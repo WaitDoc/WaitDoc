@@ -3,8 +3,15 @@ package com.team13.WaitDoc.base.util;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class Ut {
     @AllArgsConstructor
@@ -50,6 +57,22 @@ public class Ut {
 
         public String build(){
             return this.ub.toString();
+        }
+    }
+    public static class ApiResponse{
+        public static String  getBody(String s) throws IOException, InterruptedException {
+            URL url = new URL(s);
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url.toString()))
+                    .header("Content-type", "application/xml")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.statusCode());
+            return response.body();
         }
     }
 
