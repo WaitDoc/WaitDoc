@@ -10,9 +10,10 @@ spring:
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/waitdoc__dev?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
+    url: jdbc:mariadb://localhost:3306/
+    username:
     password:
+
   jpa:
     hibernate:
       ddl-auto: create
