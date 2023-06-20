@@ -21,3 +21,9 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+custom:
+  API:
+    url: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncFullDown
+    rows: 10
+
+
