@@ -15,12 +15,6 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseEntity {
 
     @Column(nullable = false)
-    private String loginId;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
