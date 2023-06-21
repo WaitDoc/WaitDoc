@@ -16,6 +16,10 @@ public class SecurityConfig {
                         formLogin -> formLogin
                                 .loginPage("/user/login")
                 )
+                .oauth2Login(
+                        oauth2Login -> oauth2Login
+                                .loginPage("/member/login")
+                )
                 .logout(
                         logout -> logout
                                 .logoutUrl("/user/logout")
