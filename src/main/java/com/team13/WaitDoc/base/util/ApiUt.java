@@ -1,19 +1,24 @@
 package com.team13.WaitDoc.base.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
-public class Ut {
+public class ApiUt {
     @AllArgsConstructor
     public static class  ApiUrl {
         StringBuilder ub;
@@ -60,7 +65,7 @@ public class Ut {
         }
     }
     public static class ApiResponse{
-        public static String  getBody(String s) throws IOException, InterruptedException {
+        public static String getResult(String s) throws IOException, InterruptedException {
             URL url = new URL(s);
 
             HttpClient client = HttpClient.newHttpClient();
@@ -74,6 +79,21 @@ public class Ut {
             System.out.println(response.statusCode());
             return response.body();
         }
+    }
+    public static class ApiXml{
+        public static List<HospitalXml.Item> getItems(String xmlStr){
+            ObjectMapper xmlMapper = new XmlMapper();
+            HospitalXml.Response response = null;
+            try {
+                response = xmlMapper.readValue(xmlStr, HospitalXml.Response.class);
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return response.getBody().getItems();
+        }
+
     }
 
 
