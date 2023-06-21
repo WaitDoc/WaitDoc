@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatMessage.service;
+/*package com.team13.WaitDoc.chatting.chatMessage.service;
 
 import com.team13.WaitDoc.chatting.chatMessage.dto.response.ChatMessageDto;
 import com.team13.WaitDoc.chatting.chatMessage.entity.ChatMessage;
@@ -56,3 +56,5 @@ public class chatMessageService {
         return ChatMessageDto.fromChatMessages(list);
     }
 }
+
+ */

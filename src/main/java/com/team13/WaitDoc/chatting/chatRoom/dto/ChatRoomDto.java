@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatRoom.dto;
+/*package com.team13.WaitDoc.chatting.chatRoom.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.team13.WaitDoc.chatting.chatRoom.entity.ChatRoom;
@@ -47,3 +47,5 @@ public class ChatRoomDto {
     }
 
 }
+
+ */

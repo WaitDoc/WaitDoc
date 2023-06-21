@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatMessage.dto.response;
+/*package com.team13.WaitDoc.chatting.chatMessage.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.team13.WaitDoc.chatting.chatMessage.entity.ChatMessage;
@@ -57,3 +57,5 @@ public class ChatMessageDto {
                 .toList();
     }
 }
+
+ */

@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatMessage.controller;
+/*package com.team13.WaitDoc.chatting.chatMessage.controller;
 
 import com.team13.WaitDoc.chatting.chatMessage.dto.request.ChatMessageRequest;
 import com.team13.WaitDoc.chatting.chatMessage.dto.response.ChatMessageDto;
@@ -60,3 +60,5 @@ public class ChatMessageController {
         return chatMessageDtos;
     }
 }
+
+ */

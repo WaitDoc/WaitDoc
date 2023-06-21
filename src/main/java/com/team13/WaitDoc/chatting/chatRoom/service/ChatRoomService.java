@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatRoom.service;
+/*package com.team13.WaitDoc.chatting.chatRoom.service;
 
 import com.team13.WaitDoc.chatting.chatRoom.dto.ChatRoomDto;
 import com.team13.WaitDoc.chatting.chatRoom.entity.ChatRoom;
@@ -109,6 +109,7 @@ public class ChatRoomService {
     /**
      * 채팅방 삭제
      */
+/*
     @Transactional
     public void remove(Long roomId, Long OwnerId) {
         Member owner = memberService.findByIdElseThrow(OwnerId);
@@ -135,6 +136,7 @@ public class ChatRoomService {
      * 유저가 방 나가기
      * 현재는 사용안하고 있음!
      */
+/*
     @Transactional
     public void exitChatRoom(Long roomId, Long memberId) {
         ChatRoom chatRoom = findById(roomId);
@@ -167,3 +169,6 @@ public class ChatRoomService {
     }
 
 }
+
+ */
+

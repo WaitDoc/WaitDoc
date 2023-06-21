@@ -1,6 +1,6 @@
 package com.team13.WaitDoc.chatting.chatRoom.entity;
 
-import com.team13.WaitDoc.base.entity.BaseEntity;
+/*import com.team13.WaitDoc.base.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -67,3 +67,5 @@ public class ChatRoom extends BaseEntity {
         this.name = name;
     }
 }
+
+ */

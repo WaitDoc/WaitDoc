@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chatting.chatRoom.controller;
+/*package com.team13.WaitDoc.chatting.chatRoom.controller;
 
 import com.team13.WaitDoc.chatting.chatRoom.entity.ChatRoom;
 import com.team13.WaitDoc.chatting.chatRoom.service.ChatRoomService;
@@ -25,6 +25,7 @@ public class ChatRommController {
     /**
      * 방 조회
      */
+/*
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/rooms")
     public String showRooms(Model model) {
@@ -38,6 +39,7 @@ public class ChatRommController {
     /**
      * 방 입장
      */
+    /*
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/rooms/{roomId}")
     public String showRoom(@PathVariable Long roomId, Model model, @AuthenticationPrincipal SecurityMember member) {
@@ -74,6 +76,7 @@ public class ChatRommController {
     /**
      * 채팅방 삭제(Owner만 가능)
      */
+/*
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/rooms/{roomId}")
     public String removeRoom(@PathVariable Long roomId, @AuthenticationPrincipal SecurityMember member) {
@@ -84,6 +87,7 @@ public class ChatRommController {
     /**
      * Member가 채팅방 나가기
      */
+/*
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/rooms/{roomId}")
     public String exitChatRoom(@PathVariable Long roomId, @AuthenticationPrincipal SecurityMember member){
@@ -122,3 +126,6 @@ public class ChatRommController {
         return "usr/chat/memberList";
     }
 }
+*/
+
+
