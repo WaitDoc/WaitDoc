@@ -23,6 +23,11 @@ public class AppConfig {
     }
 
     @Getter
+    private static String mapKey;
+    @Value("${custom.API.map_key}")
+    public void setMapKey(String mapKey) { AppConfig.mapKey = mapKey; }
+
+    @Getter
     private static int rows;
 
     @Value("${custom.API.rows}")
