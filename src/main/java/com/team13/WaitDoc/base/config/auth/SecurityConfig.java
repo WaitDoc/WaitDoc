@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.base.config;
+package com.team13.WaitDoc.base.config.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
