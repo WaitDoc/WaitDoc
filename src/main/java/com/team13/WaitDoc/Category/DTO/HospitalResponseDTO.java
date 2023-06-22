@@ -18,16 +18,16 @@ public class HospitalResponseDTO {
     private String classify;
 
     @JsonProperty("dutyName")
-    private String name;
+    private String dutyName;
 
     @JsonProperty("dutyTel1")
-    private String tel;
+    private String dutyTel1;
 
     @JsonProperty("wgs84Lat")
-    private double latitude;
+    private double wgs84Lat;
 
     @JsonProperty("wgs84Lon")
-    private double longitude;
+    private double wgs84Lon;
 
     @JsonProperty("hpid")
     private String hpid;

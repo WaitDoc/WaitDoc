@@ -5,7 +5,44 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="|/hospital/category/find|">
+<script>
+    function find(event){
+        event.preventDefault(); // 폼의 기본 동작 중지
+
+        var form = event.target.form;
+        var formData = new FormData(form);
+        var queryParams = new URLSearchParams(formData).toString();
+
+        fetch("/hospital/category/find?"+queryParams, {
+            method: "GET"
+        })
+            .then(response => response.json()) // JSON 형식으로 응답 파싱
+            .then(data => {
+                // 결과를 처리하고 표시
+                var resultContainer = document.getElementById("resultContainer");
+
+                if (data.length === 0) {
+                    resultContainer.textContent = "검색 결과가 없습니다.";
+                } else {
+                    var resultHTML = "";
+                    console.log(data)
+                    // 결과 데이터를 순회하며 HTML 생성
+                    data.forEach(item => {
+                        resultHTML += "<p>" + item.dutyName + "</p>";
+                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
+                    });
+
+                    resultContainer.innerHTML = resultHTML;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+</script>
+<form >
+<!--    th:action="|/hospital/category/find|"-->
     <label for="region">지역</label>
     <select id="region" name="region">
         <option value="서울">서울</option>
@@ -38,7 +75,8 @@
         <!-- 다른 과목 옵션들 -->
     </select>
 
-    <button type="submit">제출</button>
+    <button onclick="find(event)">제출</button>
 </form>
+<div id="resultContainer"></div>
 </body>
 </html>
