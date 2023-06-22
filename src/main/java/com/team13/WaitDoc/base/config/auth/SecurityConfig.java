@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.base.config;
+package com.team13.WaitDoc.base.config.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +15,10 @@ public class SecurityConfig {
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/user/login")
+                )
+                .oauth2Login(
+                        oauth2Login -> oauth2Login
+                                .loginPage("/member/login")
                 )
                 .logout(
                         logout -> logout
