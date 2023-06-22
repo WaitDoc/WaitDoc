@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/hospital/category")
@@ -21,17 +22,20 @@ public class CategoryController {
     public List showHospital() throws IOException, InterruptedException {
         String url = ApiUt.ApiUrl.builder()
                 .page(1)
-                .rows(1)
+                .rows(20)
                 .region("서울특별시")
-                .addr("서대문구")
-                .name("삼성")
+                .addr("강남구")
+                .classify("A")
+                .department("D024")
                 .build();
+        System.out.println(ApiUt.ApiResponse.getResult(url));
 
         List<HospitalXml.Item> items = ApiUt.ApiXml.getItems(ApiUt.ApiResponse.getResult(url));
 
-        System.out.println(items.get(0).getDutyName());
+        System.out.println(items.get(0).getAdditionalProperties().toString());
         return items;
     }
+
 
 }
 

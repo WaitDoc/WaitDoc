@@ -59,10 +59,22 @@ public class ApiUt {
                     + "=" + URLEncoder.encode(name, "UTF-8"));
             return this;
         }
+        public ApiUrl department(String department) throws UnsupportedEncodingException{
+            ub.append("&" + URLEncoder.encode("QD","UTF-8")
+                    + "=" + URLEncoder.encode(department, "UTF-8"));
+            return this;
+        }
+        public ApiUrl classify(String classify) throws UnsupportedEncodingException{
+            ub.append("&" + URLEncoder.encode("QZ","UTF-8")
+                    + "=" + URLEncoder.encode(classify, "UTF-8"));
+            return this;
+        }
 
         public String build(){
             return this.ub.toString();
         }
+
+
     }
     public static class ApiResponse{
         public static String getResult(String s) throws IOException, InterruptedException {

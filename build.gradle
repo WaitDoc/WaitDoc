@@ -43,6 +43,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-messaging'
 	// webSocket 추가
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 
 tasks.named('test') {
