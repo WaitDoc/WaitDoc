@@ -6,16 +6,13 @@ import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.util.ApiUt;
 import com.team13.WaitDoc.base.util.HospitalXml;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
@@ -30,7 +27,7 @@ public class CategoryController {
     @GetMapping("/all")
     @ResponseBody
     public List<HospitalResponseDTO> showHospital() throws IOException, InterruptedException {
-        String url = ApiUt.ApiUrl.builder()
+        String url = ApiUt.Url.builder()
                 .page(1)
                 .rows(40)
                 .region("서울특별시")
@@ -38,18 +35,23 @@ public class CategoryController {
                 .classify("A")
                 .department("D024")
                 .build();
-        System.out.println(ApiUt.ApiResponse.getResult(url));
-
-        List<HospitalXml.Item> items = ApiUt.ApiXml.getItems(ApiUt.ApiResponse.getResult(url));
+        List<HospitalXml.Item> items = ApiUt.Response.getItems(ApiUt.Response.getBody(url));
 
         ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
     }
+
+    /*** TODO
+     * 1.find시 요청받은 정보에 대한 DB에 병원 정보 있는지 확인
+     * 2. DB에 병원이 존재한다면 createDate가 3개월이 지났는지 확인
+     * 3. 데이터가 없거나 생성한지 3개월이 지났다면 API에서 데이터 가져옴
+     * 4. 둘다 해당하지 않는다면 데이터를 db에서 보내줌
+     */
     @ResponseBody
     @GetMapping("/find")
-    public CategoryRequestDTO find(CategoryRequestDTO requestDTO) throws UnsupportedEncodingException {
-        System.out.println(">>>>>>>>>>>>>>>>>>>"+ApiUt.ApiUrl.DtoToUrl(requestDTO));
-        return requestDTO;
+    public List<HospitalResponseDTO> find(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+        String url = ApiUt.Url.getByRequestDTO(requestDTO);
+        return ApiUt.Response.getResponseDTOs(url);
     }
 
 }
