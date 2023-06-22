@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,16 @@ public class ApiUt {
     public static class  ApiUrl {
         StringBuilder ub;
 
+        public static String DtoToUrl(CategoryRequestDTO requestDTO) throws UnsupportedEncodingException {
+            return  ApiUt.ApiUrl.builder()
+                    .page(1)
+                    .rows(40)
+                    .region(requestDTO.getRegion())
+                    .addr(requestDTO.getAddr())
+                    .classify(requestDTO.getClassify())
+                    .department(requestDTO.getDepartment())
+                    .build();
+        }
         public static ApiUrl builder() throws UnsupportedEncodingException{
             String serviceKey = AppConfig.getServiceKey();
 
@@ -45,28 +56,33 @@ public class ApiUt {
         }
 
         public ApiUrl region(String region) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("Q0","UTF-8")
-                    + "=" + URLEncoder.encode(region, "UTF-8"));
+            if(region != null)
+                ub.append("&" + URLEncoder.encode("Q0","UTF-8")
+                        + "=" + URLEncoder.encode(region, "UTF-8"));
             return this;
         }
         public ApiUrl addr(String addr) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("Q1","UTF-8")
-                    + "=" + URLEncoder.encode(addr, "UTF-8"));
+            if(addr != null)
+                ub.append("&" + URLEncoder.encode("Q1","UTF-8")
+                        + "=" + URLEncoder.encode(addr, "UTF-8"));
             return this;
         }
         public ApiUrl name(String name) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("QN","UTF-8")
-                    + "=" + URLEncoder.encode(name, "UTF-8"));
+            if(name != null)
+                ub.append("&" + URLEncoder.encode("QN","UTF-8")
+                        + "=" + URLEncoder.encode(name, "UTF-8"));
             return this;
         }
         public ApiUrl department(String department) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("QD","UTF-8")
-                    + "=" + URLEncoder.encode(department, "UTF-8"));
+                if(department != null)
+                    ub.append("&" + URLEncoder.encode("QD","UTF-8")
+                        + "=" + URLEncoder.encode(department, "UTF-8"));
             return this;
         }
         public ApiUrl classify(String classify) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("QZ","UTF-8")
-                    + "=" + URLEncoder.encode(classify, "UTF-8"));
+            if(classify != null)
+                ub.append("&" + URLEncoder.encode("QZ","UTF-8")
+                        + "=" + URLEncoder.encode(classify, "UTF-8"));
             return this;
         }
 
@@ -91,6 +107,7 @@ public class ApiUt {
             System.out.println(response.statusCode());
             return response.body();
         }
+
     }
     public static class ApiXml{
         public static List<HospitalXml.Item> getItems(String xmlStr){
