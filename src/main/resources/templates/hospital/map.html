@@ -6,8 +6,11 @@
 </head>
 <body>
 <div id="map" style="width:750px;height:350px;"></div>
+<label for="address">주소: </label>
+<input type="text" id="address" placeholder="예: 서울시 강남구">
+<button id="setAddress">주소 설정</button>
 
-<script th:attr="src=${'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + appKey + '&libraries=clusterer'}"></script>
+<script th:attr="src=${'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + appKey + '&libraries=clusterer,services'}"></script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -21,22 +24,7 @@
     /*]]>*/
 </script>
 <script>
-
-    // 현재 위치를 가져온 뒤 지도를 생성합니다.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude,
-                lon = position.coords.longitude;
-
-            createMap(lat, lon);
-
-        }, function(error) {
-            console.error(error);
-            createMap(37.56656, 126.98014); // 기본값 설정
-        });
-    } else {
-        createMap(37.56656, 126.98014); // 기본값 설정
-    }
+    var map;
 
     function createMap(lat, lon) {
         var mapContainer = document.getElementById('map');
@@ -46,7 +34,7 @@
             mapTypeId : kakao.maps.MapTypeId.ROADMAP
         };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+        map = new kakao.maps.Map(mapContainer, mapOption);
         setUpMap(map);
     }
 
@@ -95,6 +83,34 @@
         var zoomControl = new kakao.maps.ZoomControl();
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude,
+                lon = position.coords.longitude;
+            createMap(lat, lon);
+
+        }, function(error) {
+            console.error(error);
+            createMap(37.56656, 126.98014); // 기본값 설정
+        });
+    } else {
+        createMap(37.56656, 126.98014); // 기본값 설정
+    }
+
+    document.getElementById("setAddress").addEventListener("click", function() {
+        var address = document.getElementById("address").value;
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        geocoder.addressSearch(address, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var newPos = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map.setCenter(newPos);
+            } else {
+                alert("주소 검색에 실패했습니다. 올바른 주소를 입력해주세요.");
+            }
+        });
+    });
 </script>
 </body>
 </html>
