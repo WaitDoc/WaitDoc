@@ -1,8 +1,13 @@
 package com.team13.WaitDoc.base.util;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public class HospitalXml {
     @Data
@@ -26,6 +31,7 @@ public class HospitalXml {
     @Data
     static public class Item{
         private String dutyAddr; //주소 (서울 특별시 서대문구...)
+        private String dutyEtc; //비고
         private String dutyDiv; //병원 분류 (A)
         private String dutyDivNam; //병원 분류명 (의원)
         private String dutyEmcls; // 응급 의료기관 코드(G099)
@@ -51,5 +57,12 @@ public class HospitalXml {
         private int rnum;//item 순서 번호(1)
         private double wgs84Lat;//병원위도(37.48813256)
         private double wgs84Lon;//병원경도(127.0851566)
+
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
+        @JsonAnySetter
+        public void setAdditionalProperty(String key, Object value) {
+            additionalProperties.put(key, value);
+        }
     }
 }

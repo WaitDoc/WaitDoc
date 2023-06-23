@@ -1,12 +1,14 @@
 package com.team13.WaitDoc.base.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
+import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -20,52 +22,79 @@ import java.util.List;
 
 public class ApiUt {
     @AllArgsConstructor
-    public static class  ApiUrl {
+    public static class Url {
         StringBuilder ub;
 
-        public static ApiUrl builder() throws UnsupportedEncodingException{
+        public static String getByRequestDTO(CategoryRequestDTO requestDTO) throws UnsupportedEncodingException {
+            return  Url.builder()
+                    .page(1)
+                    .rows(40)
+                    .region(requestDTO.getRegion())
+                    .addr(requestDTO.getAddr())
+                    .classify(requestDTO.getClassify())
+                    .department(requestDTO.getDepartment())
+                    .build();
+        }
+        public static Url builder() throws UnsupportedEncodingException{
             String serviceKey = AppConfig.getServiceKey();
 
             StringBuilder sb = new StringBuilder(AppConfig.getApiUrl()).append("?" + URLEncoder.encode("ServiceKey","UTF-8")
                     + "=" + URLEncoder.encode(serviceKey,"UTF-8")); //Service Key
 
-            return new ApiUrl(sb);
+            return new Url(sb);
         }
 
-        public ApiUrl page(int page)throws UnsupportedEncodingException{
+        public Url page(int page)throws UnsupportedEncodingException{
             ub.append("&" + URLEncoder.encode("pageNo","UTF-8")
                     + "=" + URLEncoder.encode(String.valueOf(page), "UTF-8")); //페이지 번호
             return this;
         }
 
-        public ApiUrl rows(int rows)throws UnsupportedEncodingException{
+        public Url rows(int rows)throws UnsupportedEncodingException{
             ub.append("&" + URLEncoder.encode("numOfRows","UTF-8")
                     + "=" + URLEncoder.encode(String.valueOf(rows), "UTF-8")); //페이지 번호
             return this;
         }
 
-        public ApiUrl region(String region) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("Q0","UTF-8")
-                    + "=" + URLEncoder.encode(region, "UTF-8"));
+        public Url region(String region) throws UnsupportedEncodingException{
+            if(region != null)
+                ub.append("&" + URLEncoder.encode("Q0","UTF-8")
+                        + "=" + URLEncoder.encode(region, "UTF-8"));
             return this;
         }
-        public ApiUrl addr(String addr) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("Q1","UTF-8")
-                    + "=" + URLEncoder.encode(addr, "UTF-8"));
+        public Url addr(String addr) throws UnsupportedEncodingException{
+            if(addr != null)
+                ub.append("&" + URLEncoder.encode("Q1","UTF-8")
+                        + "=" + URLEncoder.encode(addr, "UTF-8"));
             return this;
         }
-        public ApiUrl name(String name) throws UnsupportedEncodingException{
-            ub.append("&" + URLEncoder.encode("QN","UTF-8")
-                    + "=" + URLEncoder.encode(name, "UTF-8"));
+        public Url name(String name) throws UnsupportedEncodingException{
+            if(name != null)
+                ub.append("&" + URLEncoder.encode("QN","UTF-8")
+                        + "=" + URLEncoder.encode(name, "UTF-8"));
+            return this;
+        }
+        public Url department(String department) throws UnsupportedEncodingException{
+                if(department != null)
+                    ub.append("&" + URLEncoder.encode("QD","UTF-8")
+                        + "=" + URLEncoder.encode(department, "UTF-8"));
+            return this;
+        }
+        public Url classify(String classify) throws UnsupportedEncodingException{
+            if(classify != null)
+                ub.append("&" + URLEncoder.encode("QZ","UTF-8")
+                        + "=" + URLEncoder.encode(classify, "UTF-8"));
             return this;
         }
 
         public String build(){
             return this.ub.toString();
         }
+
+
     }
-    public static class ApiResponse{
-        public static String getResult(String s) throws IOException, InterruptedException {
+    public static class Response {
+        public static String getBody(String s) throws IOException, InterruptedException {
             URL url = new URL(s);
 
             HttpClient client = HttpClient.newHttpClient();
@@ -79,8 +108,6 @@ public class ApiUt {
             System.out.println(response.statusCode());
             return response.body();
         }
-    }
-    public static class ApiXml{
         public static List<HospitalXml.Item> getItems(String xmlStr){
             ObjectMapper xmlMapper = new XmlMapper();
             HospitalXml.Response response = null;
@@ -94,6 +121,12 @@ public class ApiUt {
             return response.getBody().getItems();
         }
 
+        public static List<HospitalResponseDTO> getResponseDTOs(String url) throws IOException, InterruptedException {
+            List<HospitalXml.Item> items = getItems(ApiUt.Response.getBody(url));
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
+        }
     }
 
 
