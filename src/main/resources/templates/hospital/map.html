@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>다음 지도 API</title>
+</head>
+<body>
+<div id="map" style="width:750px;height:350px;"></div>
+
+<script th:attr="src=${'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + appKey + '&libraries=clusterer'}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var items = /*[[${items}]]*/ [{"dutyName": "", "wgs84Lat": 0, "wgs84Lon": 0}];
+
+    var hospitalData = [];
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        hospitalData.push([item.wgs84Lat, item.wgs84Lon, '<div style="padding:5px;">' + item.dutyName + '</div>']);
+    }
+    /*]]>*/
+</script>
+<script>
+
+    // 현재 위치를 가져온 뒤 지도를 생성합니다.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude,
+                lon = position.coords.longitude;
+
+            createMap(lat, lon);
+
+        }, function(error) {
+            console.error(error);
+            createMap(37.56656, 126.98014); // 기본값 설정
+        });
+    } else {
+        createMap(37.56656, 126.98014); // 기본값 설정
+    }
+
+    function createMap(lat, lon) {
+        var mapContainer = document.getElementById('map');
+        var mapOption = {
+            center: new kakao.maps.LatLng(lat, lon),
+            level: 2,
+            mapTypeId : kakao.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        setUpMap(map);
+    }
+
+    function setUpMap(map) {
+        var clusterer = new kakao.maps.MarkerClusterer({
+            map: map,
+            averageCenter: true,
+            minLevel: 7
+        });
+
+        var markers = [];
+        var currentInfowindow = null;
+
+        function displayInfowindow(marker, content) {
+            if (currentInfowindow) closeInfowindow(currentInfowindow);
+
+            var infowindow = new kakao.maps.InfoWindow({
+                content: content
+            });
+
+            infowindow.open(map, marker);
+            currentInfowindow = infowindow;
+        }
+
+        function closeInfowindow(infowindow) {
+            if (infowindow) {
+                infowindow.close();
+            }
+        }
+
+        for (var i = 0; i < hospitalData.length; i++) {
+            var marker = new kakao.maps.Marker({
+                position: new kakao.maps.LatLng(hospitalData[i][0], hospitalData[i][1]),
+                map: map
+            });
+
+            (function (marker, content) {
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    displayInfowindow(marker, content);
+                });
+            })(marker, hospitalData[i][2]);
+            markers.push(marker);
+        }
+
+        clusterer.addMarkers(markers);
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    }
+</script>
+</body>
+</html>

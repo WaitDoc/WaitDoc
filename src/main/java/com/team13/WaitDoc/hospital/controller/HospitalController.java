@@ -4,26 +4,22 @@ import com.team13.WaitDoc.base.config.AppConfig;
 import com.team13.WaitDoc.base.util.ApiUt;
 import com.team13.WaitDoc.base.util.HospitalXml;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/hospital/map")
 public class HospitalController {
 
-    @GetMapping("/all")
+    @GetMapping("/map")
     public String mapHospital(Model model) throws IOException, InterruptedException {
         String url = ApiUt.ApiUrl.builder()
                 .page(1)
-                .rows(1)
+                .rows(2)
                 .region("서울특별시")
                 .addr("서대문구")
                 .name("삼성")
@@ -38,6 +34,6 @@ public class HospitalController {
 
         model.addAttribute("items", items);
 
-        return "detail/hospital";
+        return "hospital/map";
     }
 }
