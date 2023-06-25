@@ -28,7 +28,11 @@
                     console.log(data)
                     // 결과 데이터를 순회하며 HTML 생성
                     data.forEach(item => {
-                        resultHTML += "<p>" + item.dutyName + "</p>";
+                        resultHTML += "<h3>" + item.dutyName + "</h3>";
+                        resultHTML += "<p>" + item.dutyDivNam + "</p>";
+                        resultHTML += "<p>" + item.dutyAddr + "</p>";
+                        resultHTML += "<p>" + item.dutyTel1 + "</p>";
+
                         // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
                     });
 
@@ -43,38 +47,75 @@
 </script>
 <form >
 <!--    th:action="|/hospital/category/find|"-->
-    <label for="region">지역</label>
-    <select id="region" name="region">
-        <option value="서울">서울</option>
-        <option value="부산">부산</option>
-        <option value="대구">대구</option>
-        <!-- 다른 지역 옵션들 -->
-    </select>
+<!--    <label for="region">지역</label>-->
+<!--    <select id="region" name="region">-->
+<!--        <option value="">선택</option>-->
+<!--        <option value="서울">서울</option>-->
+<!--        <option value="부산">부산</option>-->
+<!--        <option value="대구">대구</option>-->
+<!--        &lt;!&ndash; 다른 지역 옵션들 &ndash;&gt;-->
+<!--    </select>-->
 
-    <label for="addr">동네:</label>
-    <select id="addr" name="addr">
-        <option value="강남">강남</option>
-        <option value="종로">종로</option>
-        <option value="강북">강북</option>
-        <!-- 다른 지역 옵션들 -->
-    </select>
+<!--    <label for="addr">동네:</label>-->
+<!--    <select id="addr" name="addr">-->
+<!--        <option value="">선택</option>-->
+<!--        <option value="강남">강남</option>-->
+<!--        <option value="종로">종로</option>-->
+<!--        <option value="강북">강북</option>-->
+<!--        &lt;!&ndash; 다른 지역 옵션들 &ndash;&gt;-->
+<!--    </select>-->
 
     <label for="classify">형태:</label>
     <select id="classify" name="classify">
+        <option value="">선택</option>
         <option value="A">종합병원</option>
         <option value="B">병원</option>
         <option value="C">의원</option>
+        <option value="E">한방병원</option>
+        <option value="G">한의원</option>
+        <option value="H">약국</option>
+        <option value="R">보건소</option>
+        <option value="Y">중앙응급의료센터</option>
+        <option value="Z">응급의료지원센터</option>
+
         <!-- 다른 형태 옵션들 -->
     </select>
 
     <label for="department">과목:</label>
     <select id="department" name="department">
+        <option value="">선택</option>
         <option value="D001">내과</option>
+        <option value="D026">치과</option>
+        <option value="D008">정형외과</option>
+        <option value="D005">피부과</option>
+        <option value="D006">외과</option>
+        <option value="D010">성형외과</option>
+        <option value="D012">안과</option>
+        <option value="D013">이비인후과</option>
+        <option value="D022">가정의학과</option>
         <option value="D002">소아청소년과</option>
+        <option value="D007">흉부외과</option>
         <option value="D003">신경과</option>
+        <option value="D009">신경외과</option>
+        <option value="D011">산부인과</option>
+        <option value="D014">비뇨기과</option>
+        <option value="D004">정신건강의학과</option>
+        <option value="D016">재활의학과</option>
+        <option value="D017">마취통증의학과</option>
+        <option value="D018">영상의학과</option>
+        <option value="D019">치료방사선과</option>
+        <option value="D020">임상병리과</option>
+        <option value="D021">해부병리과</option>
+        <option value="D023">핵의학과</option>
+        <option value="D024">응급의학과</option>
+        <option value="D034">구강악안면외과</option>
+
+
         <!-- 다른 과목 옵션들 -->
     </select>
 
+    <input type="text" placeholder="병원명" name="name"/>
+    <input type="text" placeholder="서울특별시 서대문구" id="location" name="location"/>
     <button onclick="find(event)">제출</button>
 </form>
 <div id="resultContainer"></div>

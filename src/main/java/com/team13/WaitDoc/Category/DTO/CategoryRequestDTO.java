@@ -6,13 +6,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@RequiredArgsConstructor
-@Builder
 @ToString
 public class CategoryRequestDTO {
-    private final String region;
-    private final String addr;
+    private String region;
+    private String addr;
+    private final String location;
     private final String name;
     private final String department;
     private final String classify;
+
+    public CategoryRequestDTO(String location, String name, String department, String classify) {
+        this.location = location;
+        this.name = name;
+        this.department = department;
+        this.classify = classify;
+
+        if(location.contains(" ")){
+            String[] locationParts = location.split(" ");
+            this.region = locationParts[0];
+            this.addr = locationParts[1];
+        }
+        else{
+            this.region = location;
+        }
+
+    }
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalXml {
     @Data
     static class Response{
@@ -51,6 +51,11 @@ public class HospitalXml {
         private int dutyTime5s;//시작: 금
         private int dutyTime6c;//종료: 토
         private int dutyTime6s;//시작: 토
+        private int dutyTime7s;//시작: 일
+        private int dutyTime7c;//종료: 일
+        private int dutyTime8s;//시작: 공휴일
+        private int dutyTime8c;//종료: 공휴일
+
         private String hpid;//기관 ID(A0000028)
         private int postCdn1;//우편번호1(135)
         private int postCdn2;//우편번호2(750)
