@@ -37,7 +37,22 @@ public class OAuthAttributes {
             return ofNaver(userNameAttributeName,attributes);
         }
 
+        if("google".equals(socialName)){
+            System.out.println(attributes);
+            return ofGoogle(userNameAttributeName,attributes);
+        }
         return null;
+    }
+
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuthAttributes.builder()
+                .nickname((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .gender((String)attributes.get("gender"))
+                .birthday((String)attributes.get("birthday"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
     }
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
