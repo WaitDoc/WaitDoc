@@ -1,10 +1,12 @@
 package com.team13.WaitDoc.member.service;
 
+import com.team13.WaitDoc.base.config.auth.OAuthAttributes;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.entity.MemberRole;
 import com.team13.WaitDoc.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -12,25 +14,22 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    private Member login(String username,String providerTypeCode){
+    @Transactional
+    public Member save(OAuthAttributes oAuthAttributes) {
 
-
-        Member member = Member
-                .builder()
-                .name(username)
-                .providerTypeCode(providerTypeCode)
-                .memberRole(MemberRole.ROLE_USER)
-                .phone("01011111111")
-                .address("서울시")
-                .build();
-
+        Member member = createMember(oAuthAttributes);
         memberRepository.save(member);
 
         return member;
     }
 
-    public Member whenSocialLogin(String username, String providerTypeCode) {
-
-        return login(username,providerTypeCode);
+    private Member createMember(OAuthAttributes oAuthAttributes) {
+        return new Member(
+                oAuthAttributes.getNickname(),
+                oAuthAttributes.getEmail(),
+                oAuthAttributes.getGender(),
+                oAuthAttributes.getBirthday(),
+                MemberRole.ROLE_USER
+        );
     }
 }

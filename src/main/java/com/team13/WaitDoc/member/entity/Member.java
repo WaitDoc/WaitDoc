@@ -9,11 +9,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,30 +17,18 @@ import java.util.List;
 public class Member extends BaseEntity {
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String address;
-
+    private String nickname;
+    private String email;
+    private String gender;
+    private String birthday;
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
-    private String providerTypeCode;
-
-    public List<? extends GrantedAuthority> getGrantedAuthorities() {
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-        grantedAuthorities.add(new SimpleGrantedAuthority("member"));
-
-        if ("admin".equals(name)) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("admin"));
-        }
-
-        return grantedAuthorities;
+    public Member(String nickname, String email, String gender, String birthday, MemberRole memberRole) {
+        this.nickname = nickname;
+        this.email = email;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.memberRole = memberRole;
     }
-
-
 }
