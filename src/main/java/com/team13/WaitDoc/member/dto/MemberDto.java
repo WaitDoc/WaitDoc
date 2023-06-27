@@ -26,17 +26,13 @@ public class MemberDto {
     @JsonProperty("updated_at")
     private LocalDateTime modifyDate;
 
-    /*public static MemberDto fromUser(Member member) {
+    public static MemberDto fromUser(Member member) {
         MemberDto memberDto = MemberDto.builder()
                 .id(member.getId())
                 .username(member.getName())
-                .createDate(Member.getCreateDate())
-                .modifyDate(Member.getModifyDate())
                 .build();
 
         return memberDto;
     }
-
-     */
 
 }
