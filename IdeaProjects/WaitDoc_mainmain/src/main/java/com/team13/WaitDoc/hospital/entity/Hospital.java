@@ -32,5 +32,4 @@ public class Hospital extends BaseEntity {
 
     private LocalDateTime endTime;
 
-    private int waitingNumber;
 }
