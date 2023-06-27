@@ -1,8 +1,7 @@
 package com.team13.WaitDoc.hospital.entity;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -33,4 +34,12 @@ public class Hospital extends BaseEntity {
     private LocalDateTime endTime;
 
     private int waitingNumber;
+
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<HospitalInquiry> hospitalChatRooms = new HashSet<>();
+
+    public Set<HospitalInquiry> getHospitalChatRooms() {
+        return hospitalChatRooms;
+    }
+
 }
