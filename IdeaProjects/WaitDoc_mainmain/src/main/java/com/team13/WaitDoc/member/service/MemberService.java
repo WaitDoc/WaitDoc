@@ -32,4 +32,9 @@ public class MemberService {
                 MemberRole.ROLE_USER
         );
     }
+
+    public Member getMember(Long memberId) {
+        return memberRepository.findById(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("Member with id " + memberId + " not found"));
+    }
 }
