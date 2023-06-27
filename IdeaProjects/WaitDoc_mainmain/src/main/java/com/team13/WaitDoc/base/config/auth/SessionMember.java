@@ -8,9 +8,11 @@ public class SessionMember {
 
     private final String nickname;
     private final String email;
+    private final Long memberId;
 
     public SessionMember(Member member) {
         this.nickname = member.getNickname();
         this.email = member.getEmail();
+        this.memberId = member.getId();
     }
 }
