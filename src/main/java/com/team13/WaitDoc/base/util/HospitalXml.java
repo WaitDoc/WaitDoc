@@ -2,6 +2,7 @@ package com.team13.WaitDoc.base.util;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team13.WaitDoc.hospital.entity.Hospital;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class HospitalXml {
     static class Response{
         private Header header;
         private Body body;
+        private String cmmMsgHeader;
 
     }
     @Data
@@ -68,6 +70,33 @@ public class HospitalXml {
         @JsonAnySetter
         public void setAdditionalProperty(String key, Object value) {
             additionalProperties.put(key, value);
+        }
+
+        public Hospital toEntity(){
+            return Hospital.builder()
+                    .name(dutyName)
+                    .addr(dutyAddr)
+                    .department(dutyDivNam)
+                    .latitude(wgs84Lat)
+                    .longitude(wgs84Lon)
+                    .hpid(hpid)
+                    .monStartTime(dutyTime1s)
+                    .monEndTime(dutyTime1c)
+                    .tueStartTime(dutyTime2s)
+                    .tueEndTime(dutyTime2c)
+                    .wedStartTime(dutyTime3s)
+                    .wedEndTime(dutyTime3c)
+                    .thuStartTime(dutyTime4s)
+                    .thuEndTime(dutyTime4c)
+                    .friStartTime(dutyTime5s)
+                    .friEndTime(dutyTime5c)
+                    .satStartTime(dutyTime6s)
+                    .satEndTime(dutyTime6c)
+                    .sunStartTime(dutyTime7s)
+                    .sunEndTime(dutyTime7c)
+                    .holidayStartTime(dutyTime8s)
+                    .holidayEndTime(dutyTime8c)
+                    .build();
         }
     }
 }

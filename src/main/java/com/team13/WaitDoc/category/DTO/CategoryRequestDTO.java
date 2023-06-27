@@ -1,8 +1,6 @@
-package com.team13.WaitDoc.Category.DTO;
+package com.team13.WaitDoc.category.DTO;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter

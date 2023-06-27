@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
+import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 

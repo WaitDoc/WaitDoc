@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.Category.DTO;
+package com.team13.WaitDoc.category.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
