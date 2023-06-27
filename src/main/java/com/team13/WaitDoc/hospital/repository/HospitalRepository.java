@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface HospitalRepository extends JpaRepository<Hospital,Long> {
-    Optional<Hospital> findByHpid(String hpid);
+public interface HospitalRepository extends JpaRepository<Hospital, Long> {
+    public Optional<Hospital> findByHpid(String hpid);
 }
