@@ -6,16 +6,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.springframework.util.Assert;
+
 import lombok.experimental.SuperBuilder;
+
 
 @Entity
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
-
     @Column(nullable = false)
     private String nickname;
     private String email;
@@ -24,6 +28,16 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
+    @Builder
+    public Member(String username, String password) {
+
+        Assert.notNull(username, "username는 널일 수 없습니다.");
+        Assert.notNull(password, "password는 널일 수 없습니다.");
+
+        //this.name = username;
+        //this.password = password;
+    }
+
     public Member(String nickname, String email, String gender, String birthday, MemberRole memberRole) {
         this.nickname = nickname;
         this.email = email;
@@ -31,4 +45,5 @@ public class Member extends BaseEntity {
         this.birthday = birthday;
         this.memberRole = memberRole;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.team13.WaitDoc.base.config;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,8 @@ public class AppConfig {
     public void setApiUrl(String apiUrl) {
         AppConfig.apiUrl = apiUrl;
     }
+
+
 
     @Getter
     private static String serviceKey;
@@ -30,3 +33,5 @@ public class AppConfig {
         AppConfig.rows = rows;
     }
 }
+
+
