@@ -37,10 +37,13 @@ public class ApiUt {
         }
 
         public static Url builder() throws UnsupportedEncodingException{
-            List<String> serviceKeys = List.of(AppConfig.getServiceKey_1()
-                    , AppConfig.getServiceKey_2()
-                    , AppConfig.getServiceKey_3());
-            String serviceKey = serviceKeys.get(new Random().nextInt(3));
+            List<String> serviceKeys = List.of(
+                    AppConfig.getServiceKey_1(),
+                    AppConfig.getServiceKey_2(),
+                    AppConfig.getServiceKey_3(),
+                    AppConfig.getServiceKey_4()
+            );
+            String serviceKey = serviceKeys.get(new Random().nextInt(4));
 
             StringBuilder sb = new StringBuilder(AppConfig.getApiUrl()).append("?" + URLEncoder.encode("ServiceKey","UTF-8")
                     + "=" + URLEncoder.encode(serviceKey,"UTF-8")); //Service Key
