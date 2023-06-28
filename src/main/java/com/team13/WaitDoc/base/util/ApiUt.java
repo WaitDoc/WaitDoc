@@ -134,7 +134,7 @@ public class ApiUt {
             return body.getItems();
         }
         public static List<HospitalResponseDTO> getResponseDTOs(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
-            List<HospitalXml.Item> items = getBody(requestDTO).getItems();
+            List<HospitalXml.Item> items = getItems(requestDTO);
             return new ObjectMapper().convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
         }
     }
