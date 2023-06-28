@@ -49,6 +49,7 @@ dependencies {
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	// JSON
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // 타임리프에서 layout.html 사용하려고
 
 }
 
