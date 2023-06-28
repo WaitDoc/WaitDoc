@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   mvc:
     hiddenmethod:
@@ -10,9 +10,9 @@ spring:
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url:
-    username:
-    password:
+    url: jdbc:mariadb://127.0.0.1:3306/waitdoc
+    username: testuser
+    password: 5678
 
   jpa:
     hibernate:

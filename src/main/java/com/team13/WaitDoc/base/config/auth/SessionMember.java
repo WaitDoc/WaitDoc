@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 public class SessionMember {
 
-    private final String nickname;
+    private final String name;
     private final String email;
 
     public SessionMember(Member member) {
-        this.nickname = member.getNickname();
+        this.name = member.getName();
         this.email = member.getEmail();
     }
 }
