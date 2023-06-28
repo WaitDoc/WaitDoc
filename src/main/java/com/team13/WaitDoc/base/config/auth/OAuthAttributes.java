@@ -82,7 +82,7 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public Member toEntity() {
+    /*public Member toEntity() {
         return Member.builder()
                 .nickname(nickname)
                 .email(email)
@@ -91,4 +91,6 @@ public class OAuthAttributes {
                 .memberRole(MemberRole.ROLE_USER)
                 .build();
     }
+
+     */
 }

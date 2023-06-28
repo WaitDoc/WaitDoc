@@ -8,13 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberService {
-
     private final MemberRepository memberRepository;
 
-    @Transactional
+
+    public Member findByIdElseThrow(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow();
+    } //이게 맞나?
+
+
+
+
+
+
     public Member save(OAuthAttributes oAuthAttributes) {
 
         Member member = createMember(oAuthAttributes);
@@ -22,6 +33,8 @@ public class MemberService {
 
         return member;
     }
+
+
 
     private Member createMember(OAuthAttributes oAuthAttributes) {
         return new Member(
@@ -32,4 +45,7 @@ public class MemberService {
                 MemberRole.ROLE_USER
         );
     }
+
+
 }
+
