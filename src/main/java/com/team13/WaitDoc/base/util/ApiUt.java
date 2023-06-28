@@ -117,7 +117,6 @@ public class ApiUt {
             ObjectMapper xmlMapper = new XmlMapper();
             HospitalXml.Response response = xmlMapper.readValue(responseToAPI(url), HospitalXml.Response.class);
 
-            System.out.println(">>>>>>>>>>>>>>>>>>"+response);
             return response.getBody();
 
         }
@@ -132,7 +131,7 @@ public class ApiUt {
             while(isFail(body))
                 body = getBody(requestDTO);
 
-            return getBody(requestDTO).getItems();
+            return body.getItems();
         }
         public static List<HospitalResponseDTO> getResponseDTOs(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
             List<HospitalXml.Item> items = getBody(requestDTO).getItems();
