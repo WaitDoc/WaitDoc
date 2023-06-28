@@ -44,6 +44,11 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-messaging'
 	// webSocket 추가
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	// JSON
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0'
 
 }
 

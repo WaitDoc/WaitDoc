@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Waiting Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-200">
+<div class="text-center">
+  <h1 class="text-4xl mb-4 mt-8" th:text="${hospitalName}"></h1>
+  <div class="w-24 h-24 rounded-full bg-blue-500 text-white flex items-center justify-center mx-auto mb-4">
+    <span class="text-2xl font-bold" th:text="${waitingCount}"></span>
+  </div>
+  <div class="mb-4">
+    <form th:action="@{'/waiting/' + ${hospitalId}}" method="post">
+      <input type="hidden" name="memberId" th:value="${memberId}" />
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border border-blue-700">
+        줄서기 등록
+      </button>
+    </form>
+  </div>
+  <form th:action="@{'/waiting/delete/' + ${hospitalId}}" method="post">
+    <input type="hidden" name="memberId" th:value="${memberId}" />
+    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded border border-red-700">
+      줄서기 취소
+    </button>
+  </form>
+</div>
+</body>
+</html>
