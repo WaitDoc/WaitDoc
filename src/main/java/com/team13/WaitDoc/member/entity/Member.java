@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
     @Column(nullable = false)
-    private String nickname;
+    private String name;
     private String email;
     private String gender;
     private String birthday;
@@ -34,12 +34,12 @@ public class Member extends BaseEntity {
         Assert.notNull(username, "username는 널일 수 없습니다.");
         Assert.notNull(password, "password는 널일 수 없습니다.");
 
-        //this.name = username;
+        this.name = username;
         //this.password = password;
     }
 
-    public Member(String nickname, String email, String gender, String birthday, MemberRole memberRole) {
-        this.nickname = nickname;
+    public Member(String name, String email, String gender, String birthday, MemberRole memberRole) {
+        this.name = name;
         this.email = email;
         this.gender = gender;
         this.birthday = birthday;
