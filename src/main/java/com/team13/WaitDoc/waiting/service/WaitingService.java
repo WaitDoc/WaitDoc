@@ -1,5 +1,8 @@
 package com.team13.WaitDoc.waiting.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +10,7 @@ import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.repository.HospitalRepository;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.repository.MemberRepository;
+import com.team13.WaitDoc.waiting.dto.WaitingInfo;
 import com.team13.WaitDoc.waiting.entity.Waiting;
 import com.team13.WaitDoc.waiting.repository.WaitingRepository;
 
@@ -50,6 +54,19 @@ public class WaitingService {
 	//대기자 수 조회
 	public int getWaitingCount(Long hospitalId) {
 		return waitingRepository.countByHospitalId(hospitalId);
+	}
+
+	//대기자 리스트 조회
+	public List<WaitingInfo> getWaitingList(Long hospitalId) {
+		List<Waiting> waitingList = waitingRepository.findByHospitalId(hospitalId);
+
+		return waitingList.stream()
+			.map(waiting -> {
+				WaitingInfo info = new WaitingInfo(waiting.getMember().getId(), waiting.getMember().getName());
+				info.setHospitalId(waiting.getHospital().getId());
+				return info;
+			})
+			.collect(Collectors.toList());
 	}
 }
 
