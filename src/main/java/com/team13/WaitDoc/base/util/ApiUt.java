@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
+import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 
@@ -29,6 +29,7 @@ public class ApiUt {
             return  Url.builder()
                     .page(1)
                     .rows(40)
+                    .name(requestDTO.getName())
                     .region(requestDTO.getRegion())
                     .addr(requestDTO.getAddr())
                     .classify(requestDTO.getClassify())
@@ -57,31 +58,31 @@ public class ApiUt {
         }
 
         public Url region(String region) throws UnsupportedEncodingException{
-            if(region != null)
+            if(region != null && !region.isBlank())
                 ub.append("&" + URLEncoder.encode("Q0","UTF-8")
                         + "=" + URLEncoder.encode(region, "UTF-8"));
             return this;
         }
         public Url addr(String addr) throws UnsupportedEncodingException{
-            if(addr != null)
+            if(addr != null && !addr.isBlank())
                 ub.append("&" + URLEncoder.encode("Q1","UTF-8")
                         + "=" + URLEncoder.encode(addr, "UTF-8"));
             return this;
         }
         public Url name(String name) throws UnsupportedEncodingException{
-            if(name != null)
+            if(name != null && !name.isBlank())
                 ub.append("&" + URLEncoder.encode("QN","UTF-8")
                         + "=" + URLEncoder.encode(name, "UTF-8"));
             return this;
         }
         public Url department(String department) throws UnsupportedEncodingException{
-                if(department != null)
+                if(department != null && !department.isBlank())
                     ub.append("&" + URLEncoder.encode("QD","UTF-8")
                         + "=" + URLEncoder.encode(department, "UTF-8"));
             return this;
         }
         public Url classify(String classify) throws UnsupportedEncodingException{
-            if(classify != null)
+            if(classify != null && !classify.isBlank())
                 ub.append("&" + URLEncoder.encode("QZ","UTF-8")
                         + "=" + URLEncoder.encode(classify, "UTF-8"));
             return this;

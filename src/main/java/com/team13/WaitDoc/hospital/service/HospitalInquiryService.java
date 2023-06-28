@@ -2,7 +2,7 @@ package com.team13.WaitDoc.hospital.service;
 
 import com.team13.WaitDoc.chats.entity.ChatRoom;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
-import com.team13.WaitDoc.hospital.Repository.HospitalInquiryRepository;
+import com.team13.WaitDoc.hospital.repository.HospitalInquiryRepository;
 import com.team13.WaitDoc.chats.service.ChatRoomService;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.member.entity.Member;
@@ -22,8 +22,8 @@ public class HospitalInquiryService {
     public void inquiry(Long hospitalId, Long memberId) {
         ChatRoom chatRoom = createHospitalRoom(hospitalId);
 
-        Member member = memberService.findByIdElseThrow(memberId);
-        chatRoom.addChatUser(member);
+        //Member member = memberService.findByIdElseThrow(memberId);
+        //chatRoom.addChatUser(member);
     }
 
     private ChatRoom createHospitalRoom(Long hospitalId) {

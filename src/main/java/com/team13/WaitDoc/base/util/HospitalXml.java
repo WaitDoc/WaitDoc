@@ -2,18 +2,20 @@ package com.team13.WaitDoc.base.util;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team13.WaitDoc.hospital.entity.Hospital;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalXml {
     @Data
     static class Response{
         private Header header;
         private Body body;
+        private String cmmMsgHeader;
 
     }
     @Data
@@ -51,6 +53,11 @@ public class HospitalXml {
         private int dutyTime5s;//시작: 금
         private int dutyTime6c;//종료: 토
         private int dutyTime6s;//시작: 토
+        private int dutyTime7s;//시작: 일
+        private int dutyTime7c;//종료: 일
+        private int dutyTime8s;//시작: 공휴일
+        private int dutyTime8c;//종료: 공휴일
+
         private String hpid;//기관 ID(A0000028)
         private int postCdn1;//우편번호1(135)
         private int postCdn2;//우편번호2(750)
@@ -63,6 +70,33 @@ public class HospitalXml {
         @JsonAnySetter
         public void setAdditionalProperty(String key, Object value) {
             additionalProperties.put(key, value);
+        }
+
+        public Hospital toEntity(){
+            return Hospital.builder()
+                    .name(dutyName)
+                    .addr(dutyAddr)
+                    .department(dutyDivNam)
+                    .latitude(wgs84Lat)
+                    .longitude(wgs84Lon)
+                    .hpid(hpid)
+                    .monStartTime(dutyTime1s)
+                    .monEndTime(dutyTime1c)
+                    .tueStartTime(dutyTime2s)
+                    .tueEndTime(dutyTime2c)
+                    .wedStartTime(dutyTime3s)
+                    .wedEndTime(dutyTime3c)
+                    .thuStartTime(dutyTime4s)
+                    .thuEndTime(dutyTime4c)
+                    .friStartTime(dutyTime5s)
+                    .friEndTime(dutyTime5c)
+                    .satStartTime(dutyTime6s)
+                    .satEndTime(dutyTime6c)
+                    .sunStartTime(dutyTime7s)
+                    .sunEndTime(dutyTime7c)
+                    .holidayStartTime(dutyTime8s)
+                    .holidayEndTime(dutyTime8c)
+                    .build();
         }
     }
 }
