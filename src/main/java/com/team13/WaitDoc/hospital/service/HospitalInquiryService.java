@@ -22,8 +22,8 @@ public class HospitalInquiryService {
     public void inquiry(Long hospitalId, Long memberId) {
         ChatRoom chatRoom = createHospitalRoom(hospitalId);
 
-        //Member member = memberService.findByIdElseThrow(memberId);
-        //chatRoom.addChatUser(member);
+        Member member = memberService.findByIdElseThrow(memberId);
+        chatRoom.addChatUser(member);
     }
 
     private ChatRoom createHospitalRoom(Long hospitalId) {
@@ -63,4 +63,9 @@ public class HospitalInquiryService {
 
         return hospitalChatRoom;
     }
+
+    /*public void findAllByHospitalId(Long hospitalId, Long id) {
+        return hospitalChatRoomRepository.findAll(id);
+    }
+     */
 }
