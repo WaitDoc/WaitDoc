@@ -33,12 +33,10 @@ public class WaitingController {
 		int waitingCount = waitingService.getWaitingCount(hospitalId);
 		Hospital hospital = hospitalService.getHospital(hospitalId);
 		String hospitalName = hospitalService.getHospitalName(hospitalId);
-		Member member = memberService.getMember(hospitalId);
 
 		model.addAttribute("waitingCount", waitingCount);
 		model.addAttribute("hospital", hospital);
 		model.addAttribute("hospitalName", hospitalName);
-		model.addAttribute("member", member);
 		return "waiting/waitingpage";
 	}
 
