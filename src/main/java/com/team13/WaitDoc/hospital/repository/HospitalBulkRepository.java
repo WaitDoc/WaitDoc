@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.hospital.repository;
 
+import com.team13.WaitDoc.base.config.AppConfig;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,10 +18,10 @@ public class HospitalBulkRepository {
 
     @Transactional
     public void bulkSave(List<Hospital> hospitals) {
-        batchInsert(1000, hospitals);
+        batchInsert(hospitals);
     }
 
-    private void batchInsert(int batchSize, List<Hospital> hospitals){
+    private void batchInsert(List<Hospital> hospitals){
         jdbcTemplate.batchUpdate(
                 "INSERT INTO hospital (name, hpid, department, " +
                         "fri_start_time, fri_end_time, " +
@@ -37,7 +38,7 @@ public class HospitalBulkRepository {
                         "waiting_number) "+
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 hospitals,
-                batchSize,
+                AppConfig.getBatchSize(),
                 (ps, argument) -> {
                     ps.setString(1, argument.getName());
                     ps.setString(2, argument.getHpid());
