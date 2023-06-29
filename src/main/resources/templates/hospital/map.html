@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{common/layout.html}">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>카테고리로 장소 검색하기</title>
+    <style>
+        #map {
+            width: 50%;
+            height:  400px;
+            display: inline-block;
+        }
+        #placesList {
+            width: 250px;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        #placesList::-webkit-scrollbar {
+            width: 6px;
+            background: #f5f5f5;
+        }
+        #placesList::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 10px;
+        }
+        #placesList .place-item {
+            font-size: 14px;
+            margin-bottom: 8px;
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #placesList .place-item:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="main">
+    <div id="map"></div>
+    <div id="placesList"></div>
+
+    <label for="address">주소: </label>
+    <input type="text" id="address" placeholder="예: 서울시 강남구">
+    <button id="setAddress">주소 설정</button>
+    <button id="searchPharmacy">약국</button>
+    <button id="searchHospital">병원</button>
+
+
+    <script th:attr="src=${'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + appKey + '&libraries=services'}"></script>
+    <script>
+        var map;
+        var maxZoomLevel = 8;
+        var lat, lon;
+        var markers = [];
+
+        function createMap(lat, lon) {
+            var mapContainer = document.getElementById('map');
+            var mapOption = {
+                center: new kakao.maps.LatLng(lat, lon),
+                level: 5
+            };
+
+            map = new kakao.maps.Map(mapContainer, mapOption);
+            searchCategory(map);
+
+            kakao.maps.event.addListener(map, 'bounds_changed', function() { searchCategory(map); });
+            kakao.maps.event.addListener(map, 'zoom_changed', checkZoomLevel);
+        }
+
+        function checkZoomLevel() {
+            if (map.getLevel() > maxZoomLevel) {
+                map.setLevel(maxZoomLevel);
+            }
+        }
+
+        var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+        function searchCategory(map) {
+            var ps = new kakao.maps.services.Places(map);
+            ps.categorySearch('HP8', placesSearchCB, {useMapBounds:true});
+        }
+
+        function placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+                displayPlaces(data); // 검색 결과를 목록에 표시
+            }
+        }
+        function displayPlaces(places) {
+            clearMarkers();
+            var listEl = document.getElementById('placesList');
+            listEl.innerHTML = '';
+
+            places.forEach(function(place) {
+                var marker = createMarker(place);
+                markers.push(marker);
+
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                    infowindow.open(map, marker);
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    infowindow.close();
+                });
+
+                var itemEl = document.createElement('div');
+                itemEl.className = 'place-item';
+                itemEl.innerHTML = '<strong>' + place.place_name + '</strong><br>' + '<span style="color: gray;">' + place.address_name + '</span>';
+
+                itemEl.addEventListener('mouseenter', function() {
+                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                    infowindow.open(map, marker);
+                });
+
+                itemEl.addEventListener('mouseleave', function() {
+                    infowindow.close();
+                });
+
+                listEl.appendChild(itemEl);
+            });
+        }
+
+        function createMarker(place) {
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+            return marker;
+        }
+
+        function clearMarkers() {
+            // 기존에 생성된 마커를 순회하며 지도에서 제거
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+
+            // 마커 배열 초기화
+            markers = [];
+        }
+
+
+        function displayMarker(place) {
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+
+        }
+
+        // 병원 검색
+        function searchHospital(map) {
+            var ps = new kakao.maps.services.Places(map);
+            ps.categorySearch('HP8', placesSearchCB, {useMapBounds: true});
+        }
+
+        document.getElementById("searchHospital").addEventListener("click", function() {
+            searchHospital(map);
+        });
+
+        // 약국 검색
+        function searchPharmacy(map) {
+            var ps = new kakao.maps.services.Places(map);
+            ps.categorySearch('PM9', placesSearchCB, {useMapBounds: true});
+        }
+
+        document.getElementById("searchPharmacy").addEventListener("click", function() {
+            searchPharmacy(map);
+        });
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
+                createMap(lat, lon);
+            }, function(error) {
+                console.error(error);
+                createMap(37.566826, 126.9786567);
+            });
+        } else {
+            createMap(37.566826, 126.9786567);
+        }
+
+        document.getElementById("setAddress").addEventListener("click", function() {
+            var address = document.getElementById("address").value;
+            var geocoder = new kakao.maps.services.Geocoder();
+
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var newPos = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    map.setCenter(newPos);
+                } else {
+                    alert("주소 검색에 실패했습니다. 올바른 주소를 입력해주세요.");
+                }
+            });
+        });
+    </script>
+</section>
+</body>
+</html>

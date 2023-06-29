@@ -34,12 +34,12 @@ public class HospitalXml {
     @Data
     static public class Item{
         private String dutyAddr; //주소 (서울 특별시 서대문구...)
-        private String dutyEtc; //비고
         private String dutyDiv; //병원 분류 (A)
         private String dutyDivNam; //병원 분류명 (의원)
         private String dutyEmcls; // 응급 의료기관 코드(G099)
         private String dutyEmclsName; //응급 의료기관 코드명(응급기관 이외)
         private long dutyEryn; //응급실운영여부(1)
+        private String dutyEtc; //비고
         private String dutyName;//기관명 (삼성병원)
         private String dutyTel1;//대표전화1
         private int dutyTime1c;//진료종료시간:월 (1530)
@@ -106,4 +106,5 @@ public class HospitalXml {
                     .build();
         }
     }
+
 }
