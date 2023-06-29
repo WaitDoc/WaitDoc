@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -23,9 +22,7 @@ public class MemberService {
 
 
 
-
-
-
+    @Transactional
     public Member save(OAuthAttributes oAuthAttributes) {
 
         Member member = createMember(oAuthAttributes);
