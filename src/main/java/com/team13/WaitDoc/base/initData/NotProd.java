@@ -21,7 +21,7 @@ public class NotProd {
             @Transactional
             public void run(String... args) throws Exception {
                 List<HospitalXml.Item> items = ApiUt.Response.getItems(
-                        CategoryRequestDTO.builder().page(1).rows(100).build());
+                        CategoryRequestDTO.builder().page(1).rows(1000).build());
                 hospitalRepository.saveAll(items.stream()
                         .map(HospitalXml.Item::toEntity)
                         .collect(Collectors.toList()));
