@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import lombok.Data;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +34,12 @@ public class HospitalXml {
     @Data
     static public class Item{
         private String dutyAddr; //주소 (서울 특별시 서대문구...)
-        private String dutyEtc; //비고
         private String dutyDiv; //병원 분류 (A)
         private String dutyDivNam; //병원 분류명 (의원)
         private String dutyEmcls; // 응급 의료기관 코드(G099)
         private String dutyEmclsName; //응급 의료기관 코드명(응급기관 이외)
         private long dutyEryn; //응급실운영여부(1)
+        private String dutyEtc; //비고
         private String dutyName;//기관명 (삼성병원)
         private String dutyTel1;//대표전화1
         private int dutyTime1c;//진료종료시간:월 (1530)
@@ -71,7 +72,13 @@ public class HospitalXml {
         public void setAdditionalProperty(String key, Object value) {
             additionalProperties.put(key, value);
         }
+        public LocalTime intToTime(int time){
+            int hour = time/100 > 23? time/100%24 : time/100;
+            if(time == 0)
+                return null;
+            return LocalTime.of(hour, time % 100);
 
+        }
         public Hospital toEntity(){
             return Hospital.builder()
                     .name(dutyName)
@@ -80,23 +87,24 @@ public class HospitalXml {
                     .latitude(wgs84Lat)
                     .longitude(wgs84Lon)
                     .hpid(hpid)
-                    .monStartTime(dutyTime1s)
-                    .monEndTime(dutyTime1c)
-                    .tueStartTime(dutyTime2s)
-                    .tueEndTime(dutyTime2c)
-                    .wedStartTime(dutyTime3s)
-                    .wedEndTime(dutyTime3c)
-                    .thuStartTime(dutyTime4s)
-                    .thuEndTime(dutyTime4c)
-                    .friStartTime(dutyTime5s)
-                    .friEndTime(dutyTime5c)
-                    .satStartTime(dutyTime6s)
-                    .satEndTime(dutyTime6c)
-                    .sunStartTime(dutyTime7s)
-                    .sunEndTime(dutyTime7c)
-                    .holidayStartTime(dutyTime8s)
-                    .holidayEndTime(dutyTime8c)
+                    .monStartTime(intToTime(dutyTime1s))
+                    .monEndTime(intToTime(dutyTime1c))
+                    .tueStartTime(intToTime(dutyTime2s))
+                    .tueEndTime(intToTime(dutyTime2c))
+                    .wedStartTime(intToTime(dutyTime3s))
+                    .wedEndTime(intToTime(dutyTime3c))
+                    .thuStartTime(intToTime(dutyTime4s))
+                    .thuEndTime(intToTime(dutyTime4c))
+                    .friStartTime(intToTime(dutyTime5s))
+                    .friEndTime(intToTime(dutyTime5c))
+                    .satStartTime(intToTime(dutyTime6s))
+                    .satEndTime(intToTime(dutyTime6c))
+                    .sunStartTime(intToTime(dutyTime7s))
+                    .sunEndTime(intToTime(dutyTime7c))
+                    .holidayStartTime(intToTime(dutyTime8s))
+                    .holidayEndTime(intToTime(dutyTime8c))
                     .build();
         }
     }
+
 }
