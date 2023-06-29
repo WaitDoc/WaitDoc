@@ -2,7 +2,7 @@ package com.team13.WaitDoc.hospital.service;
 
 import com.team13.WaitDoc.chats.entity.ChatRoom;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
-import com.team13.WaitDoc.hospital.Repository.HospitalInquiryRepository;
+import com.team13.WaitDoc.hospital.repository.HospitalInquiryRepository;
 import com.team13.WaitDoc.chats.service.ChatRoomService;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.member.entity.Member;
@@ -63,4 +63,9 @@ public class HospitalInquiryService {
 
         return hospitalChatRoom;
     }
+
+    /*public void findAllByHospitalId(Long hospitalId, Long id) {
+        return hospitalChatRoomRepository.findAll(id);
+    }
+     */
 }

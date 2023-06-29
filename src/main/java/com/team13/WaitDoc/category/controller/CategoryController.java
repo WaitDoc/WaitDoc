@@ -1,9 +1,9 @@
-package com.team13.WaitDoc.Category.controller;
+package com.team13.WaitDoc.category.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
+import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.util.ApiUt;
 import com.team13.WaitDoc.base.util.HospitalXml;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +27,8 @@ public class CategoryController {
     @GetMapping("/all")
     @ResponseBody
     public List<HospitalResponseDTO> showHospital() throws IOException, InterruptedException {
-        String url = ApiUt.Url.builder()
-                .page(1)
-                .rows(40)
-                .region("서울특별시")
-                .addr("강남구")
-                .classify("A")
-                .department("D024")
-                .build();
-        List<HospitalXml.Item> items = ApiUt.Response.getItems(ApiUt.Response.getBody(url));
 
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
+        return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
     }
 
     /*** TODO
@@ -50,8 +40,7 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("/find")
     public List<HospitalResponseDTO> find(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
-        String url = ApiUt.Url.getByRequestDTO(requestDTO);
-        return ApiUt.Response.getResponseDTOs(url);
+        return ApiUt.Response.getResponseDTOs(requestDTO);
     }
 
 }

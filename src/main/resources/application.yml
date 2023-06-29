@@ -1,6 +1,10 @@
 server:
-  port: 8081
+  port: 8080
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: myGroup
   mvc:
     hiddenmethod:
       filter:
@@ -10,9 +14,9 @@ spring:
     include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/waitdoc
-    username: testuser
-    password: 5678
+    url: jdbc:mariadb://localhost:3306/
+    username:
+    password:
 
   jpa:
     hibernate:
@@ -56,5 +60,6 @@ custom:
   API:
     url: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire
     rows: 10
+    batch_size: 1000
 
 

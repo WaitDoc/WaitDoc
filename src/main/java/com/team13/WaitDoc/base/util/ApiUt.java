@@ -1,12 +1,10 @@
 package com.team13.WaitDoc.base.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.team13.WaitDoc.Category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.Category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
+import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 
@@ -19,6 +17,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Random;
 
 public class ApiUt {
     @AllArgsConstructor
@@ -27,16 +26,24 @@ public class ApiUt {
 
         public static String getByRequestDTO(CategoryRequestDTO requestDTO) throws UnsupportedEncodingException {
             return  Url.builder()
-                    .page(1)
-                    .rows(40)
+                    .page(requestDTO.getPage())
+                    .rows(requestDTO.getRows())
+                    .name(requestDTO.getName())
                     .region(requestDTO.getRegion())
                     .addr(requestDTO.getAddr())
                     .classify(requestDTO.getClassify())
                     .department(requestDTO.getDepartment())
                     .build();
         }
+
         public static Url builder() throws UnsupportedEncodingException{
-            String serviceKey = AppConfig.getServiceKey();
+            List<String> serviceKeys = List.of(
+                    AppConfig.getServiceKey_1(),
+                    AppConfig.getServiceKey_2(),
+                    AppConfig.getServiceKey_3(),
+                    AppConfig.getServiceKey_4()
+            );
+            String serviceKey = serviceKeys.get(new Random().nextInt(4));
 
             StringBuilder sb = new StringBuilder(AppConfig.getApiUrl()).append("?" + URLEncoder.encode("ServiceKey","UTF-8")
                     + "=" + URLEncoder.encode(serviceKey,"UTF-8")); //Service Key
@@ -57,31 +64,31 @@ public class ApiUt {
         }
 
         public Url region(String region) throws UnsupportedEncodingException{
-            if(region != null)
+            if(region != null && !region.isBlank())
                 ub.append("&" + URLEncoder.encode("Q0","UTF-8")
                         + "=" + URLEncoder.encode(region, "UTF-8"));
             return this;
         }
         public Url addr(String addr) throws UnsupportedEncodingException{
-            if(addr != null)
+            if(addr != null && !addr.isBlank())
                 ub.append("&" + URLEncoder.encode("Q1","UTF-8")
                         + "=" + URLEncoder.encode(addr, "UTF-8"));
             return this;
         }
         public Url name(String name) throws UnsupportedEncodingException{
-            if(name != null)
+            if(name != null && !name.isBlank())
                 ub.append("&" + URLEncoder.encode("QN","UTF-8")
                         + "=" + URLEncoder.encode(name, "UTF-8"));
             return this;
         }
         public Url department(String department) throws UnsupportedEncodingException{
-                if(department != null)
+                if(department != null && !department.isBlank())
                     ub.append("&" + URLEncoder.encode("QD","UTF-8")
                         + "=" + URLEncoder.encode(department, "UTF-8"));
             return this;
         }
         public Url classify(String classify) throws UnsupportedEncodingException{
-            if(classify != null)
+            if(classify != null && !classify.isBlank())
                 ub.append("&" + URLEncoder.encode("QZ","UTF-8")
                         + "=" + URLEncoder.encode(classify, "UTF-8"));
             return this;
@@ -94,8 +101,8 @@ public class ApiUt {
 
     }
     public static class Response {
-        public static String getBody(String s) throws IOException, InterruptedException {
-            URL url = new URL(s);
+        private static String responseToAPI(String urlStr) throws IOException, InterruptedException {
+            URL url = new URL(urlStr);
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -105,27 +112,33 @@ public class ApiUt {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.statusCode());
+            String body = response.body();
             return response.body();
         }
-        public static List<HospitalXml.Item> getItems(String xmlStr){
+        private static HospitalXml.Body getBody(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+            String url = Url.getByRequestDTO(requestDTO);
             ObjectMapper xmlMapper = new XmlMapper();
-            HospitalXml.Response response = null;
-            try {
-                response = xmlMapper.readValue(xmlStr, HospitalXml.Response.class);
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return response.getBody().getItems();
+            HospitalXml.Response response = xmlMapper.readValue(responseToAPI(url), HospitalXml.Response.class);
+
+            return response.getBody();
+
         }
 
-        public static List<HospitalResponseDTO> getResponseDTOs(String url) throws IOException, InterruptedException {
-            List<HospitalXml.Item> items = getItems(ApiUt.Response.getBody(url));
+        private static boolean isFail(HospitalXml.Body body) {
+            return body == null;
+        }
 
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
+        public static List<HospitalXml.Item> getItems(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+            HospitalXml.Body body = getBody(requestDTO);
+
+            while(isFail(body))
+                body = getBody(requestDTO);
+
+            return body.getItems();
+        }
+        public static List<HospitalResponseDTO> getResponseDTOs(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+            List<HospitalXml.Item> items = getItems(requestDTO);
+            return new ObjectMapper().convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
         }
     }
 
