@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,29 +41,29 @@ public class Hospital extends BaseEntity {
 
     private int waitingNumber;
 
-    private int monStartTime;
-    private int monEndTime;
+    private LocalTime monStartTime;
+    private LocalTime monEndTime;
 
-    private int tueStartTime;
-    private int tueEndTime;
+    private LocalTime tueStartTime;
+    private LocalTime tueEndTime;
 
-    private int wedStartTime;
-    private int wedEndTime;
+    private LocalTime wedStartTime;
+    private LocalTime wedEndTime;
 
-    private int thuStartTime;
-    private int thuEndTime;
+    private LocalTime thuStartTime;
+    private LocalTime thuEndTime;
 
-    private int friStartTime;
-    private int friEndTime;
+    private LocalTime friStartTime;
+    private LocalTime friEndTime;
 
-    private int satStartTime;
-    private int satEndTime;
+    private LocalTime satStartTime;
+    private LocalTime satEndTime;
 
-    private int sunStartTime;
-    private int sunEndTime;
+    private LocalTime sunStartTime;
+    private LocalTime sunEndTime;
 
-    private int holidayStartTime;
-    private int holidayEndTime;
+    private LocalTime holidayStartTime;
+    private LocalTime holidayEndTime;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<HospitalInquiry> hospitalChatRooms = new HashSet<>();
