@@ -1,9 +1,187 @@
-<html layout:decorate="~{common/layout.html}">
+<html data-theme="light" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
-    <title>기다리닥</title>
+    <!-- 폰트어썸 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 아이콘 목록 : https://fontawesome.com/search?o=r&m=free -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />-->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/87140d707c.js" crossorigin="anonymous"></script>
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
+
+    <script src="/resource/common/common.js"></script>
+    <link href="/resource/common/common.css" rel="stylesheet">
+    <style>
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 32px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: end;
+        }
+
+        .inner-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100px;
+            width: 500px;
+            background-color: white;
+            background-opacity: 0;
+            border-radius: 30px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1.5px solid rgba(0, 128, 0, 0.3);
+            padding: 16px 0;
+            margin-top: 32px;
+        }
+
+        .container {
+            width: 500px;
+            height: 200px;
+            flex-direction: column;
+            justify-content: space-around;
+            background-color: white;
+            background-opacity: 0;
+            border-radius: 30px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1.5px solid rgba(0, 128, 0, 0.3);
+            padding: 16px;
+            margin-top: 32px;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #207f00;
+            margin-bottom: 4px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 0.5px;
+            background-color: rgba(0, 128, 0, 0.3);
+        }
+
+        .tag {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 20px;
+            padding: 1px 7px;
+            background-color: #80c465;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+            margin: 8px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 16px;
+            margin-right: 16px;
+            margin-top: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+    </style>
 </head>
-<body>
-    안녕하세요. 기다리닥입니다.
+<body class="min-h-screen w-screen flex flex-col">
+<nav class="navbar bg-base-100 flex drop-shadow-md">
+    <div class="navbar-start">
+
+    </div>
+    <div class="navbar-center justify-content">
+        <a href="#" class="btn btn-ghost normal-case">기다리DOC</a>
+    </div>
+    <div class="navbar-end pr-4">
+        <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
+            Sign in
+        </a>
+        <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-sm btn-neutral">
+            Logout
+        </a>
+    </div>
+</nav>
+<div class="main">
+    <div>
+        <div class="flex justify-end">
+            <div class="input-group">
+                <button class="btn btn-sm btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <input type="text" placeholder="검색" class="input input-bordered text-black" style="height:32px"/>
+            </div>
+        </div>
+        <div class="inner-container">
+            <a href="/" class="item">
+                <span class="text-center fa-regular fa-hospital fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">병원예약</span>
+            </a>
+            <a href="/" class="item">
+                <span class="text-center fa-regular fa-map fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">인근 병원 조회</span>
+            </a>
+            <a href="/" class="item">
+                <span class="text-center fa-regular fa-bookmark fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">예약 목록</span>
+            </a>
+            <a href="/" class="item">
+                <span class="text-center fa-regular fa-folder fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">서류보관함</span>
+            </a>
+            <a href="/" class="item">
+                <span class="text-center fa-regular fa-comments fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">1:1 상담하기</span>
+            </a>
+        </div>
+
+        <div class="inner-container">
+            <span class="text-center text-black text-[12px] font-normal">현재 대기 중인 병원이 없습니다.</span>
+        </div>
+
+        <div class="container">
+            <div>
+                <div class="title">진료과</div>
+                <div class="tag">소아과</div>
+                <div class="tag">소아과</div>
+                <div class="tag">소아과</div>
+                <div class="tag">소아과</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <div class="title">카테고리</div>
+                <div class="tag">야간진료</div>
+                <div class="tag">야간진료</div>
+                <div class="tag">야간진료</div>
+                <div class="tag">야간진료</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
+
+
+
+
+
 </html>
