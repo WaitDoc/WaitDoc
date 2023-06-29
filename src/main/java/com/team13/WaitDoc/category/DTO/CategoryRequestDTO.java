@@ -35,6 +35,5 @@ public class CategoryRequestDTO {
         else{
             this.region = location;
         }
-
     }
 }

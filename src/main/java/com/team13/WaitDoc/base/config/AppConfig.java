@@ -56,6 +56,14 @@ public class AppConfig {
     public void setRows(int rows) {
         AppConfig.rows = rows;
     }
+
+    @Getter
+    private static int batchSize;
+
+    @Value("${custom.API.batch_size}")
+    public void setBatchSize(int batchSize) {
+        AppConfig.batchSize = batchSize;
+    }
 }
 
 
