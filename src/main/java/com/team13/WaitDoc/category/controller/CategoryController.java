@@ -27,15 +27,8 @@ public class CategoryController {
     @GetMapping("/all")
     @ResponseBody
     public List<HospitalResponseDTO> showHospital() throws IOException, InterruptedException {
-        String url = ApiUt.Url.builder()
-                .page(100)
-                .rows(1000)
-                .build();
-        List<HospitalXml.Item> items = ApiUt.Response.getItems(ApiUt.Response.getBody(url));
 
-        ObjectMapper mapper = new ObjectMapper();
-        List<HospitalResponseDTO>list = mapper.convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});
-        return list;
+        return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
     }
 
     /*** TODO
@@ -47,8 +40,7 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("/find")
     public List<HospitalResponseDTO> find(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
-        String url = ApiUt.Url.getByRequestDTO(requestDTO);
-        return ApiUt.Response.getResponseDTOs(url);
+        return ApiUt.Response.getResponseDTOs(requestDTO);
     }
 
 }
