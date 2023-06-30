@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<html layout:decorate="~{common/layout.html}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Chat Room List</title>
+    </head>
 <body>
-
+<h1>Chat Room List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>병원명</th>
+        <th>채팅 날짜</th>
+        <th>채팅방</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="hospitalInquiry : ${hospitalInquiries}">
+        <td th:text="${hospitalInquiry.hospital.name}"></td>
+        <td th:text="${hospitalInquiry.hospital.createDate}"></td>
+        <td>
+            <a th:href="@{/chatroom/{roomId}(roomId=${hospitalInquiry.id})}">Enter Chat Room</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
