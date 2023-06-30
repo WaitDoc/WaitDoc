@@ -1,30 +1,63 @@
-package com.team13.WaitDoc.hospital.entity;
+package com.team13.WaitDoc.chats.entity;
 
-import com.team13.WaitDoc.chats.entity.ChatRoom;
-import com.team13.WaitDoc.hospital.entity.Hospital;
-import jakarta.persistence.*;
+import com.team13.WaitDoc.base.entity.BaseEntity;
+import com.team13.WaitDoc.member.entity.Member;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.LAZY;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class HospitalInquiry {
+@NoArgsConstructor(access = PROTECTED)
+public class ChatRoom extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    private Hospital hospital;
+    private String name;
 
-    @OneToOne(fetch = LAZY)
-    private ChatRoom room;
+    @OneToMany(mappedBy = "chatRoom", cascade = PERSIST)
+    @Builder.Default
+    private Set<ChatUser> chatUsers = new HashSet<>();
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private boolean isActive;
+
+    public static ChatRoom create(String name) {
+        return ChatRoom.builder()
+                .name(name)
+                .isActive(true)
+                .build();
+    }
+
+    public void addChatUser(Member member) {
+        ChatUser chatUser = ChatUser.builder()
+                .user(member)
+                .chatRoom(this)
+                .build();
+        chatUsers.add(chatUser);
+    }
+
+
+
+
 }

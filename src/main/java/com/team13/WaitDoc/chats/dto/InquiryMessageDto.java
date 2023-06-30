@@ -1,7 +1,7 @@
 package com.team13.WaitDoc.chats.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.team13.WaitDoc.chats.entity.ChatMessage;
+import com.team13.WaitDoc.chats.entity.InquiryMessage;
 import com.team13.WaitDoc.chats.entity.ChatMessageType;
 import com.team13.WaitDoc.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
@@ -36,24 +36,24 @@ public class ChatMessageDto {
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
-    public static ChatMessageDto fromChatMessage(ChatMessage chatMessage) {
+    public static ChatMessageDto fromChatMessage(InquiryMessage inquiryMessage) {
 
-        MemberDto userDto = MemberDto.fromUser(chatMessage.getSender().getUser()); //member?
+        MemberDto userDto = MemberDto.fromUser(inquiryMessage.getSender().getUser()); //member?
 
         ChatMessageDto chatMessageDto = ChatMessageDto.builder()
-                .id(chatMessage.getId())
-                .type(chatMessage.getType())
+                .id(inquiryMessage.getId())
+                .type(inquiryMessage.getType())
                 .sender(userDto)
-                .content(chatMessage.getContent())
-                .type(chatMessage.getType())
-                .createdAt(chatMessage.getCreatedAt())
-                .updatedAt(chatMessage.getUpdatedAt())
+                .content(inquiryMessage.getContent())
+                .type(inquiryMessage.getType())
+                .createdAt(inquiryMessage.getCreatedAt())
+                .updatedAt(inquiryMessage.getUpdatedAt())
                 .build();
 
         return chatMessageDto;
     }
 
-    public static List<ChatMessageDto> fromChatMessages(List<ChatMessage> messages) {
+    public static List<ChatMessageDto> fromChatMessages(List<InquiryMessage> messages) {
         return messages.stream()
                 .map(ChatMessageDto::fromChatMessage)
                 .toList();

@@ -1,8 +1,7 @@
 package com.team13.WaitDoc.chats.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.team13.WaitDoc.chats.entity.ChatRoom;
-import com.team13.WaitDoc.member.dto.MemberDto;
+import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,13 +27,13 @@ public class ChatRoomDto {
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
-    public static ChatRoomDto fromChatRoom(ChatRoom chatRoom) {
+    public static ChatRoomDto fromChatRoom(HospitalInquiry hospitalInquiry) {
 
         ChatRoomDto chatRoomDto = ChatRoomDto.builder()
-                .id(chatRoom.getId())
-                .name(chatRoom.getName())
-                .createdAt(chatRoom.getCreatedAt())
-                .updatedAt(chatRoom.getUpdatedAt())
+                .id(hospitalInquiry.getId())
+                .name(hospitalInquiry.getName())
+                .createdAt(hospitalInquiry.getCreatedAt())
+                .updatedAt(hospitalInquiry.getUpdatedAt())
                 .build();
 
         return chatRoomDto;

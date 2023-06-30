@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.chats.entity;
 
+import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class ChatMessage {
     private ChatUser sender;
 
     @ManyToOne(fetch = LAZY)
-    private ChatRoom chatRoom;
+    private HospitalInquiry hospitalInquiry;
 
     @Enumerated(STRING)
     private ChatMessageType type;
@@ -40,15 +41,15 @@ public class ChatMessage {
     private LocalDateTime updatedAt;
 
     @Builder
-    public ChatMessage(String content, ChatUser sender, ChatRoom chatRoom, ChatMessageType type) {
+    public ChatMessage(String content, ChatUser sender, HospitalInquiry hospitalInquiry, ChatMessageType type) {
 
         Assert.notNull(content, "content는 널일 수 없습니다.");
         Assert.notNull(sender, "sender는 널일 수 없습니다.");
-        Assert.notNull(chatRoom, "chatRoom는 널일 수 없습니다.");
+        Assert.notNull(hospitalInquiry, "chatRoom는 널일 수 없습니다.");
 
         this.content = content;
         this.sender = sender;
-        this.chatRoom = chatRoom;
+        this.hospitalInquiry = hospitalInquiry;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
