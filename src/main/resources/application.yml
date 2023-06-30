@@ -61,5 +61,3 @@ custom:
     url: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire
     rows: 10
     batch_size: 1000
-
-
