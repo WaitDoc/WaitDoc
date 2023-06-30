@@ -1,11 +1,8 @@
-package com.team13.WaitDoc.chats.entity;
+package com.team13.WaitDoc.hospital.entity;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.member.entity.Member;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class ChatRoom extends BaseEntity {
+public class HospitalInquiry extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -32,9 +29,9 @@ public class ChatRoom extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = PERSIST)
+    @OneToMany(mappedBy = "hospitalInquiry", cascade = PERSIST)
     @Builder.Default
-    private Set<ChatUser> chatUsers = new HashSet<>();
+    private Set<HospitalInquiryMember> hospitalInquiryMembers = new HashSet<>();
 
     private LocalDateTime createdAt;
 
@@ -42,22 +39,25 @@ public class ChatRoom extends BaseEntity {
 
     private boolean isActive;
 
-    public static ChatRoom create(String name) {
-        return ChatRoom.builder()
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Hospital hospital;
+
+    public static HospitalInquiry create(String name) {
+        return HospitalInquiry.builder()
                 .name(name)
                 .isActive(true)
                 .build();
     }
 
     public void addChatUser(Member member) {
-        ChatUser chatUser = ChatUser.builder()
-                .user(member)
-                .chatRoom(this)
+        HospitalInquiryMember hospitalInquiryMember = HospitalInquiryMember.builder()
+                .member(member)
+                .hospitalInquiry(this)
                 .build();
-        chatUsers.add(chatUser);
+        hospitalInquiryMembers.add(hospitalInquiryMember);
     }
 
-
-
-
+    public void unActive() {
+        this.isActive = false;
+    }
 }

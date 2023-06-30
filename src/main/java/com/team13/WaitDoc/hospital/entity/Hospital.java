@@ -14,8 +14,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -66,10 +69,11 @@ public class Hospital extends BaseEntity {
     private LocalTime holidayEndTime;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<HospitalInquiry> hospitalChatRooms = new HashSet<>();
+    private Set<HospitalInquiry> hospitalInquiries = new HashSet<>();
 
-    public Set<HospitalInquiry> getHospitalChatRooms() {
-        return hospitalChatRooms;
+    public List<HospitalInquiry> getInquiries() {
+        return new ArrayList<>(hospitalInquiries);
     }
+
 
 }

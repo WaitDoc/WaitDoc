@@ -2,7 +2,7 @@ package com.team13.WaitDoc.chats.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.team13.WaitDoc.chats.entity.InquiryMessage;
-import com.team13.WaitDoc.chats.entity.ChatMessageType;
+import com.team13.WaitDoc.chats.entity.InquiryMessageType;
 import com.team13.WaitDoc.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessageDto {
+public class InquiryMessageDto {
 
     @JsonProperty("message_id")
     private Long id;
@@ -28,7 +28,7 @@ public class ChatMessageDto {
     private MemberDto sender;
 
     @JsonProperty("type")
-    private ChatMessageType type;
+    private InquiryMessageType type;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
@@ -36,11 +36,11 @@ public class ChatMessageDto {
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
-    public static ChatMessageDto fromChatMessage(InquiryMessage inquiryMessage) {
+    public static InquiryMessageDto fromChatMessage(InquiryMessage inquiryMessage) {
 
-        MemberDto userDto = MemberDto.fromUser(inquiryMessage.getSender().getUser()); //member?
+        MemberDto userDto = MemberDto.fromUser(inquiryMessage.getSender().getMember()); //member?
 
-        ChatMessageDto chatMessageDto = ChatMessageDto.builder()
+        InquiryMessageDto inquiryMessageDto = InquiryMessageDto.builder()
                 .id(inquiryMessage.getId())
                 .type(inquiryMessage.getType())
                 .sender(userDto)
@@ -50,12 +50,12 @@ public class ChatMessageDto {
                 .updatedAt(inquiryMessage.getUpdatedAt())
                 .build();
 
-        return chatMessageDto;
+        return inquiryMessageDto;
     }
 
-    public static List<ChatMessageDto> fromChatMessages(List<InquiryMessage> messages) {
+    public static List<InquiryMessageDto> fromChatMessages(List<InquiryMessage> messages) {
         return messages.stream()
-                .map(ChatMessageDto::fromChatMessage)
+                .map(InquiryMessageDto::fromChatMessage)
                 .toList();
     }
 }

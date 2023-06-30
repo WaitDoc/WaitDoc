@@ -9,6 +9,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ChatMessageRequest {
+public class InquiryMessageRequest {
     private String content;
 }

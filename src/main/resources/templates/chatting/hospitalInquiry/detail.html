@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:inline="javascript">
-        const chatRoomId = /*[[${chatRoom.id}]]*/ '';
+        const chatRoomId = /*[[${hospitalInquiry.id}]]*/ '';
         const token = /*[[${_csrf.token}]]*/ '';
     </script>
     <script th:src="@{/app.js}"></script>
@@ -21,11 +21,11 @@
         <th>Enter</th>
     </tr>
     <tr>
-        <td th:text="${chatRoom.id}"></td>
-        <td th:text="${chatRoom.name}"></td>
-        <td th:text="${chatRoom.owner.username}"></td>
-        <td th:text="${chatRoom.createdAt}"></td>
-        <td th:text="${chatRoom.updatedAt}"></td>
+        <td th:text="${hospitalInquiry.id}"></td>
+        <td th:text="${hospitalInquiry.name}"></td>
+        <td th:text="${hospitalInquiry.owner.username}"></td>
+        <td th:text="${hospitalInquiry.createdAt}"></td>
+        <td th:text="${hospitalInquiry.updatedAt}"></td>
     </tr>
 
 

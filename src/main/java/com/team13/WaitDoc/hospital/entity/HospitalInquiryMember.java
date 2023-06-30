@@ -1,6 +1,5 @@
-package com.team13.WaitDoc.chats.entity;
+package com.team13.WaitDoc.hospital.entity;
 
-import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
 import com.team13.WaitDoc.member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,14 +20,14 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class ChatUser { //hospitalInquiryMember
+public class HospitalInquiryMember { //hospitalInquiryMember
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    private Member user;
+    private Member member;
 
     @ManyToOne(fetch = LAZY)
     private HospitalInquiry hospitalInquiry;
@@ -38,15 +37,15 @@ public class ChatUser { //hospitalInquiryMember
     private LocalDateTime updatedAt;
 
     @Builder
-    public ChatUser(Member user, HospitalInquiry hospitalInquiry) {
-        this.user = user;
+    public HospitalInquiryMember(Member member, HospitalInquiry hospitalInquiry) {
+        this.member = member;
         this.hospitalInquiry = hospitalInquiry;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     public void setName() {
-        this.user=user;
+        this.member = member;
     }
 
 }
