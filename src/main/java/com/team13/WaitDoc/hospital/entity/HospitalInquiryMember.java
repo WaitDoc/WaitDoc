@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.chats.entity;
+package com.team13.WaitDoc.hospital.entity;
 
 import com.team13.WaitDoc.member.entity.Member;
 import jakarta.persistence.Entity;
@@ -20,32 +20,32 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class ChatUser {
+public class HospitalInquiryMember { //hospitalInquiryMember
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    private Member user;
+    private Member member;
 
     @ManyToOne(fetch = LAZY)
-    private ChatRoom chatRoom;
+    private HospitalInquiry hospitalInquiry;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
     @Builder
-    public ChatUser(Member user, ChatRoom chatRoom) {
-        this.user = user;
-        this.chatRoom = chatRoom;
+    public HospitalInquiryMember(Member member, HospitalInquiry hospitalInquiry) {
+        this.member = member;
+        this.hospitalInquiry = hospitalInquiry;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     public void setName() {
-        this.user=user;
+        this.member = member;
     }
 
 }

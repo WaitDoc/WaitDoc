@@ -1,71 +1,91 @@
 package com.team13.WaitDoc.hospital.service;
 
-import com.team13.WaitDoc.chats.entity.ChatRoom;
-import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
+import com.team13.WaitDoc.hospital.entity.*;
 import com.team13.WaitDoc.hospital.repository.HospitalInquiryRepository;
-import com.team13.WaitDoc.chats.service.ChatRoomService;
-import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static com.team13.WaitDoc.hospital.entity.HospitalMemberRole.DIRECTOR;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class HospitalInquiryService {
 
-    private final ChatRoomService chatRoomService;
     private final HospitalService hospitalService;
     private final MemberService memberService;
-    private final HospitalInquiryRepository hospitalChatRoomRepository;
+    private final HospitalInquiryRepository hospitalInquiryRepository;
+    private final HospitalInquiryMemberService hospitalInquiryMemberService;
+    private final HospitalMemberService hospitalMemberService;
 
     public void inquiry(Long hospitalId, Long memberId) {
-        ChatRoom chatRoom = createHospitalRoom(hospitalId);
+        HospitalInquiry hospitalInquiry = createAndSave(hospitalId);
 
         Member member = memberService.findByIdElseThrow(memberId);
-        chatRoom.addChatUser(member);
+        hospitalInquiry.addChatUser(member);
     }
 
-    private ChatRoom createHospitalRoom(Long hospitalId) {
+
+    public HospitalInquiry createAndSave(Long hospitalId) {
         Hospital hospital = hospitalService.findByIdElseThrow(hospitalId);
-        ChatRoom chatRoom = chatRoomService.createAndSave(hospital.getName());
-        createAndSave(hospital.getId(), chatRoom.getId());
-        return chatRoom;
-    }
 
-    public HospitalInquiry createAndSave(Long hospitalId, Long roomId) {
-
-        Hospital hospital = hospitalService.findByIdElseThrow(hospitalId);
-        ChatRoom chatRoom = chatRoomService.findById(roomId);
-
-        HospitalInquiry hospitalChatRoom = HospitalInquiry.builder()
-                .room(chatRoom)
+        HospitalInquiry hospitalInquiry = HospitalInquiry.builder()
                 .hospital(hospital)
                 .build();
 
-        return hospitalChatRoomRepository.save(hospitalChatRoom);
+        return hospitalInquiryRepository.save(hospitalInquiry);
     }
 
-    public HospitalInquiry findByIdElseThrow(Long hospitalId) {
-        return hospitalChatRoomRepository.findById(hospitalId)
+    public HospitalInquiry findByIdElseThrow(Long hospitalInquiryId) {
+        return hospitalInquiryRepository.findById(hospitalInquiryId)
                 .orElseThrow();
     }
 
-    public HospitalInquiry enterHospitalChatRoom(Long hospitalRoomId, Long memberId) {
-        HospitalInquiry hospitalChatRoom = findByIdElseThrow(hospitalRoomId);
+    public HospitalInquiry enterHospitalInquiry(Long hospitalInquiryId, Long memberId) {
+        HospitalInquiry hospitalInquiry = findByIdElseThrow(hospitalInquiryId);
 
-        ChatRoom chatRoom = hospitalChatRoom.getRoom();
-
-        chatRoom.getChatUsers().stream()
-                .filter(chatUser -> chatUser.getUser().getId().equals(memberId))
+        hospitalInquiry.getHospitalInquiryMembers().stream()
+                .filter(chatUser -> chatUser.getMember().getId().equals(memberId))
                 .findFirst()
                 .orElseThrow();
 
-        return hospitalChatRoom;
+        return hospitalInquiry;
     }
 
-    /*public void findAllByHospitalId(Long hospitalId, Long id) {
-        return hospitalChatRoomRepository.findAll(id);
+
+    // 병원장이 모든 내역을 보고싶다
+    public List<HospitalInquiry> findAllByHospitalIdAndMemberId(Long hospitalId, Long memberId) {
+        HospitalMember hospitalMember = hospitalMemberService.findByMemberIdElseThrow(memberId);
+
+        if (!hospitalMember.getHospital().getId().equals(hospitalId)) {
+            throw new IllegalArgumentException("병원에 권한이 없습니다.");
+        }
+
+        if (!hospitalMember.getRole().equals(DIRECTOR)) {
+            throw new IllegalArgumentException("DIRECTOR에게 권한을 요청하세요.");
+        }
+
+        return hospitalInquiryRepository.findAllByHospitalId(hospitalId);
     }
-     */
+
+    public void endInquiry(Long hospitalInquiryId) {
+        HospitalInquiry hospitalInquiry = findByIdElseThrow(hospitalInquiryId);
+        hospitalInquiry.unActive();
+    }
+
+    public void deleteInquiry(Long hospitalInquiryId) {
+        HospitalInquiry hospitalInquiry = findByIdElseThrow(hospitalInquiryId);
+        hospitalInquiryRepository.deleteById(hospitalInquiry.getId());
+    }
+
+    public List<HospitalInquiry> findAllByMemberId(Long memberId) {
+        return hospitalInquiryMemberService.findAllByMemberId(memberId).stream()
+                .map(HospitalInquiryMember::getHospitalInquiry)
+                .toList();
+    }
 }
