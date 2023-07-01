@@ -65,6 +65,7 @@ public class HospitalXml {
         private int rnum;//item 순서 번호(1)
         private double wgs84Lat;//병원위도(37.48813256)
         private double wgs84Lon;//병원경도(127.0851566)
+        private String dutyInf;//병원정보
 
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -87,6 +88,7 @@ public class HospitalXml {
                     .latitude(wgs84Lat)
                     .longitude(wgs84Lon)
                     .hpid(hpid)
+                    .introduction(dutyInf)
                     .monStartTime(intToTime(dutyTime1s))
                     .monEndTime(intToTime(dutyTime1c))
                     .tueStartTime(intToTime(dutyTime2s))

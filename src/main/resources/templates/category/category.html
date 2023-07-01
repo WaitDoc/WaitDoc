@@ -28,10 +28,10 @@
                     console.log(data)
                     // 결과 데이터를 순회하며 HTML 생성
                     data.forEach(item => {
-                        resultHTML += "<h3>" + item.dutyName + "</h3>";
-                        resultHTML += "<p>" + item.dutyDivNam + "</p>";
-                        resultHTML += "<p>" + item.dutyAddr + "</p>";
-                        resultHTML += "<p>" + item.dutyTel1 + "</p>";
+                        resultHTML += "<h3>" + item.name + "</h3>";
+                        resultHTML += "<p>" + item.department + "</p>";
+                        resultHTML += "<p>" + item.addr + "</p>";
+                        resultHTML += "<p>" + item.introduction + "</p>";
 
                         // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
                     });
