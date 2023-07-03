@@ -32,7 +32,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -49,7 +48,7 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	// JSON
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.4'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // 타임리프에서 layout.html 사용하려고
 	//Querydsl
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
