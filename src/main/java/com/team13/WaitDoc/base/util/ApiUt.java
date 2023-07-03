@@ -29,8 +29,8 @@ public class ApiUt {
                     .page(requestDTO.getPage())
                     .rows(requestDTO.getRows())
                     .name(requestDTO.getName())
-                    .region(requestDTO.getRegion())
-                    .addr(requestDTO.getAddr())
+//                    .region(requestDTO.getRegion())
+//                    .addr(requestDTO.getAddr())
                     .classify(requestDTO.getClassify())
                     .department(requestDTO.getDepartment())
                     .build();

@@ -84,7 +84,7 @@ public class HospitalXml {
             return Hospital.builder()
                     .name(dutyName)
                     .addr(dutyAddr)
-                    .department(dutyDivNam)
+                    .classify(dutyDivNam)
                     .latitude(wgs84Lat)
                     .longitude(wgs84Lon)
                     .hpid(hpid)

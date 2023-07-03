@@ -8,6 +8,7 @@ import com.team13.WaitDoc.hospital.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,19 +29,23 @@ public class CategoryController {
     @ResponseBody
     public List<HospitalResponseDTO> showHospital() throws IOException, InterruptedException {
 
-        return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
+        //return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
+        return null;
     }
 
     @GetMapping("/db")
     @ResponseBody
     public List<HospitalResponseDTO> findFromDB(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
         hospitalService.search(requestDTO);
-        return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
+        //return ApiUt.Response.getResponseDTOs(CategoryRequestDTO.builder().build());
+        return null;
     }
     @ResponseBody
     @GetMapping("/find")
-    public List<Hospital> find(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+    public List<Hospital> find(@ModelAttribute CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
 //        return ApiUt.Response.getResponseDTOs(requestDTO);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>"+requestDTO);
+
         return hospitalService.search(requestDTO);
     }
 

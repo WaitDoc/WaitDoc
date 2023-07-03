@@ -36,6 +36,8 @@ public class Hospital extends BaseEntity {
 
     private String department;
 
+    private String classify;
+
     private String hpid;
 
     private double latitude;

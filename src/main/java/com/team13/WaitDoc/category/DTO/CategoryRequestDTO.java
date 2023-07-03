@@ -7,11 +7,8 @@ import java.util.List;
 @Getter
 @ToString
 @Builder
-@AllArgsConstructor
+//@NoArgsConstructor
 public class CategoryRequestDTO {
-    private String region;
-    private String addr;
-    private String[] addrs;
     private String location;
     private String name;
     private String department;
@@ -21,23 +18,20 @@ public class CategoryRequestDTO {
     @Setter
     private int rows = 40;
 
-    public CategoryRequestDTO(String region, String addr, String location, String name, String department, String classify, int page, int rows) {
-        this.region = region;
-        this.addr = addr;
+    public String[] getAddrs(){
+        if(location != null && !location.isBlank()){
+            return location.trim().split(" ");
+        }
+        return null;
+    }
+
+    public CategoryRequestDTO(String location, String name, String department, String classify, int page, int rows) {
         this.location = location;
         this.name = name;
         this.department = department;
         this.classify = classify;
         if (page > 0) this.page = page;
         if (rows > 0) this.rows = rows;
-
-        if(location != null && !location.isBlank() && location.contains(" ")){
-            addrs = location.split(" ");
-            this.region = addrs[0];
-            this.addr = addrs[1];
-        }
-        else{
-            this.region = location;
-        }
     }
+
 }
