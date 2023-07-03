@@ -40,6 +40,7 @@ public class AdminController {
 		}
 
 		model.addAttribute("waitingList", waitingList);
+
 		return "admin/waitinglist";
 	}
 

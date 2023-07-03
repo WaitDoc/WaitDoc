@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>병원 상세 페이지</title>
+</head>
+<body>
+<section layout:fragment="main">
+    <div class="text-center">
+        <h1 class="text-4xl mb-4 mt-8" th:text="${hospitalName}"></h1>
+
+        <div class="mt-8">
+            <form th:action="@{'/waiting/' + ${hospital.id}}" method="get">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    줄서기
+                </button>
+            </form>
+
+            <form th:action="@{'/admin/apply/' + ${hospital.id}}" method="get">
+                <input type="hidden" name="memberId" th:value="${memberId}" />
+                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    관리자 신청하기
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>
