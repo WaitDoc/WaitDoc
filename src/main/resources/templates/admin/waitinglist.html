@@ -13,6 +13,7 @@
       <tr class="text-left">
         <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">환자 ID</th>
         <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">환자 이름</th>
+        <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600">미방문 횟수</th>
         <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100 text-gray-600"></th>
       </tr>
       </thead>
@@ -20,9 +21,13 @@
       <tr th:each="waiting : ${waitingList}" class="bg-white">
         <td class="py-2 px-3" th:text="${waiting.memberId}"></td>
         <td class="py-2 px-3" th:text="${waiting.name}"></td>
-        <td class="py-2 px-3">
-          <form th:action="@{'/admin/waiting/delete/'+${waiting.hospitalId}+'/'+${waiting.memberId}}" method="post">
+        <td class="py-2 px-3" th:text="${waiting.warningCount}"></td>
+        <td class="py-2 px-3 flex gap-2">
+          <form th:action="@{'/admin/waiting/delete/'+${waiting.hospitalId}+'/'+${waiting.memberId}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
             <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove</button>
+          </form>
+          <form th:action="@{'/admin/waiting/noShow/'+${waiting.hospitalId}+'/'+${waiting.memberId}}" method="post" onsubmit="return confirm('정말로 NoShow 처리하시겠습니까?');">
+            <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">NoShow</button>
           </form>
         </td>
       </tr>
