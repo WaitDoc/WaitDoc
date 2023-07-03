@@ -58,6 +58,7 @@ spring:
             user-name-attribute: response
 custom:
   API:
-    url: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire
+    url_1: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire
+    url_2: https://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire
     rows: 10
     batch_size: 1000

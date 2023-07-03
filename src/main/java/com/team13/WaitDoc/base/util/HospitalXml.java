@@ -2,10 +2,19 @@ package com.team13.WaitDoc.base.util;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team13.WaitDoc.hospital.entity.Department;
 import com.team13.WaitDoc.hospital.entity.Hospital;
+import com.team13.WaitDoc.hospital.entity.HospitalDepartment;
+import com.team13.WaitDoc.hospital.repository.HospitalRepository;
+import com.team13.WaitDoc.hospital.service.DepartmentService;
+import com.team13.WaitDoc.hospital.service.HospitalService;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +43,15 @@ public class HospitalXml {
     @Data
     static public class Item{
         private String dutyAddr; //주소 (서울 특별시 서대문구...)
+        private String dgidIdName; //병원 진료 과목
+        private int dutyEryn; //응급실 운영여부 (1:운영, 2:그외)
+        private int dutyHayn; //입원 여부 (1:운영, 2:그외)
+        private int dutyHano; //병상 개수
+
         private String dutyDiv; //병원 분류 (A)
         private String dutyDivNam; //병원 분류명 (의원)
         private String dutyEmcls; // 응급 의료기관 코드(G099)
         private String dutyEmclsName; //응급 의료기관 코드명(응급기관 이외)
-        private long dutyEryn; //응급실운영여부(1)
         private String dutyEtc; //비고
         private String dutyName;//기관명 (삼성병원)
         private String dutyTel1;//대표전화1
@@ -80,14 +93,17 @@ public class HospitalXml {
             return LocalTime.of(hour, time % 100);
 
         }
-        public Hospital toEntity(){
+
+        public Hospital toHospitalEntity(){
             return Hospital.builder()
                     .name(dutyName)
                     .addr(dutyAddr)
+                    .department(dgidIdName)
                     .classify(dutyDivNam)
                     .latitude(wgs84Lat)
                     .longitude(wgs84Lon)
                     .hpid(hpid)
+                    .tel(dutyTel1)
                     .introduction(dutyInf)
                     .monStartTime(intToTime(dutyTime1s))
                     .monEndTime(intToTime(dutyTime1c))

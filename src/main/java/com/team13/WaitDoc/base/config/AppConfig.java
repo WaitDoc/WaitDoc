@@ -1,21 +1,26 @@
 package com.team13.WaitDoc.base.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
     @Getter
-    private static String apiUrl;
+    private static String apiUrl_1;
 
-    @Value("${custom.API.url}")
-    public void setApiUrl(String apiUrl) {
-        AppConfig.apiUrl = apiUrl;
+    @Value("${custom.API.url_1}")
+    public void setApiUrl_1(String apiUrl) {
+        AppConfig.apiUrl_1 = apiUrl;
     }
 
+    @Getter
+    private static String apiUrl_2;
 
+    @Value("${custom.API.url_2}")
+    public void setApiUrl_2(String apiUrl) {
+        AppConfig.apiUrl_2 = apiUrl;
+    }
 
     @Getter
     private static String serviceKey_1;

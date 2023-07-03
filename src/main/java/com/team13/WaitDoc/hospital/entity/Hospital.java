@@ -1,10 +1,8 @@
 package com.team13.WaitDoc.hospital.entity;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +24,9 @@ import java.util.stream.Collectors;
 @SuperBuilder(toBuilder = true)
 @Entity
 public class Hospital extends BaseEntity {
+    @OneToMany(mappedBy = "hospital")
+    private List<Department> departments;
+
     private String name;
 
     @Column(length = 1000)
@@ -36,6 +37,12 @@ public class Hospital extends BaseEntity {
 
     private String department;
 
+    private boolean hasER;
+
+    private boolean canAdmit;
+
+    private int bedCount;
+
     private String classify;
 
     private String hpid;
@@ -45,6 +52,11 @@ public class Hospital extends BaseEntity {
     private double longitude;
 
     private int waitingNumber;
+
+    private String tel;
+
+    @OneToMany(mappedBy = "hospital")
+    private List<HospitalDepartment> hospitalDepartment;
 
     private LocalTime monStartTime;
     private LocalTime monEndTime;
@@ -75,6 +87,19 @@ public class Hospital extends BaseEntity {
 
     public List<HospitalInquiry> getInquiries() {
         return new ArrayList<>(hospitalInquiries);
+    }
+
+    public HospitalResponseDTO mapToDTO(){
+        return HospitalResponseDTO.builder()
+                .id(getId())
+                .name(name)
+                .department(department.split(","))
+                .tel(tel)
+                .addr(addr)
+                .info(introduction)
+                .wgs84Lat(latitude)
+                .wgs84Lon(longitude)
+                .build();
     }
 
 

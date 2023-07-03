@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
+import com.team13.WaitDoc.hospital.entity.QDepartment;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
@@ -28,6 +29,11 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository{
 
         if(requestDTO.getClassify() != null){
             builder.and(hospital.classify.contains(requestDTO.getClassify()));
+        }
+
+        if(requestDTO.getDepartment() != null){
+            QDepartment department = QDepartment.department;
+            builder.and(hospital.departments.any().name.contains(requestDTO.getDepartment()));
         }
 
         if(requestDTO.getName() != null){
