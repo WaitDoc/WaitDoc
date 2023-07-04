@@ -49,4 +49,10 @@ public class AdminController {
 		model.addAttribute("hospitalApplications", applications);
 		return "admin/apply";
 	}
+
+	@PostMapping("/approve/{applicationId}")
+	public String approveApplication(@PathVariable Long applicationId) {
+		hospitalMemberService.approveApplication(applicationId);
+		return "redirect:/admin/apply";
+	}
 }

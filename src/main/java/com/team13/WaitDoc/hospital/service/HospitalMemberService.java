@@ -1,6 +1,7 @@
 package com.team13.WaitDoc.hospital.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.HospitalMember;
@@ -33,5 +34,12 @@ public class HospitalMemberService {
     }
     public List<HospitalMember> getAllApplications() {
         return hospitalMemberRepository.findAllByRole(HospitalMemberRole.APPLIED);
+    }
+
+    public void approveApplication(Long applicationId) {
+        HospitalMember application = hospitalMemberRepository.findById(applicationId)
+            .orElseThrow(() -> new NoSuchElementException("No application found with ID: " + applicationId));
+        application.setRole(HospitalMemberRole.DIRECTOR);
+        hospitalMemberRepository.save(application);
     }
 }
