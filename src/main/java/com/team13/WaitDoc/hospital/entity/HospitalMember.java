@@ -35,6 +35,10 @@ public class HospitalMember {
         this.role = HospitalMemberRole.APPLIED;  // 신청 상태로 초기화
     }
 
+    public void setRole(HospitalMemberRole role) {
+        this.role = role;
+    }
+
 
 }
 
