@@ -5,6 +5,9 @@ import com.team13.WaitDoc.hospital.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.team13.WaitDoc.hospital.entity.Hospital;
+import com.team13.WaitDoc.member.entity.Member;
+import com.team13.WaitDoc.member.service.MemberService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HospitalService {
     private final HospitalRepository hospitalRepository;
+    private final HospitalMemberService hospitalMemberService;
+    private final MemberService memberService;
     public Optional<Hospital> findByHpid (String hpid) {
         return hospitalRepository.findByHpid(hpid);
     }
@@ -35,4 +40,14 @@ public class HospitalService {
         return hospitalRepository.findById(hospitalId)
             .orElseThrow(() -> new NoSuchElementException("No hospital found with ID: " + hospitalId));
     }
+
+    public void applyForAdmin(Long memberId, Long hospitalId) {
+        Member member = memberService.findById(memberId);
+        Hospital hospital = findByIdElseThrow(hospitalId);
+
+        hospitalMemberService.applyForAdmin(member, hospital);
+    }
+
+
+
 }

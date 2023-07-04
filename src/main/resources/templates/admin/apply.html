@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section layout:fragment="main" class="max-w-4xl mx-auto py-10 px-5">
+    <h1>병원 관리자 신청 목록</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>병원명</th>
+            <th>신청 상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hospitalApplication : ${hospitalApplications}">
+            <td th:text="${hospitalApplication.id}"></td>
+            <td th:text="${hospitalApplication.member.name}"></td>
+            <td th:text="${hospitalApplication.hospital.name}"></td>
+            <td th:text="${hospitalApplication.role}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>
