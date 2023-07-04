@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.category.DTO;
+package com.team13.WaitDoc.hospital.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,24 +9,22 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalResponseDTO {
-    @JsonProperty("dutyAddr")
+    private Long id;
+    private String name;
+
     private String addr;
 
-    @JsonProperty("dutyDivNam")
+    private String tel;
+
     private String classify;
 
-    @JsonProperty("dutyName")
-    private String dutyName;
+    private String[] department;
 
-    @JsonProperty("dutyTel1")
-    private String dutyTel1;
+    private String info;
 
-    @JsonProperty("wgs84Lat")
     private double wgs84Lat;
 
-    @JsonProperty("wgs84Lon")
     private double wgs84Lon;
 
     @JsonProperty("hpid")

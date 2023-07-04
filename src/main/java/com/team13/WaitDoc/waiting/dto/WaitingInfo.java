@@ -22,10 +22,14 @@ public class WaitingInfo {
 
 	@JsonProperty("type")
 	private String type;
+	@JsonProperty("warningCount")
+	private int warningCount;
+
 
 	public WaitingInfo(Long memberId, String name) {
 		this.memberId = memberId;
 		this.name = name;
+		this.warningCount = warningCount;
 	}
 
 

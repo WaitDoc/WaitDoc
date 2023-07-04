@@ -23,6 +23,9 @@
         줄서기 취소
       </button>
     </form>
+    <div th:if="${blacklist != null && blacklist.warningCount >= 3}" class="mt-4 text-red-500">
+      미방문 횟수가 3회 이상이므로 줄서기 예약을 할 수 없습니다.
+    </div>
   </div>
 </section>
 </body>

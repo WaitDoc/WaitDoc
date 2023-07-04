@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import com.team13.WaitDoc.base.config.AppConfig;
 import lombok.AllArgsConstructor;
 
@@ -29,8 +29,8 @@ public class ApiUt {
                     .page(requestDTO.getPage())
                     .rows(requestDTO.getRows())
                     .name(requestDTO.getName())
-                    .region(requestDTO.getRegion())
-                    .addr(requestDTO.getAddr())
+//                    .region(requestDTO.getRegion())
+//                    .addr(requestDTO.getAddr())
                     .classify(requestDTO.getClassify())
                     .department(requestDTO.getDepartment())
                     .build();
@@ -45,7 +45,7 @@ public class ApiUt {
             );
             String serviceKey = serviceKeys.get(new Random().nextInt(4));
 
-            StringBuilder sb = new StringBuilder(AppConfig.getApiUrl()).append("?" + URLEncoder.encode("ServiceKey","UTF-8")
+            StringBuilder sb = new StringBuilder(AppConfig.getApiUrl_2()).append("?" + URLEncoder.encode("ServiceKey","UTF-8")
                     + "=" + URLEncoder.encode(serviceKey,"UTF-8")); //Service Key
 
             return new Url(sb);
