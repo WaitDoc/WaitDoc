@@ -44,7 +44,7 @@ public class AppConfig {
     @Getter
     private static String serviceKey_4;
 
-    @Value("${custom.API.service_key_3}")
+    @Value("${custom.API.service_key_4}")
     public void setServiceKey_4(String serviceKey_4) {
         AppConfig.serviceKey_4 = serviceKey_4;
     }

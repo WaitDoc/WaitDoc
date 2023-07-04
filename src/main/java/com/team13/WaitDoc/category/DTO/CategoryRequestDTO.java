@@ -2,12 +2,16 @@ package com.team13.WaitDoc.category.DTO;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @ToString
 @Builder
+@AllArgsConstructor
 public class CategoryRequestDTO {
     private String region;
     private String addr;
+    private String[] addrs;
     private String location;
     private String name;
     private String department;
@@ -28,9 +32,9 @@ public class CategoryRequestDTO {
         if (rows > 0) this.rows = rows;
 
         if(location != null && !location.isBlank() && location.contains(" ")){
-            String[] locationParts = location.split(" ");
-            this.region = locationParts[0];
-            this.addr = locationParts[1];
+            addrs = location.split(" ");
+            this.region = addrs[0];
+            this.addr = addrs[1];
         }
         else{
             this.region = location;
