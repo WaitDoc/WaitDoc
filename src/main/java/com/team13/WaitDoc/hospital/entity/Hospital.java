@@ -5,10 +5,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
@@ -68,6 +65,7 @@ public class Hospital extends BaseEntity {
     private LocalTime holidayStartTime;
     private LocalTime holidayEndTime;
 
+    @Builder.Default
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<HospitalInquiry> hospitalInquiries = new HashSet<>();
 
