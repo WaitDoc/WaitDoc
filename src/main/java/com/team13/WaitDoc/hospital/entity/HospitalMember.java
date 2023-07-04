@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class HospitalMember {
@@ -26,4 +28,17 @@ public class HospitalMember {
 
     @Enumerated(EnumType.STRING)
     private HospitalMemberRole role;
+
+    public HospitalMember(Member member, Hospital hospital) {
+        this.member = member;
+        this.hospital = hospital;
+        this.role = HospitalMemberRole.APPLIED;  // 신청 상태로 초기화
+    }
+
+    public void setRole(HospitalMemberRole role) {
+        this.role = role;
+    }
+
+
 }
+

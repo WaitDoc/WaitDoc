@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>병원 관리자 신청</title>
+</head>
+<body>
+<section layout:fragment="main" class="flex flex-col items-center min-h-screen py-2">
+    <div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
+        <div class="flex-1 flex flex-col">
+            <div class="w-full mb-8 text-2xl text-center">병원 관리자 신청 목록</div>
+            <div class="w-full overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                    <tr class="text-sm font-medium text-left text-gray-700 rounded-lg">
+                        <th class="px-4 py-2 bg-gray-200">ID</th>
+                        <th class="px-4 py-2 bg-gray-200">이름</th>
+                        <th class="px-4 py-2 bg-gray-200">병원명</th>
+                        <th class="px-4 py-2 bg-gray-200">신청 상태</th>
+                        <th class="px-4 py-2 bg-gray-200">승인</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-sm font-normal text-gray-700">
+                    <tr th:each="hospitalApplication : ${hospitalApplications}" class="hover:bg-gray-100 border-b border-gray-200 py-10">
+                        <td class="px-4 py-4" th:text="${hospitalApplication.id}"></td>
+                        <td class="px-4 py-4" th:text="${hospitalApplication.member.name}"></td>
+                        <td class="px-4 py-4" th:text="${hospitalApplication.hospital.name}"></td>
+                        <td class="px-4 py-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
+                                      th:text="${hospitalApplication.role}">
+                                </span>
+                        </td>
+                        <td class="px-4 py-4">
+                            <form th:action="@{/admin/approve/{id}(id=${hospitalApplication.id})}" method="post">
+                                <button type="submit"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    관리자 승인하기
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
