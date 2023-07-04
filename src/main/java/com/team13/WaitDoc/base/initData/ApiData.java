@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-//@Profile({"prod"})
+@Profile({"prod"})
 @Component
 @RequiredArgsConstructor
 public class ApiData {
@@ -32,9 +32,6 @@ public class ApiData {
 
             if (items.isEmpty())
                 break;
-//            hospitalBulkRepository.bulkSave(items.stream()
-//                    .map(HospitalXml.Item::toEntity)
-//                    .collect(Collectors.toList()));
             List<Hospital> hospitals = items.stream()
                     .map(HospitalXml.Item::toHospitalEntity)
                     .toList();

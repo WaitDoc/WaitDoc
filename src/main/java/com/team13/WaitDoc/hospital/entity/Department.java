@@ -23,6 +23,4 @@ public class Department extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Hospital hospital;
 
-    @OneToMany(mappedBy = "department")
-    private List<HospitalDepartment> hospitalDepartment;
 }

@@ -21,14 +21,15 @@ public class DepartmentService {
     public void saveAll(List<Hospital> hospitals){
         List<Department> departments = new ArrayList<>();
         for(Hospital hospital: hospitals){
-            System.out.println(hospital.getDepartment());
-            for(String name : hospital.getDepartment().split(",")){
-                departments.add(
-                        Department.builder()
-                                .name(name)
-                                .hospital(hospital)
-                                .build()
-                );
+            if(hospital.getDepartment() != null){
+                for(String name : hospital.getDepartment().split(",")){
+                    departments.add(
+                            Department.builder()
+                                    .name(name)
+                                    .hospital(hospital)
+                                    .build()
+                    );
+                }
             }
         }
         departmentRepository.saveAll(departments);

@@ -55,9 +55,6 @@ public class Hospital extends BaseEntity {
 
     private String tel;
 
-    @OneToMany(mappedBy = "hospital")
-    private List<HospitalDepartment> hospitalDepartment;
-
     private LocalTime monStartTime;
     private LocalTime monEndTime;
 
