@@ -1,4 +1,4 @@
-<html data-theme="light" xmlns:th="http://www.thymeleaf.org"
+<html data-theme="lemonade" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 아이콘 목록 : https://fontawesome.com/search?o=r&m=free -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css" />-->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="https://kit.fontawesome.com/87140d707c.js" crossorigin="anonymous"></script>
     <!-- toastr 불러오기 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -100,6 +100,49 @@
     </style>
 </head>
 <body class="min-h-screen w-screen flex flex-col">
+<script>
+    function find(event){
+        event.preventDefault(); // 폼의 기본 동작 중지
+        var form = event.target.form;
+        var formData = new FormData(form);
+        var queryParams = new URLSearchParams(formData).toString();
+
+        fetch("/hospital/category/find?"+queryParams, {
+            method: "GET"
+        })
+            .then(response => response.json()) // JSON 형식으로 응답 파싱
+            .then(data => {
+                // 결과를 처리하고 표시
+                var resultContainer = document.getElementById("resultContainer");
+
+                if (data.length === 0) {
+                    resultContainer.textContent = "검색 결과가 없습니다.";
+                } else {
+                    var resultHTML = "";
+                    // 결과 데이터를 순회하며 HTML 생성
+
+                    data.forEach(item => {
+                        resultHTML +=
+                            "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
+                            "<div class='card-body'>" +
+                            "<h2 class='card-title'>" + item.name + "</h2>" +
+                            "<p>" + item.tel + "</p>" +
+                            "<p>" + item.addr + "</p>"+
+                            "<div class='card-actions justify-end'>"+
+                            "<a class='btn btn-primary btn-sm' href='/chat/"+item.id+"'>1:1 채팅하기</a>"+
+                            "</div></div></div>";
+
+                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
+                    });
+
+                    resultContainer.innerHTML = resultHTML;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+</script>
 <nav class="navbar bg-base-100 flex drop-shadow-md">
     <div class="navbar-start">
 
@@ -118,14 +161,7 @@
 </nav>
 <div class="main">
     <div>
-        <div class="flex justify-end">
-            <div class="input-group">
-                <button class="btn btn-sm btn-square">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </button>
-                <input type="text" placeholder="검색" class="input input-bordered text-black" style="height:32px"/>
-            </div>
-        </div>
+
         <div class="inner-container">
             <a href="/" class="item">
                 <span class="text-center fa-regular fa-hospital fa-2xl"></span>
@@ -152,8 +188,44 @@
         <div class="inner-container">
             <span class="text-center text-black text-[12px] font-normal">현재 대기 중인 병원이 없습니다.</span>
         </div>
-
-        <div class="container">
+        <div class="flex justify-end mt-[15px]">
+            <form class="input-group w-[500px]">
+                <select class="select" id="department" name="department">
+                    <option value="">진료과목</option>
+                    <option value="내과">내과</option>
+                    <option value="치과">치과</option>
+                    <option value="정형외과">정형외과</option>
+                    <option value="피부과">피부과</option>
+                    <option value="외과">외과</option>
+                    <option value="성형외과">성형외과</option>
+                    <option value="안과">안과</option>
+                    <option value="이비인후과">이비인후과</option>
+                    <option value="가정의학과">가정의학과</option>
+                    <option value="소아청소년과">소아청소년과</option>
+                    <option value="흉부외과">흉부외과</option>
+                    <option value="신경과">신경과</option>
+                    <option value="신경외과">신경외과</option>
+                    <option value="산부인과">산부인과</option>
+                    <option value="비뇨기과">비뇨기과</option>
+                    <option value="정신건강의학과">정신건강의학과</option>
+                    <option value="재활의학과">재활의학과</option>
+                    <option value="마취통증의학과">마취통증의학과</option>
+                    <option value="영상의학과">영상의학과</option>
+                    <option value="치료방사선과">치료방사선과</option>
+                    <option value="임상병리과">임상병리과</option>
+                    <option value="해부병리과">해부병리과</option>
+                    <option value="핵의학과">핵의학과</option>
+                    <option value="응급의학과">응급의학과</option>
+                    <option value="구강악안면외과">구강악안면외과</option>
+                </select>
+                <input class="input input-bordered input-success max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
+                <input class="input input-bordered input-success max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
+                <button class="btn btn-primary" onclick="find(event)">검색</button>
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="rows" value="10">
+                </form>
+        </div>
+        <div class="container" style="margin-top: 15px">
             <div>
                 <div class="title">진료과</div>
                 <div class="tag">소아과</div>
@@ -167,15 +239,18 @@
             <div>
                 <div class="title">카테고리</div>
                 <div class="tag">야간진료</div>
-                <div class="tag">야간진료</div>
-                <div class="tag">야간진료</div>
-                <div class="tag">야간진료</div>
+                <div class="tag">주말진료</div>
+                <div class="tag">공휴일진료</div>
+                <div class="tag">주차장 보유</div>
             </div>
+
+        </div>
+
+        <div id="resultContainer" class="container flex flex-col items-center h-auto">
 
         </div>
     </div>
 </div>
-
 </body>
 
 

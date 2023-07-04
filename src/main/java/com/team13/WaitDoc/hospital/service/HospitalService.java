@@ -1,22 +1,20 @@
 package com.team13.WaitDoc.hospital.service;
 
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
-import com.team13.WaitDoc.category.DTO.HospitalResponseDTO;
+import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.team13.WaitDoc.hospital.entity.Hospital;
+
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -44,22 +42,19 @@ public class HospitalService {
             .orElseThrow(() -> new NoSuchElementException("No hospital found with ID: " + hospitalId));
     }
 
+
+    public List<HospitalResponseDTO> search(CategoryRequestDTO requestDTO) {
+        return hospitalRepository.search(requestDTO)
+                .stream()
+                .map(Hospital::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     public void applyForAdmin(Long memberId, Long hospitalId) {
         Member member = memberService.findById(memberId);
         Hospital hospital = findByIdElseThrow(hospitalId);
 
         hospitalMemberService.applyForAdmin(member, hospital);
     }
-
-
-
-
-    public List<Hospital> search(CategoryRequestDTO requestDTO) {
-        return hospitalRepository.search(requestDTO);
-    }
-
-
-
-
 
 }

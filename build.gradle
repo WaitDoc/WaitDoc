@@ -47,9 +47,11 @@ dependencies {
 	// kafka
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
-	// JSON
+
+	// JSON, xml
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.4'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // 타임리프에서 layout.html 사용하려고
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.4'
 	//Querydsl
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
