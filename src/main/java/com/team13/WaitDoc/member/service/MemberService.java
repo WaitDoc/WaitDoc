@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,16 @@ public class MemberService {
         return memberRepository.findById(memberId).orElseThrow();
     } //이게 맞나?
 
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId)
+            .orElseThrow(() -> new NoSuchElementException("No member found with ID: " + memberId));
+    }
+
+    public String findNameById(Long id) {
+        Member member = memberRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
+        return member.getName();
+    }
 
 
     @Transactional
