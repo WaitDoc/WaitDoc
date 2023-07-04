@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.hospital.repository;
 
+
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static com.team13.WaitDoc.hospital.entity.QHospital.hospital;
 @RequiredArgsConstructor
@@ -41,16 +41,8 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository{
         }
 
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
-//                .where(ExpressionUtils.allOf(addrExpression(requestDTO.getAddrs())))
                 .where(builder)
                 .fetch();
         return hospitals;
     }
-    private BooleanExpression[] addrExpression(String[] addrs){
-        return Arrays.stream(addrs)
-                .map(hospital.addr::contains)
-                .toArray(BooleanExpression[]::new);
-    }
-
-
 }

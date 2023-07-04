@@ -7,7 +7,6 @@ import java.util.List;
 @Getter
 @ToString
 @Builder
-//@NoArgsConstructor
 public class CategoryRequestDTO {
     private String location;
     private String name;

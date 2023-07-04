@@ -2,19 +2,9 @@ package com.team13.WaitDoc.base.util;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.team13.WaitDoc.hospital.entity.Department;
 import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.entity.HospitalDepartment;
-import com.team13.WaitDoc.hospital.repository.HospitalRepository;
-import com.team13.WaitDoc.hospital.service.DepartmentService;
-import com.team13.WaitDoc.hospital.service.HospitalService;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

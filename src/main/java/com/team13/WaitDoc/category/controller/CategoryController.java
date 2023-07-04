@@ -2,6 +2,7 @@ package com.team13.WaitDoc.category.controller;
 
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
+
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class CategoryController {
 
     @ResponseBody
     @GetMapping("/find")
-    public List<HospitalResponseDTO> find(@ModelAttribute CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
+    public List<HospitalResponseDTO> find(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
         return hospitalService.search(requestDTO);
     }
 
