@@ -44,16 +44,21 @@ public class HospitalService {
             .orElseThrow(() -> new NoSuchElementException("No hospital found with ID: " + hospitalId));
     }
 
-    public List<Hospital> search(CategoryRequestDTO requestDTO) {
-        return hospitalRepository.search(requestDTO);
-    }
-
     public void applyForAdmin(Long memberId, Long hospitalId) {
         Member member = memberService.findById(memberId);
         Hospital hospital = findByIdElseThrow(hospitalId);
 
         hospitalMemberService.applyForAdmin(member, hospital);
     }
+
+
+
+
+    public List<Hospital> search(CategoryRequestDTO requestDTO) {
+        return hospitalRepository.search(requestDTO);
+    }
+
+
 
 
 

@@ -17,4 +17,6 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> ,Hospi
    // public List<Hospital> search(@Param("region") String region, @Param("addr") String addr);
 
 
+
+
 }
