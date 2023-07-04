@@ -13,7 +13,9 @@ public class CategoryRequestDTO {
     private String department;
     private String classify;
     @Setter
+    @Builder.Default
     private int page = 1;
+    @Builder.Default
     @Setter
     private int rows = 40;
 

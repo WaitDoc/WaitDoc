@@ -3,10 +3,7 @@ package com.team13.WaitDoc.hospital.entity;
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
@@ -80,6 +77,7 @@ public class Hospital extends BaseEntity {
     private LocalTime holidayEndTime;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<HospitalInquiry> hospitalInquiries = new HashSet<>();
 
     public List<HospitalInquiry> getInquiries() {
