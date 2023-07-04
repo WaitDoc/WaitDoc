@@ -13,5 +13,6 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
 	boolean existsByHospitalIdAndMemberId(Long hospitalId, Long memberId);
 	Waiting findByHospitalIdAndMemberId(Long hospitalId, Long memberId);
 	List<Waiting> findByHospitalId(Long hospitalId);
+	List<Waiting> findByMemberId(Long memberId);
 
 }
