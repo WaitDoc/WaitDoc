@@ -41,6 +41,7 @@ public class WaitingController {
 
 
 		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+
 		Long memberId = sessionMember.getMemberId();
 		Optional<Blacklist> blacklistOptional = blacklistService.getBlacklistByMemberId(memberId);
 		Blacklist blacklist = blacklistOptional.orElse(null);

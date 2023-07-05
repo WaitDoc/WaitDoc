@@ -24,14 +24,24 @@ public class QHospital extends EntityPathBase<Hospital> {
 
     public final StringPath addr = createString("addr");
 
+    public final NumberPath<Integer> bedCount = createNumber("bedCount", Integer.class);
+
+    public final BooleanPath canAdmit = createBoolean("canAdmit");
+
+    public final StringPath classify = createString("classify");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createDate = _super.createDate;
 
     public final StringPath department = createString("department");
 
+    public final ListPath<Department, QDepartment> departments = this.<Department, QDepartment>createList("departments", Department.class, QDepartment.class, PathInits.DIRECT2);
+
     public final TimePath<java.time.LocalTime> friEndTime = createTime("friEndTime", java.time.LocalTime.class);
 
     public final TimePath<java.time.LocalTime> friStartTime = createTime("friStartTime", java.time.LocalTime.class);
+
+    public final BooleanPath hasER = createBoolean("hasER");
 
     public final TimePath<java.time.LocalTime> holidayEndTime = createTime("holidayEndTime", java.time.LocalTime.class);
 
@@ -66,6 +76,8 @@ public class QHospital extends EntityPathBase<Hospital> {
     public final TimePath<java.time.LocalTime> sunEndTime = createTime("sunEndTime", java.time.LocalTime.class);
 
     public final TimePath<java.time.LocalTime> sunStartTime = createTime("sunStartTime", java.time.LocalTime.class);
+
+    public final StringPath tel = createString("tel");
 
     public final TimePath<java.time.LocalTime> thuEndTime = createTime("thuEndTime", java.time.LocalTime.class);
 
