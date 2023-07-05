@@ -23,11 +23,13 @@ public class HospitalInquiryService {
     private final HospitalInquiryMemberService hospitalInquiryMemberService;
     private final HospitalMemberService hospitalMemberService;
 
-    public void inquiry(Long hospitalId, Long memberId) {
+    public Long inquiry(Long hospitalId, Long memberId) {
         HospitalInquiry hospitalInquiry = createAndSave(hospitalId);
 
         Member member = memberService.findByIdElseThrow(memberId);
         hospitalInquiry.addChatUser(member);
+
+        return hospitalInquiry.getId();
     }
 
 
