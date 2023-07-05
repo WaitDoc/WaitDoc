@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Configuration
 @Profile({"dev", "test"})
-@Configuration
 public class NotProd {
     @Bean
     CommandLineRunner initData (HospitalRepository hospitalRepository, DepartmentService departmentService) {
