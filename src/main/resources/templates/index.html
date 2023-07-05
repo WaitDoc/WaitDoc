@@ -2,6 +2,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+    <script th:inline="javascript">
+        const token = /*[[${_csrf.token}]]*/ '';
+    </script>
     <meta charset="UTF-8">
     <!-- 폰트어썸 아이콘 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,8 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
-    <script src="/resource/common/common.js"></script>
-    <link href="/resource/common/common.css" rel="stylesheet">
+<!--    <script th:src="@{/js/common/common.js}"></script>-->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
     <style>
         .main {
             display: flex;
@@ -106,6 +109,7 @@
         var form = event.target.form;
         var formData = new FormData(form);
         var queryParams = new URLSearchParams(formData).toString();
+        console.log("실행")
 
         fetch("/hospital/category/find?"+queryParams, {
             method: "GET"
@@ -129,7 +133,7 @@
                             "<p>" + item.tel + "</p>" +
                             "<p>" + item.addr + "</p>"+
                             "<div class='card-actions justify-end'>"+
-                            "<a class='btn btn-primary btn-sm' href='/chat/"+item.id+"'>1:1 채팅하기</a>"+
+                            `<form action='/hospital/${item.id}/inquiry' method='post'><input type='hidden' name='_csrf' value='${token}' /><button class='btn btn-primary btn-sm'>1:1 채팅하기</button>></form>`+
                             "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
                             "</div></div></div>";
 
@@ -143,13 +147,15 @@
                 console.error("Error:", error);
             });
     }
+
+    find();
 </script>
 <nav class="navbar bg-base-100 flex drop-shadow-md">
     <div class="navbar-start">
 
     </div>
     <div class="navbar-center justify-content">
-        <a href="#" class="btn btn-ghost normal-case">기다리DOC</a>
+        <a href="#" class="btn btn-ghost normal-case">기다리닥</a>
     </div>
     <div class="navbar-end pr-4">
         <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
@@ -180,9 +186,9 @@
                 <span class="text-center fa-regular fa-folder fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">서류보관함</span>
             </a>
-            <a href="/" class="item">
-                <span class="text-center fa-regular fa-comments fa-2xl"></span>
-                <span class="text-center text-black text-[12px] font-normal mt-6">1:1 상담하기</span>
+            <a href="/mypage" class="item">
+                <span class="text-center fa-regular fa-user fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">마이페이지</span>
             </a>
         </div>
 
