@@ -44,7 +44,7 @@ public class InquiryMessageController {
 
         log.info("content : {}", request.getContent());
 
-        inquiryMessageService.createAndSave(request.getContent(), securityUser.getId(), roomId, MESSAGE);
+        inquiryMessageService.createAndSave(request.getContent(), securityUser.getMemberId(), roomId, MESSAGE);
 
         return SignalResponse.builder()
                 .type(NEW_MESSAGE)
@@ -63,7 +63,7 @@ public class InquiryMessageController {
             @RequestParam(defaultValue = "0") Long fromId) {
 
         List<InquiryMessageDto> inquiryMessageDtos =
-                inquiryMessageService.getByChatRoomIdAndUserIdAndFromId(roomId, securityUser.getId(), fromId);
+                inquiryMessageService.getByChatRoomIdAndUserIdAndFromId(roomId, securityUser.getMemberId(), fromId);
 
         return inquiryMessageDtos;
     }

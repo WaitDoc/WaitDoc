@@ -23,39 +23,36 @@ public class HospitalInquiryController {
             @AuthenticationPrincipal SecurityUser securityUser,
             Model model
             ) {
-        HospitalInquiry hospitalChatRoom = hospitalInquiryService.enterHospitalInquiry(hospitalInquiryId, securityUser.getId());
+        HospitalInquiry hospitalInquiry = hospitalInquiryService.enterHospitalInquiry(hospitalInquiryId, securityUser.getMemberId());
 
-        model.addAttribute("hospitalChatRoom", hospitalChatRoom);
-        return "hospitalInquiry/detail";
+        model.addAttribute("hospitalInquiry", hospitalInquiry);
+        return "chatting/hospitalInquiry/detail";
     }
 
     @GetMapping("/hospital/{hospitalId}/chatList")
     public String hospitalMemberInquiryList(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
-        List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByHospitalIdAndMemberId(hospitalId, securityUser.getId());
+        List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByHospitalIdAndMemberId(hospitalId, securityUser.getMemberId());
         model.addAttribute("hospitalInquires", hospitalInquiries);
-        return "chatlist/chatlist";
+        return "chatting/chatlist/chatlist";
     }
 
     @GetMapping("/chatList")
     public String memberInquiryList(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
-        List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByMemberId(securityUser.getId());
+        List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByMemberId(securityUser.getMemberId());
         model.addAttribute("hospitalInquiry", hospitalInquiries);
-        return "chatlist/chatlist";
+        return "chatting/chatlist/chatlist";
     }
 
     @PostMapping("/{hospitalInquiryId}/endChat")
     public String endInquiry(@PathVariable Long hospitalInquiryId) {
         hospitalInquiryService.endInquiry(hospitalInquiryId);
-        return "redirect:/chatlist/chatlist";
+        return "redirect:/chatList";
     }
 
     @PostMapping("/{hospitalInquiryId}/delete")
     public String deleteInquiry(@PathVariable Long hospitalInquiryId) {
         hospitalInquiryService.deleteInquiry(hospitalInquiryId);
-        return "redirect:/chatlist/chatlist";
+        return "redirect:/chatList";
     }
-
-
-
 
 }
