@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -58,6 +60,12 @@ public class MemberService {
         return memberRepository.findById(memberId)
             .orElseThrow(() -> new IllegalArgumentException("Member with id " + memberId + " not found"));
     }
+
+    public Member findByName(String name) {
+        return memberRepository.findByName(name)
+            .orElseThrow(() -> new IllegalArgumentException("Member with name " + name + " not found"));
+    }
+
 
 
 }
