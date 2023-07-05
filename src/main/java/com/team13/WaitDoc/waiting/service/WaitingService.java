@@ -68,6 +68,15 @@ public class WaitingService {
 			})
 			.collect(Collectors.toList());
 	}
+
+	public List<Hospital> getWaitingHospitalsByMemberId(Long memberId) {
+		List<Waiting> waitings = waitingRepository.findByMemberId(memberId);
+		return waitings.stream()
+			.map(Waiting::getHospital)
+			.collect(Collectors.toList());
+	}
+
+
 }
 
 
