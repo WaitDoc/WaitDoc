@@ -35,16 +35,15 @@ import static com.team13.WaitDoc.chats.response.SignalType.NEW_MESSAGE;
 public class InquiryMessageController {
 
     private final InquiryMessageService inquiryMessageService;
-    private final InquiryMessageQueryDslRepository inquiryMessageQueryDslRepository;
 
-    @MessageMapping("/chats/{roomId}/sendMessage")
-    @SendTo("/topic/hospital/{hospitalId}/inquiry/{hospitalRoomId}")
-    public SignalResponse sendChatMessage(@DestinationVariable Long roomId, InquiryMessageRequest request,
+    @MessageMapping("/inquiry/{hospitalInquiryId}/sendMessage")
+    @SendTo("/topic/inquiry/{hospitalInquiryId}")
+    public SignalResponse sendChatMessage(@DestinationVariable Long hospitalInquiryId, InquiryMessageRequest request,
                                           @AuthenticationPrincipal SecurityUser securityUser)  {
 
         log.info("content : {}", request.getContent());
 
-        inquiryMessageService.createAndSave(request.getContent(), securityUser.getMemberId(), roomId, MESSAGE);
+        inquiryMessageService.createAndSave(request.getContent(), securityUser.getMemberId(), hospitalInquiryId, MESSAGE);
 
         return SignalResponse.builder()
                 .type(NEW_MESSAGE)
@@ -56,14 +55,14 @@ public class InquiryMessageController {
         System.out.println("예외 발생!!");
     }
 
-    @GetMapping("/rooms/{roomId}/messages")
+    @GetMapping("/inquiry/{hospitalInquiryId}/messages")
     @ResponseBody
     public List<InquiryMessageDto> findAll(
-            @PathVariable Long roomId, @AuthenticationPrincipal SecurityUser securityUser,
+            @PathVariable Long hospitalInquiryId, @AuthenticationPrincipal SecurityUser securityUser,
             @RequestParam(defaultValue = "0") Long fromId) {
 
         List<InquiryMessageDto> inquiryMessageDtos =
-                inquiryMessageService.getByChatRoomIdAndUserIdAndFromId(roomId, securityUser.getMemberId(), fromId);
+                inquiryMessageService.getByChatRoomIdAndUserIdAndFromId(hospitalInquiryId, securityUser.getMemberId(), fromId);
 
         return inquiryMessageDtos;
     }
