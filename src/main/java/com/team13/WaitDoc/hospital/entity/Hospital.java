@@ -32,6 +32,7 @@ public class Hospital extends BaseEntity {
     @Column(length = 1000)
     private String introduction;
 
+    @Column(length = 1000)
     private String department;
 
     private boolean hasER;
