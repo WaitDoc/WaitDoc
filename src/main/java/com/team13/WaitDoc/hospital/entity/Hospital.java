@@ -32,6 +32,7 @@ public class Hospital extends BaseEntity {
     @Column(length = 1000)
     private String introduction;
 
+    @Column(length = 1000)
     private String department;
 
     private boolean hasER;
@@ -85,10 +86,16 @@ public class Hospital extends BaseEntity {
     }
 
     public HospitalResponseDTO mapToDTO(){
+        String[] departmentsArray;
+        if (department != null) {
+            departmentsArray = department.split(",");
+        } else {
+            departmentsArray = new String[0]; // 또는 null로 할당해도 됩니다, 상황에 맞게 선택하면 됩니다.
+        }
         return HospitalResponseDTO.builder()
                 .id(getId())
                 .name(name)
-                .department(department.split(","))
+                .department(departmentsArray)
                 .tel(tel)
                 .addr(addr)
                 .info(introduction)

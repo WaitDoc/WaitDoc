@@ -84,7 +84,7 @@ public class HospitalXml {
 
         }
 
-        public Hospital toHospitalEntity(){
+        public Hospital toHospitalEntity(){ //To Do map으로 저장
             return Hospital.builder()
                     .name(dutyName)
                     .addr(dutyAddr)
@@ -92,6 +92,7 @@ public class HospitalXml {
                     .classify(dutyDivNam)
                     .latitude(wgs84Lat)
                     .longitude(wgs84Lon)
+                    .canAdmit(dutyHayn == 1)
                     .hpid(hpid)
                     .tel(dutyTel1)
                     .introduction(dutyInf)

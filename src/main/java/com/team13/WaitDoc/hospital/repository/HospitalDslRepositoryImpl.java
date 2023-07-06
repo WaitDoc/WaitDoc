@@ -40,6 +40,20 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository{
             builder.and(hospital.name.contains(requestDTO.getName()));
         }
 
+        if(requestDTO.getHoliday() != null){
+            builder.and(hospital.holidayStartTime.isNotNull()).and(hospital.holidayEndTime.isNotNull());
+        }
+
+        if(requestDTO.getWeekend() != null){
+            BooleanExpression saturdayOpen = (hospital.satStartTime.isNotNull().and(hospital.satEndTime.isNotNull()));
+            BooleanExpression sundayOpen = (hospital.sunStartTime.isNotNull().and(hospital.sunEndTime.isNotNull()));
+            builder.and(ExpressionUtils.or(saturdayOpen,sundayOpen));
+        }
+
+        if(requestDTO.getAdmission() != null){
+            builder.and(hospital.canAdmit.eq(true));
+        }
+
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
                 .fetch();

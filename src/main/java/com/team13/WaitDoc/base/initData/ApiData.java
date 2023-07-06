@@ -27,8 +27,7 @@ public class ApiData {
     public void loadData() throws IOException, InterruptedException {
         int i = 1;
         while(true){
-            List<HospitalXml.Item> items = ApiUt.Response.getItems(CategoryRequestDTO.builder()
-                                                                    .page(i++).rows(1000).build());
+            List<HospitalXml.Item> items = ApiUt.Response.getItems(i++, 1000);
 
             if (items.isEmpty())
                 break;

@@ -24,8 +24,7 @@ public class NotProd {
             @Override
             @Transactional
             public void run(String... args) throws Exception {
-                List<HospitalXml.Item> items = ApiUt.Response.getItems(
-                        CategoryRequestDTO.builder().page(1).rows(1000).build());
+                List<HospitalXml.Item> items = ApiUt.Response.getItems(1, 1000);
                 List<Hospital> hospitals = items.stream()
                         .map(HospitalXml.Item::toHospitalEntity)
                         .toList();
