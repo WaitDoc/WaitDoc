@@ -1,10 +1,18 @@
 package com.team13.WaitDoc.member.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.team13.WaitDoc.base.entity.BaseEntity;
+import com.team13.WaitDoc.blacklist.entity.Blacklist;
+import com.team13.WaitDoc.waiting.entity.Waiting;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +33,13 @@ public class Member extends BaseEntity {
     private String email;
     private String gender;
     private String birthday;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Waiting> waitings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Blacklist> blacklists = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 

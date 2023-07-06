@@ -58,5 +58,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository{
                 .where(builder)
                 .fetch();
         return hospitals;
+
+
     }
 }

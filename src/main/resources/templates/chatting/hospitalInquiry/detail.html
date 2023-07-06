@@ -1,40 +1,65 @@
-<html layout:decorate="~{common/layout.html}">
+<html layout:decorate="~{common/layout.html}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:inline="javascript">
-        const chatRoomId = /*[[${hospitalInquiry.id}]]*/ '';
         const token = /*[[${_csrf.token}]]*/ '';
+        const hospitalInquiryId = /*[[${hospitalInquiry.id}]]*/ '';
     </script>
-    <script th:src="@{/app.js}"></script>
+    <script th:src="@{/js/inquiryMessage.js}" type="application/javascript"></script>
 </head>
+
 <body>
-<table class="tb_col">
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>owner_username</th>
-        <th>createdAt</th>
-        <th>updatedAt</th>
-        <th>Enter</th>
-    </tr>
-    <tr>
-        <td th:text="${hospitalInquiry.id}"></td>
-        <td th:text="${hospitalInquiry.name}"></td>
-        <td th:text="${hospitalInquiry.owner.username}"></td>
-        <td th:text="${hospitalInquiry.createdAt}"></td>
-        <td th:text="${hospitalInquiry.updatedAt}"></td>
-    </tr>
+<main layout:fragment="main" class="w-screen h-full">
+<section class="container">
+    <div class="room-info">
+        <table>
+            <tbody>
+            <tr>
+<!--                <td th:text="${hospital.name}"></td>-->
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost btn-circle">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+                    <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-64">
+                        <li>
 
+                            <form th:action="@{/{hospitalInquiryId}/endChat(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="if ( !confirm('문의를 종료하시겠습니까?') ) return false; disconnect()">
+                                <input type="hidden" name="_method" value="delete">
+                                <button>문의 종료</button>
+                            </form>
+                        </li>
+<!--                        <li th:if="${member.id == #}">//admin이면-->
+<!--                            <form th:action="@{/{hospitalInquiryId}/delete(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="return confirm('채팅방을 삭제하시겠습니까?')">-->
+<!--                                <button type="submit">채팅방 삭제</button>-->
+<!--                            </form>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-</table>
-<form class="chat__write-message" onsubmit="ChatWriteMessage(this); return false;">
-    <input type="text" placeholder="내용을 입력해주세요." name="content">
-    <input type="submit" value="작성">
-</form>
-<li class="chat__message-ul"></li>
+<section class="container2">
+    <section class="chat-messages">
+        <div>
+            <ul class="chat__message-ul px-5 py-5"></ul>
+        </div>
+    </section>
+</section>
 
+<section class="container">
+    <section class="chat-input">
+        <form class="chat__write-message" onsubmit="ChatWriteMessage(this); return false;">
+            <input type="text" placeholder="내용을 입력해주세요." name="content">
+            <input type="submit" value="작성">
+        </form>
+    </section>
+</section>
+</main>
 </body>
 </html>

@@ -2,6 +2,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+
     <meta charset="UTF-8">
     <!-- 폰트어썸 아이콘 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,8 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
-    <script src="/resource/common/common.js"></script>
-    <link href="/resource/common/common.css" rel="stylesheet">
+<!--    <script th:src="@{/js/common/common.js}"></script>-->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
     <style>
         .main {
             display: flex;
@@ -101,75 +102,15 @@
 </head>
 <body class="min-h-screen w-screen flex flex-col">
 <script>
-    function addToParams(formData){
-        let params = {};
-        let tags = document.querySelectorAll('.tag-chck');
-        for (let tag of tags){
-            if(tag.checked){
-                params[tag.name] = 'true';
-            }
-        }
-        for (let key of formData.keys()) {
-            params[key] = formData.get(key);
-        }
-        console.log(params)
-        return params;
-    }
-    function find(event){
-        event.preventDefault(); // 폼의 기본 동작 중지
-        let searchForm = document.getElementById('searchForm');
-        let formData =new FormData(searchForm);
-        let params = addToParams(formData);
-        //let url = "/hospital/category/find"
-        let url = searchForm.getAttribute('action');
-
-        fetch(url, {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        })
-            .then(response => response.json()) // JSON 형식으로 응답 파싱
-            .then(data => {
-                // 결과를 처리하고 표시
-                var resultContainer = document.getElementById("resultContainer");
-
-                if (data.length === 0) {
-                    resultContainer.textContent = "검색 결과가 없습니다.";
-                } else {
-                    var resultHTML = "";
-                    // 결과 데이터를 순회하며 HTML 생성
-
-                    data.forEach(item => {
-                        resultHTML +=
-                            "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
-                            "<div class='card-body'>" +
-                            "<h2 class='card-title'>" + item.name + "</h2>" +
-                            "<p>" + item.tel + "</p>" +
-                            "<p>" + item.addr + "</p>"+
-                            "<div class='card-actions justify-end'>"+
-                            "<a class='btn btn-primary btn-sm' href='/chat/"+item.id+"'>1:1 채팅하기</a>"+
-                            "</div></div></div>";
-
-                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
-                    });
-
-                    resultContainer.innerHTML = resultHTML;
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    }
     document.addEventListener('click', function(event) {
         var clickedElement = event.target;
+        console.log(">>>>>>>>>"+clickedElement.type);
         //셀렉트를 클릭했을 때
         if(clickedElement.type==='select-one' && clickedElement.classList.contains('dep-slct')){
             var checkboxes = document.querySelectorAll('.dep-chck');
             //체크박스 해제
             for (var i = 0; i < checkboxes.length; i++) {
-                    checkboxes[i].checked = false;
+                checkboxes[i].checked = false;
             }
         }
         //체크박스를 클릭했을 때
@@ -189,6 +130,73 @@
             }
         }
     });
+    let token = /*[[_csrf.token]]*/ '';
+    function addToParams(formData){
+        let params = {};
+        let tags = document.querySelectorAll('.tag-chck');
+        for (let tag of tags){
+            if(tag.checked){
+                params[tag.name] = 'true';
+            }
+        }
+        for (let key of formData.keys()) {
+            params[key] = formData.get(key);
+        }
+        console.log(params)
+        return params;
+    }
+    function find(event){
+        event.preventDefault(); // 폼의 기본 동작 중지
+
+        let searchForm = document.getElementById('searchForm');
+        let formData =new FormData(searchForm);
+        let params = addToParams(formData);
+        let url = searchForm.getAttribute('action');
+
+        fetch(url, {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify(params)
+        })
+            .then(response => response.json()) // JSON 형식으로 응답 파싱
+            .then(data => {
+                // 결과를 처리하고 표시
+                var resultContainer = document.getElementById("resultContainer");
+
+                if (data.length === 0) {
+                    resultContainer.textContent = "검색 결과가 없습니다.";
+                } else {
+                    var resultHTML = "";
+                    // 결과 데이터를 순회하며 HTML 생성
+                    data.forEach(item => {
+                        resultHTML +=
+                            "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
+                            "<div class='card-body'>" +
+                            "<h2 class='card-title'>" + item.name + "</h2>" +
+                            "<p>" + item.tel + "</p>" +
+                            "<p>" + item.addr + "</p>"+
+                            "<div class='card-actions justify-end'>"+
+                            "<form action='/hospital/${item.id}/inquiry' method='post'>" +
+                            "<input type='hidden' name='_csrf' value='token' />" +
+                            "<button class='btn btn-primary btn-sm'>1:1 채팅하기</button></form>"+
+                            "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
+                            "</div></div></div>";
+
+                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
+                    });
+
+                    resultContainer.innerHTML = resultHTML;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+
 </script>
 
 
@@ -197,7 +205,7 @@
 
     </div>
     <div class="navbar-center justify-content">
-        <a href="#" class="btn btn-ghost normal-case">기다리DOC</a>
+        <a href="/" class="btn btn-ghost normal-case">기다리닥</a>
     </div>
     <div class="navbar-end pr-4">
         <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
@@ -228,14 +236,19 @@
                 <span class="text-center fa-regular fa-folder fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">서류보관함</span>
             </a>
-            <a href="/" class="item">
-                <span class="text-center fa-regular fa-comments fa-2xl"></span>
-                <span class="text-center text-black text-[12px] font-normal mt-6">1:1 상담하기</span>
+            <a href="/member/mypage" class="item">
+                <span class="text-center fa-regular fa-user fa-2xl"></span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">마이페이지</span>
             </a>
         </div>
 
         <div class="inner-container">
-            <span class="text-center text-black text-[12px] font-normal">현재 대기 중인 병원이 없습니다.</span>
+            <th:block th:each="hospital : ${waitingHospitals}">
+                <span class="text-center text-black text-[12px] font-normal" th:text="${hospital.name}"></span>
+            </th:block>
+            <th:block th:if="${#lists.isEmpty(waitingHospitals)}">
+                <span class="text-center text-black text-[12px] font-normal">현재 대기 중인 병원이 없습니다.</span>
+            </th:block>
         </div>
         <div class="flex justify-end mt-[15px]">
             <form id="searchForm" th:action="@{/hospital/category/find}" class="input-group w-[500px]">
@@ -272,6 +285,7 @@
                 <button class="btn btn-primary" onclick="find(event)">검색</button>
                 <input type="hidden" name="page" value="1">
                 <input type="hidden" name="rows" value="10">
+                <input type='hidden' name='_csrf' value='token' />
                 </form>
         </div>
         <div class="container" style="margin-top: 15px">

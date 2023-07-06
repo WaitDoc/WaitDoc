@@ -2,6 +2,8 @@ package com.team13.WaitDoc.admin.controller;
 
 import java.util.List;
 
+import com.team13.WaitDoc.security.SecurityUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +32,9 @@ public class AdminController {
 	private final HospitalService hospitalService;
 
 	@PostMapping("/apply/{hospitalId}")
-	public String applyForAdmin(@PathVariable Long hospitalId, HttpSession session, Model model){
-		SessionMember sessionMember = (SessionMember) session.getAttribute("member");
-		Long memberId = sessionMember.getMemberId();
-		String memberName = sessionMember.getName();
+	public String applyForAdmin(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser){
 
-		Member member = memberService.findById(memberId);
+		Member member = memberService.findById(securityUser.getMemberId());
 		Hospital hospital = hospitalService.getHospital(hospitalId);
 
 		hospitalMemberService.applyForAdmin(member, hospital);

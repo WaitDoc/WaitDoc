@@ -4,6 +4,7 @@ import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.member.entity.Member;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
