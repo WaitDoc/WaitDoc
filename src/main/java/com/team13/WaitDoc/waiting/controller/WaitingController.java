@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.waiting.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalService;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
+import com.team13.WaitDoc.waiting.dto.WaitingListDTO;
 import com.team13.WaitDoc.waiting.dto.WaitingRequest;
 import com.team13.WaitDoc.waiting.service.WaitingService;
 
@@ -133,7 +135,15 @@ public class WaitingController {
 		if (sessionMember != null) {
 			Long memberId = sessionMember.getMemberId();
 			List<Hospital> waitingHospitals = waitingService.getWaitingHospitalsByMemberId(memberId);
-			model.addAttribute("waitingHospitals", waitingHospitals);
+
+			List<WaitingListDTO> waitingList = new ArrayList<>();
+
+			for (Hospital hospital : waitingHospitals) {
+				int myOrder = waitingService.getMyWaitingOrder(hospital.getId(), memberId);
+				waitingList.add(new WaitingListDTO(hospital, myOrder));
+			}
+
+			model.addAttribute("waitingList", waitingList);
 		}
 
 		return "waiting/waitinglist";
