@@ -14,5 +14,7 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
 	Waiting findByHospitalIdAndMemberId(Long hospitalId, Long memberId);
 	List<Waiting> findByHospitalId(Long hospitalId);
 	List<Waiting> findByMemberId(Long memberId);
+	List<Waiting> findByHospitalIdOrderByCreateDateAsc(Long hospitalId);
+
 
 }

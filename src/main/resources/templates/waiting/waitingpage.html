@@ -11,6 +11,9 @@
       <span class="text-2xl font-bold" th:text="${waitingCount}"></span>
     </div>
     <div class="mb-4">
+      <span th:text="'내 순서: ' + ${myOrder} + '번째'"></span>
+    </div>
+    <div class="mb-4">
       <form th:action="@{'/waiting/' + ${hospitalId}}" method="post">
         <input type="hidden" name="memberId" th:value="${memberId}" />
         <button type="submit" class="bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
