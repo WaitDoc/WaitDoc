@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.waiting.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -123,6 +124,19 @@ public class WaitingController {
 		waitingService.cancelWaiting(hospitalId, memberId);
 
 		return "redirect:/waiting/" + hospitalId;
+	}
+
+	@GetMapping("/waitinglist")
+	public String main(Model model, HttpSession session) {
+		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+
+		if (sessionMember != null) {
+			Long memberId = sessionMember.getMemberId();
+			List<Hospital> waitingHospitals = waitingService.getWaitingHospitalsByMemberId(memberId);
+			model.addAttribute("waitingHospitals", waitingHospitals);
+		}
+
+		return "waiting/waitinglist";
 	}
 
 }
