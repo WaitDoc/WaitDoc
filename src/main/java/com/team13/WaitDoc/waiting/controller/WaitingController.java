@@ -1,5 +1,7 @@
 package com.team13.WaitDoc.waiting.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalService;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
+import com.team13.WaitDoc.waiting.dto.WaitingListDTO;
 import com.team13.WaitDoc.waiting.dto.WaitingRequest;
 import com.team13.WaitDoc.waiting.service.WaitingService;
 
@@ -43,6 +46,8 @@ public class WaitingController {
 		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
 
 		Long memberId = sessionMember.getMemberId();
+
+		int myOrder = waitingService.getMyWaitingOrder(hospitalId, memberId);
 		Optional<Blacklist> blacklistOptional = blacklistService.getBlacklistByMemberId(memberId);
 		Blacklist blacklist = blacklistOptional.orElse(null);
 
@@ -50,6 +55,8 @@ public class WaitingController {
 		model.addAttribute("hospital", hospital);
 		model.addAttribute("hospitalName", hospitalName);
 		model.addAttribute("blacklist", blacklist);
+
+		model.addAttribute("myOrder", myOrder);
 
 		return "waiting/waitingpage";
 	}
@@ -119,6 +126,27 @@ public class WaitingController {
 		waitingService.cancelWaiting(hospitalId, memberId);
 
 		return "redirect:/waiting/" + hospitalId;
+	}
+
+	@GetMapping("/waitinglist")
+	public String main(Model model, HttpSession session) {
+		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+
+		if (sessionMember != null) {
+			Long memberId = sessionMember.getMemberId();
+			List<Hospital> waitingHospitals = waitingService.getWaitingHospitalsByMemberId(memberId);
+
+			List<WaitingListDTO> waitingList = new ArrayList<>();
+
+			for (Hospital hospital : waitingHospitals) {
+				int myOrder = waitingService.getMyWaitingOrder(hospital.getId(), memberId);
+				waitingList.add(new WaitingListDTO(hospital, myOrder));
+			}
+
+			model.addAttribute("waitingList", waitingList);
+		}
+
+		return "waiting/waitinglist";
 	}
 
 }
