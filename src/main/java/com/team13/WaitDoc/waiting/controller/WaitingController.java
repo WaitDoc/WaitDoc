@@ -43,6 +43,8 @@ public class WaitingController {
 		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
 
 		Long memberId = sessionMember.getMemberId();
+
+		int myOrder = waitingService.getMyWaitingOrder(hospitalId, memberId);
 		Optional<Blacklist> blacklistOptional = blacklistService.getBlacklistByMemberId(memberId);
 		Blacklist blacklist = blacklistOptional.orElse(null);
 
@@ -50,6 +52,8 @@ public class WaitingController {
 		model.addAttribute("hospital", hospital);
 		model.addAttribute("hospitalName", hospitalName);
 		model.addAttribute("blacklist", blacklist);
+
+		model.addAttribute("myOrder", myOrder);
 
 		return "waiting/waitingpage";
 	}
