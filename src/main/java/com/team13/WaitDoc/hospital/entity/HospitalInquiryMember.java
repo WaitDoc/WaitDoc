@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.hospital.entity;
 
+import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class HospitalInquiryMember { //hospitalInquiryMember
+public class HospitalInquiryMember extends BaseEntity { //hospitalInquiryMember
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
