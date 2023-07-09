@@ -10,6 +10,9 @@ import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.QDepartment;
 import com.team13.WaitDoc.hospital.repository.Hospital.HospitalDslRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Hospital> search(CategoryRequestDTO requestDTO) {
+    public Page<Hospital> search(CategoryRequestDTO requestDTO, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         if(requestDTO.getAddrs() != null){
             for(String addr:requestDTO.getAddrs()){
@@ -57,12 +60,16 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
         if(requestDTO.getNight() != null){
             builder.and(hospital.operatingTime.nightDays.isNotEmpty());
         }
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>1"+pageable.getOffset());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>2"+pageable.getPageSize());
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
-        return hospitals;
-
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), hospitals.size());
+        return new PageImpl<>(hospitals.subList(start, end), pageable, hospitals.size());
 
     }
 }

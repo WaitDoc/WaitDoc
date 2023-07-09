@@ -6,6 +6,7 @@ import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,6 @@ public class CategoryController {
     @ResponseBody
     @PostMapping("/find")
     public List<HospitalResponseDTO> find(@RequestBody CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
-        System.out.println(">>>>>>>>>"+requestDTO);
         return hospitalService.search(requestDTO);
     }
 

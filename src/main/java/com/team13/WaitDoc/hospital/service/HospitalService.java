@@ -7,6 +7,10 @@ import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.OperatingTime;
 import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.team13.WaitDoc.member.entity.Member;
@@ -48,8 +52,10 @@ public class HospitalService {
 
 
     public List<HospitalResponseDTO> search(CategoryRequestDTO requestDTO) {
-        List<Hospital> hospitals = hospitalRepository.search(requestDTO);
-        return hospitals
+        Sort sort = Sort.by(Sort.Direction.ASC, "name ");
+        Pageable pageable = PageRequest.of(requestDTO.getPage(), requestDTO.getRows(), sort);
+        return hospitalRepository.search(requestDTO, pageable)
+                .getContent()
                 .stream()
                 .map(Hospital::mapToDTO)
                 .collect(Collectors.toList());
@@ -68,7 +74,6 @@ public class HospitalService {
                     .name(item.getDutyName())
                     .addr(item.getDutyAddr())
                     .department(item.getDgidIdName())
-                    .classify(item.getDgidIdName())
                     .latitude(item.getWgs84Lat())
                     .longitude(item.getWgs84Lon())
                     .canAdmit(item.getDutyHayn() == 1)

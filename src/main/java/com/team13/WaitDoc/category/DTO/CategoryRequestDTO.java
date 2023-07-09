@@ -18,9 +18,9 @@ public class CategoryRequestDTO {
     private Boolean holiday;//공휴일 진료 가능 병원
     private Boolean admission;//입원 가능 병원
     @Setter
-    private int page = 1;
+    private int page = 0;
     @Setter
-    private int rows = 40;
+    private int rows = 10;
 
     public String[] getAddrs(){
         if(location != null && !location.isBlank()){

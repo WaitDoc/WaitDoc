@@ -106,6 +106,17 @@
     document.addEventListener('click', function(event) {
         var clickedElement = event.target;
         console.log(">>>>>>>>>"+clickedElement.type);
+        let page = parseInt(document.getElementById("page").value);
+        if(clickedElement.id === 'nextPage'){
+            document.getElementById("page").value = page+1;
+            find(null);
+        }
+
+        if(clickedElement.id === 'prePage' & page>0){
+            document.getElementById("page").value = page-1;
+            find(null);
+        }
+
         //셀렉트를 클릭했을 때
         if(clickedElement.type==='select-one' && clickedElement.classList.contains('dep-slct')){
             var checkboxes = document.querySelectorAll('.dep-chck');
@@ -147,7 +158,8 @@
         return params;
     }
     function find(event){
-        event.preventDefault(); // 폼의 기본 동작 중지
+        if(event != null)
+            event.preventDefault(); // 폼의 기본 동작 중지
 
         let searchForm = document.getElementById('searchForm');
         let formData =new FormData(searchForm);
@@ -170,27 +182,6 @@
                 if (data.length === 0) {
                     resultContainer.textContent = "검색 결과가 없습니다.";
                 } else {
-                    console.log(data)
-                    //var resultHTML = "";
-                    // 결과 데이터를 순회하며 HTML 생성
-                    // data.forEach(item => {
-                    //     resultHTML +=
-                    //         "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
-                    //         "<div class='card-body'>" +
-                    //         "<h2 class='card-title'>" + item.name + "</h2>" +
-                    //         "<p>" + item.tel + "</p>" +
-                    //         "<p>" + item.addr + "</p>"+
-                    //         "<div class='badge badge-neutral badge-sm'>" +
-                    //         "<span class='label-text text-white'>"+item.nightDays[0]+"</span></div>" +
-                    //         "<div class='card-actions justify-end'>"+
-                    //         "<form action='/hospital/${item.id}/inquiry' method='post'>" +
-                    //         "<input type='hidden' name='_csrf' value='token' />" +
-                    //         "<button class='btn btn-primary btn-sm'>1:1 채팅하기</button></form>"+
-                    //         "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
-                    //         "</div></div></div>";
-                    //
-                    //     // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
-                    // });
                     let resultHTML = data.map(item => {
                         let tagsHTML = '<div class="flex flex-wrap">';
                         if (item.nightDays.length > 0) {
@@ -348,8 +339,8 @@
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
                 <button class="btn btn-primary" onclick="find(event)">검색</button>
-                <input type="hidden" name="page" value="1">
-                <input type="hidden" name="rows" value="10">
+                <input type="hidden" id="page" name="page" value="0">
+                <input type="hidden" id="rows" name="rows" value="10">
                 <input type='hidden' name='_csrf' value='token' />
                 </form>
         </div>
@@ -434,6 +425,10 @@
         <div id="resultContainer" class="container flex flex-col items-center h-auto">
 
         </div>
+    </div>
+    <div class="join grid grid-cols-2 m-2">
+        <button class="join-item btn btn-outline btn-primary" id="prePage">이전</button>
+        <button class="join-item btn btn-outline btn-primary" id="nextPage">다음</button>
     </div>
 </div>
 </body>
