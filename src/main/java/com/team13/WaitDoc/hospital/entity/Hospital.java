@@ -82,6 +82,14 @@ public class Hospital extends BaseEntity {
                 .info(introduction)
                 .wgs84Lat(latitude)
                 .wgs84Lon(longitude)
+                .nightDays(operatingTime.getNightDays().split(" "))
+                .holiday(operatingTime.getHolidayStartTime() != null
+                        && operatingTime.getHolidayEndTime() != null)
+                .saturday(operatingTime.getSatStartTime() != null
+                        && operatingTime.getSatEndTime() != null)
+                .sunday(operatingTime.getSunStartTime() != null
+                        && operatingTime.getSunEndTime() != null)
+                .canAdmit(canAdmit)
                 .build();
     }
 

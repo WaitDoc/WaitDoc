@@ -43,4 +43,6 @@ public class OperatingTime extends BaseEntity {
 
     private LocalTime holidayStartTime;
     private LocalTime holidayEndTime;
+
+    private String nightDays;
 }

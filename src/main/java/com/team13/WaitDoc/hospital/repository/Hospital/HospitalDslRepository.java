@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.hospital.repository;
+package com.team13.WaitDoc.hospital.repository.Hospital;
 
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;

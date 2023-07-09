@@ -80,7 +80,7 @@ public class HospitalXml {
         public void setAdditionalProperty(String key, Object value) {
             additionalProperties.put(key, value);
         }
-        public LocalTime intToTime(int time){
+        public static LocalTime intToTime(int time){
             int hour = time/100 > 23? time/100%24 : time/100;
             if(time == 0)
                 return null;

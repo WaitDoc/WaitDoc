@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.hospital.repository;
+package com.team13.WaitDoc.hospital.repository.Department;
 
 import com.team13.WaitDoc.hospital.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;

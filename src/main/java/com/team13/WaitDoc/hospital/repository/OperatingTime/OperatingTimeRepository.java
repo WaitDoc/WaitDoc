@@ -1,4 +1,4 @@
-package com.team13.WaitDoc.hospital.repository;
+package com.team13.WaitDoc.hospital.repository.OperatingTime;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.OperatingTime;

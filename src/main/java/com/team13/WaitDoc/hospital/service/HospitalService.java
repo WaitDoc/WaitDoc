@@ -4,7 +4,8 @@ import com.team13.WaitDoc.base.util.HospitalXml;
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.repository.HospitalRepository;
+import com.team13.WaitDoc.hospital.entity.OperatingTime;
+import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -45,7 +48,8 @@ public class HospitalService {
 
 
     public List<HospitalResponseDTO> search(CategoryRequestDTO requestDTO) {
-        return hospitalRepository.search(requestDTO)
+        List<Hospital> hospitals = hospitalRepository.search(requestDTO);
+        return hospitals
                 .stream()
                 .map(Hospital::mapToDTO)
                 .collect(Collectors.toList());

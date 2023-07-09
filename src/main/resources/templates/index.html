@@ -170,24 +170,88 @@
                 if (data.length === 0) {
                     resultContainer.textContent = "검색 결과가 없습니다.";
                 } else {
-                    var resultHTML = "";
+                    console.log(data)
+                    //var resultHTML = "";
                     // 결과 데이터를 순회하며 HTML 생성
-                    data.forEach(item => {
-                        resultHTML +=
-                            "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
-                            "<div class='card-body'>" +
-                            "<h2 class='card-title'>" + item.name + "</h2>" +
-                            "<p>" + item.tel + "</p>" +
-                            "<p>" + item.addr + "</p>"+
-                            "<div class='card-actions justify-end'>"+
-                            "<form action='/hospital/${item.id}/inquiry' method='post'>" +
-                            "<input type='hidden' name='_csrf' value='token' />" +
-                            "<button class='btn btn-primary btn-sm'>1:1 채팅하기</button></form>"+
-                            "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
-                            "</div></div></div>";
+                    // data.forEach(item => {
+                    //     resultHTML +=
+                    //         "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
+                    //         "<div class='card-body'>" +
+                    //         "<h2 class='card-title'>" + item.name + "</h2>" +
+                    //         "<p>" + item.tel + "</p>" +
+                    //         "<p>" + item.addr + "</p>"+
+                    //         "<div class='badge badge-neutral badge-sm'>" +
+                    //         "<span class='label-text text-white'>"+item.nightDays[0]+"</span></div>" +
+                    //         "<div class='card-actions justify-end'>"+
+                    //         "<form action='/hospital/${item.id}/inquiry' method='post'>" +
+                    //         "<input type='hidden' name='_csrf' value='token' />" +
+                    //         "<button class='btn btn-primary btn-sm'>1:1 채팅하기</button></form>"+
+                    //         "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
+                    //         "</div></div></div>";
+                    //
+                    //     // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
+                    // });
+                    let resultHTML = data.map(item => {
+                        let tagsHTML = '<div class="flex flex-wrap">';
+                        if (item.nightDays.length > 0) {
+                            tagsHTML += item.nightDays.map(day => `
+                                <div class="badge badge-neutral badge-sm m-[2px]">
+                                    <span class="label-text text-white text-xs">🌙${day}</span>
+                                </div>
+                            `).join('');
+                        }
 
-                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
-                    });
+                        if (item.holiday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">공휴일 진료</span>
+                                </div>
+                            `;
+                        }
+
+                        if (item.saturday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">토요일 진료</span>
+                                </div>
+                            `;
+                        }
+
+                        if (item.sunday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">일요일 진료</span>
+                                </div>
+                            `;
+                        }
+
+                        if (item.canAdmit){
+                            tagsHTML += `
+                                <div class="badge badge-secondary badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">입원가능</span>
+                                </div>
+                            `;
+                        }
+                        tagsHTML+='</div>';
+
+                        return `
+                            <div class="card w-96 bg-base-100 shadow-xl mb-2">
+                                <div class="card-body">
+                                    <h2 class="card-title">${item.name}</h2>
+                                    <p>${item.tel}</p>
+                                    <p>${item.addr}</p>
+                                    ${tagsHTML}
+                                    <div class="card-actions justify-end">
+                                        <form action="/hospital/${item.id}/inquiry" method="post">
+                                            <input type="hidden" name="_csrf" value="token" />
+                                            <button class="btn btn-primary btn-sm">1:1 채팅하기</button>
+                                        </form>
+                                        <a class="btn btn-sm bg-blue-400 text-white ml-2" href="/waiting/${item.id}">원격 줄서기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
 
                     resultContainer.innerHTML = resultHTML;
                 }
