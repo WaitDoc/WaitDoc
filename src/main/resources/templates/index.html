@@ -161,9 +161,9 @@
         <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
             Sign in
         </a>
-        <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-sm btn-neutral">
-            Logout
-        </a>
+        <form th:action="@{/member/logout}" method="post" sec:authorize="isAuthenticated()">
+            <input type="submit" value="Logout" class="btn btn-sm btn-neutral" />
+        </form>
     </div>
 </nav>
 <div class="main">

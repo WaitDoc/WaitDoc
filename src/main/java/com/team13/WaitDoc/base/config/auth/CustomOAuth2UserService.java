@@ -33,31 +33,35 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = service.loadUser(userRequest); // OAuth2 정보 가져오기
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 소셜 정보 가져오기
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        Member member = save(attributes);
 
+        // 기존 회원 정보 찾기
+        Member existingMember = memberService.findByEmail(attributes.getEmail());
+
+        if (existingMember == null) {
+            // 그렇지 않으면 새로운 회원 저장
+            existingMember = save(attributes);
+        }
         //세션 멤버 객체 추가
-        SessionMember sessionMember = new SessionMember(member);
+        SessionMember sessionMember = new SessionMember(existingMember);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         session.setAttribute("member", sessionMember);
 
         SecurityUser securityUser = SecurityUser.builder()
-            .name(member.getName())
-            .email(member.getEmail())
-            .memberId(member.getId())
-            .authorities(Collections.singleton(new SimpleGrantedAuthority(member.getMemberRole().getKey())))
-            .build();
+                .name(existingMember.getName())
+                .email(existingMember.getEmail())
+                .memberId(existingMember.getId())
+                .authorities(Collections.singleton(new SimpleGrantedAuthority(existingMember.getMemberRole().getKey())))
+                .build();
 
         return securityUser;
     }
-
 
     private Member save(OAuthAttributes attributes) {
         return memberService.save(attributes);
