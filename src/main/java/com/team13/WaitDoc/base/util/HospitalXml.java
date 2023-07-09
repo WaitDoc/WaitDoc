@@ -31,6 +31,10 @@ public class HospitalXml {
         public int totalCount; // 데이터 개수
     }
     @Data
+    static public class HospitalEntity{
+
+    }
+    @Data
     static public class Item{
         private String dutyAddr; //주소 (서울 특별시 서대문구...)
         private String dgidIdName; //병원 진료 과목
@@ -96,22 +100,22 @@ public class HospitalXml {
                     .hpid(hpid)
                     .tel(dutyTel1)
                     .introduction(dutyInf)
-                    .monStartTime(intToTime(dutyTime1s))
-                    .monEndTime(intToTime(dutyTime1c))
-                    .tueStartTime(intToTime(dutyTime2s))
-                    .tueEndTime(intToTime(dutyTime2c))
-                    .wedStartTime(intToTime(dutyTime3s))
-                    .wedEndTime(intToTime(dutyTime3c))
-                    .thuStartTime(intToTime(dutyTime4s))
-                    .thuEndTime(intToTime(dutyTime4c))
-                    .friStartTime(intToTime(dutyTime5s))
-                    .friEndTime(intToTime(dutyTime5c))
-                    .satStartTime(intToTime(dutyTime6s))
-                    .satEndTime(intToTime(dutyTime6c))
-                    .sunStartTime(intToTime(dutyTime7s))
-                    .sunEndTime(intToTime(dutyTime7c))
-                    .holidayStartTime(intToTime(dutyTime8s))
-                    .holidayEndTime(intToTime(dutyTime8c))
+//                    .monStartTime(intToTime(dutyTime1s))
+//                    .monEndTime(intToTime(dutyTime1c))
+//                    .tueStartTime(intToTime(dutyTime2s))
+//                    .tueEndTime(intToTime(dutyTime2c))
+//                    .wedStartTime(intToTime(dutyTime3s))
+//                    .wedEndTime(intToTime(dutyTime3c))
+//                    .thuStartTime(intToTime(dutyTime4s))
+//                    .thuEndTime(intToTime(dutyTime4c))
+//                    .friStartTime(intToTime(dutyTime5s))
+//                    .friEndTime(intToTime(dutyTime5c))
+//                    .satStartTime(intToTime(dutyTime6s))
+//                    .satEndTime(intToTime(dutyTime6c))
+//                    .sunStartTime(intToTime(dutyTime7s))
+//                    .sunEndTime(intToTime(dutyTime7c))
+//                    .holidayStartTime(intToTime(dutyTime8s))
+//                    .holidayEndTime(intToTime(dutyTime8c))
                     .build();
         }
     }

@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.hospital.service;
 
+import com.team13.WaitDoc.base.util.HospitalXml;
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.dto.HospitalResponseDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
@@ -57,4 +58,24 @@ public class HospitalService {
         hospitalMemberService.applyForAdmin(member, hospital);
     }
 
+    public Hospital toEntity(HospitalXml.Item item){
+        if(findByHpid(item.getHpid()).isEmpty())
+            return Hospital.builder()
+                    .name(item.getDutyName())
+                    .addr(item.getDutyAddr())
+                    .department(item.getDgidIdName())
+                    .classify(item.getDgidIdName())
+                    .latitude(item.getWgs84Lat())
+                    .longitude(item.getWgs84Lon())
+                    .canAdmit(item.getDutyHayn() == 1)
+                    .hpid(item.getHpid())
+                    .tel(item.getDutyTel1())
+                    .introduction(item.getDutyInf())
+                    .build();
+        return null;
+    }
+
+    public void saveAll(List<Hospital> hospitals) {
+        hospitalRepository.saveAll(hospitals);
+    }
 }
