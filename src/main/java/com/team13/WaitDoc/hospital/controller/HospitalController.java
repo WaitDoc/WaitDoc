@@ -47,7 +47,7 @@ public class HospitalController {
         return "hospital/detail";
     }
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public String main(Model model, HttpSession session) {
         SessionMember sessionMember = (SessionMember)session.getAttribute("member");
 
@@ -58,6 +58,12 @@ public class HospitalController {
         }
 
         return "index";
+    }
+
+    @GetMapping("/")
+    public String home() {
+
+        return "main";
     }
 
     @PostMapping("/hospital/{hospitalId}/inquiry")
