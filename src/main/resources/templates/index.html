@@ -107,6 +107,11 @@
         var clickedElement = event.target;
         console.log(">>>>>>>>>"+clickedElement.type);
         let page = parseInt(document.getElementById("page").value);
+
+        if(clickedElement.id === 'search-btn'){
+            document.getElementById("page").value =0;
+        }
+
         if(clickedElement.id === 'nextPage'){
             document.getElementById("page").value = page+1;
             find(null);
@@ -184,7 +189,7 @@
                 } else {
                     let resultHTML = data.map(item => {
                         let tagsHTML = '<div class="flex flex-wrap">';
-                        if (item.nightDays.length > 0) {
+                        if (item.nightDays.length > 0 && item.nightDays[0].trim().length > 0) {
                             tagsHTML += item.nightDays.map(day => `
                                 <div class="badge badge-neutral badge-sm m-[2px]">
                                     <span class="label-text text-white text-xs">🌙${day}</span>
@@ -338,7 +343,7 @@
                 </select>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
-                <button class="btn btn-primary" onclick="find(event)">검색</button>
+                <button class="btn btn-primary" id="search-btn" onclick="find(event)">검색</button>
                 <input type="hidden" id="page" name="page" value="0">
                 <input type="hidden" id="rows" name="rows" value="10">
                 <input type='hidden' name='_csrf' value='token' />
