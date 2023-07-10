@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>내 대기 목록</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.0/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<section layout:fragment="main">
+  <div class="flex justify-center items-center h-screen">
+    <div class="space-y-4">
+      <th:block th:each="item : ${waitingList}">
+        <div class="flex justify-between items-center space-x-4">
+          <div class="bg-gray-100 rounded-lg p-4 shadow-md">
+            <span class="text-gray-700 text-lg" th:text="${item.hospital.name}"></span>
+          </div>
+          <div class="bg-blue-100 rounded-lg p-4 shadow-md">
+            <span class="text-gray-700 text-lg" th:text="'내 순서: ' + (${item.myOrder} != null ? ${item.myOrder} : 'N/A') + '번째'"></span>
+          </div>
+        </div>
+      </th:block>
+      <th:block th:if="${#lists.isEmpty(waitingList)}">
+        <span class="text-gray-700 font-bold text-xl">현재 대기 중인 병원이 없습니다.</span>
+      </th:block>
+    </div>
+  </div>
+</section>
+</body>
+</html>

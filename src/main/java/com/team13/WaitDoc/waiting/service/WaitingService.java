@@ -76,6 +76,17 @@ public class WaitingService {
 			.collect(Collectors.toList());
 	}
 
+	//순서를 조회하는 메서드
+	public int getMyWaitingOrder(Long hospitalId, Long memberId) {
+		List<Waiting> waitingList = waitingRepository.findByHospitalIdOrderByCreateDateAsc(hospitalId);
+		for (int i = 0; i < waitingList.size(); i++) {
+			if (waitingList.get(i).getMember().getId().equals(memberId)) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+
 
 }
 

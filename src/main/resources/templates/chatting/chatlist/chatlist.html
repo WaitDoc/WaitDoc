@@ -2,27 +2,34 @@
 <head>
     <head>
         <meta charset="UTF-8">
-        <title>Chat Room List</title>
+        <title>문의 내역</title>
     </head>
 <body>
-<h1>Chat Room List</h1>
-<table>
-    <thead>
-    <tr>
-        <th>병원명</th>
-        <th>채팅 날짜</th>
-        <th>채팅방</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="hospitalInquiry : ${hospitalInquiries}">
-        <td th:text="${hospitalInquiry.hospital.name}"></td>
-        <td th:text="${hospitalInquiry.hospital.createDate}"></td>
-        <td>
-            <a th:href="@{/chatroom/{roomId}(roomId=${hospitalInquiry.id})}">Enter Chat Room</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<main layout:fragment="main" class="w-screen h-full">
+    <div class="flex justify-center">
+        <p class="text-2xl" th:if="${#lists.isEmpty(hospitalInquiries)}">
+            문의 내역이 없습니다.
+        </p>
+        <table class="table w-fit" th:if="${!#lists.isEmpty(hospitalInquiries)}">
+            <thead>
+            <tr>
+                <th>병원명</th>
+                <th>채팅 날짜</th>
+                <th>채팅방</th>
+            </tr>
+            </thead>
+            <tbody th:each="hospitalInquiry: ${hospitalInquiries}">
+            <tr>
+                <td th:text="${hospitalInquiry.hospital.name}"></td>
+                <td th:text="${#temporals.format(hospitalInquiry.hospital.createDate, 'yyyy-MM-dd')}"></td>
+                <td>
+                    <a th:href="@{'/hospitalInquiry/' + ${hospitalInquiry.id}}"><button class='btn btn-primary btn-sm' style='background-color: #67bef0; border: none; color: white;'>ENTER</button></a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 </body>
 </html>
