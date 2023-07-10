@@ -12,4 +12,5 @@ public class WaitDocApplication {
 		SpringApplication.run(WaitDocApplication.class, args);
 	}
 
+
 }

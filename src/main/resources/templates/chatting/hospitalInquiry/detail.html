@@ -9,35 +9,129 @@
         const hospitalInquiryId = /*[[${hospitalInquiry.id}]]*/ '';
     </script>
     <script th:src="@{/js/inquiryMessage.js}" type="application/javascript"></script>
+    <style>
+
+        .room-info {
+            flex: 0 0 auto;
+            max-width: 100%;
+        }
+
+        .chat-messages {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            border: 1px #cffad1;
+            border-radius: 15px;
+        }
+
+        .chat-input {
+            flex: 0 0 auto;
+            position: fixed;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat__write-message {
+            display: flex;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            padding: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .chat__write-message input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .chat__write-message input[type="submit"] {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #67bef0;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .chat__message-ul {
+            list-style-type: none;
+            position: center;
+            padding: 0;
+            height: calc(100vh - 200px);
+            background-color:#fff;
+            word-break: break-all;
+        }
+
+        .chat__message-ul li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #c3e6fa;
+            width: max-content;
+            max-width: 45%;
+            word-break: break-all;
+        }
+        .chat__message-ul li.sender {
+            margin-left: auto;
+            text-align: left;
+            border-radius: 15px;
+        }
+
+        .chat__message-ul li.receiver {
+            margin-right: auto;
+            text-align: left;
+            border-radius: 15px;
+        }
+        .chat__message-ul li.center {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-radius: 15px;
+        }
+        .chat__message-ul li .message-time {
+            font-size: 10px; /* 폰트 크기 조정 */
+        }
+    </style>
 </head>
 
 <body>
-<main layout:fragment="main" class="w-screen h-full">
+<main layout:fragment="main">
+<section class="container3 flex justify-end">
+    <form class="mt-10 mr-10" th:action="@{/{hospitalInquiryId}/endChat(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="if (!confirm('문의를 종료하시겠습니까?')) return false; disconnect()">
+        <button class="btn btn-primary ml-2" type="submit" style="background-color: #f55e56; color: white; border-color: transparent;">문의 종료</button>
+    </form>
+</section>
 <section class="container">
+
     <div class="room-info">
         <table>
             <tbody>
             <tr>
-<!--                <td th:text="${hospital.name}"></td>-->
-                <div class="dropdown">
-                    <label tabindex="0" class="btn btn-ghost btn-circle">
-                        <i class="fa-solid fa-bars"></i>
-                    </label>
-                    <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-64">
-                        <li>
+<!--             <td th:text="${hospital.name}"></td>-->
 
-                            <form th:action="@{/{hospitalInquiryId}/endChat(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="if ( !confirm('문의를 종료하시겠습니까?') ) return false; disconnect()">
-                                <input type="hidden" name="_method" value="delete">
-                                <button>문의 종료</button>
-                            </form>
-                        </li>
-<!--                        <li th:if="${member.id == #}">//admin이면-->
+                <!--                        <li th:if="${member.id == #}">//admin이면-->
 <!--                            <form th:action="@{/{hospitalInquiryId}/delete(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="return confirm('채팅방을 삭제하시겠습니까?')">-->
 <!--                                <button type="submit">채팅방 삭제</button>-->
 <!--                            </form>-->
 <!--                        </li>-->
                     </ul>
-                </div>
             </tr>
             </tbody>
         </table>
@@ -60,6 +154,7 @@
         </form>
     </section>
 </section>
+
 </main>
 </body>
 </html>

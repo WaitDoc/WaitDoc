@@ -7,7 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.repository.HospitalRepository;
+import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.repository.MemberRepository;
 import com.team13.WaitDoc.waiting.dto.WaitingInfo;

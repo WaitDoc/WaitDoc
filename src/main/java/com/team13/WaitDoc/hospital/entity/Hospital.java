@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder(toBuilder = true)
 @Entity
+@Table(indexes = @Index(name = "hpid_index", columnList = "hpid"))
 public class Hospital extends BaseEntity {
     @OneToMany(mappedBy = "hospital")
     private List<Department> departments;
@@ -43,6 +44,7 @@ public class Hospital extends BaseEntity {
 
     private String classify;
 
+    @Column(name = "hpid", unique = true)
     private String hpid;
 
     private double latitude;
@@ -53,29 +55,8 @@ public class Hospital extends BaseEntity {
 
     private String tel;
 
-    private LocalTime monStartTime;
-    private LocalTime monEndTime;
-
-    private LocalTime tueStartTime;
-    private LocalTime tueEndTime;
-
-    private LocalTime wedStartTime;
-    private LocalTime wedEndTime;
-
-    private LocalTime thuStartTime;
-    private LocalTime thuEndTime;
-
-    private LocalTime friStartTime;
-    private LocalTime friEndTime;
-
-    private LocalTime satStartTime;
-    private LocalTime satEndTime;
-
-    private LocalTime sunStartTime;
-    private LocalTime sunEndTime;
-
-    private LocalTime holidayStartTime;
-    private LocalTime holidayEndTime;
+    @OneToOne(mappedBy = "hospital")
+    private OperatingTime operatingTime;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
@@ -86,15 +67,29 @@ public class Hospital extends BaseEntity {
     }
 
     public HospitalResponseDTO mapToDTO(){
+        String[] departmentsArray;
+        if (department != null) {
+            departmentsArray = department.split(",");
+        } else {
+            departmentsArray = new String[0];
+        }
         return HospitalResponseDTO.builder()
                 .id(getId())
                 .name(name)
-                .department(department.split(","))
+                .department(departmentsArray)
                 .tel(tel)
                 .addr(addr)
                 .info(introduction)
                 .wgs84Lat(latitude)
                 .wgs84Lon(longitude)
+                .nightDays(operatingTime.getNightDays().split(" "))
+                .holiday(operatingTime.getHolidayStartTime() != null
+                        && operatingTime.getHolidayEndTime() != null)
+                .saturday(operatingTime.getSatStartTime() != null
+                        && operatingTime.getSatEndTime() != null)
+                .sunday(operatingTime.getSunStartTime() != null
+                        && operatingTime.getSunEndTime() != null)
+                .canAdmit(canAdmit)
                 .build();
     }
 
