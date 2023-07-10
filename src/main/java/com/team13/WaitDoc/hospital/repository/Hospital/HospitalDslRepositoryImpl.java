@@ -60,16 +60,13 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
         if(requestDTO.getNight() != null){
             builder.and(hospital.operatingTime.nightDays.isNotEmpty());
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>1>"+pageable.getOffset());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>2>"+pageable.getPageSize());
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), hospitals.size());
-        return new PageImpl<>(hospitals.subList(start, end), pageable, hospitals.size());
+
+        return new PageImpl<>(hospitals, pageable, hospitals.size());
 
     }
 }

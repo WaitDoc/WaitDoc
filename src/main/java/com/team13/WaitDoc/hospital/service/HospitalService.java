@@ -54,11 +54,22 @@ public class HospitalService {
     public List<HospitalResponseDTO> search(CategoryRequestDTO requestDTO) {
         Sort sort = Sort.by(Sort.Direction.ASC, "name ");
         Pageable pageable = PageRequest.of(requestDTO.getPage(), requestDTO.getRows(), sort);
-        return hospitalRepository.search(requestDTO, pageable)
+        Page<Hospital> pages = hospitalRepository.search(requestDTO, pageable);
+        List<HospitalResponseDTO> l = pages
                 .getContent()
                 .stream()
                 .map(Hospital::mapToDTO)
                 .collect(Collectors.toList());
+        List<Hospital> lists = pages.getContent();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>1>"+pages.getTotalElements());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>2>"+pages.getContent().size());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>3>"+l.size());
+//        return hospitalRepository.search(requestDTO, pageable)
+//                .getContent()
+//                .stream()
+//                .map(Hospital::mapToDTO)
+//                .collect(Collectors.toList());
+        return l;
     }
 
     public void applyForAdmin(Long memberId, Long hospitalId) {
