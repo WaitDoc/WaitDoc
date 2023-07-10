@@ -7,20 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.blacklist.entity.Blacklist;
 import com.team13.WaitDoc.blacklist.service.BlacklistService;
 import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.service.HospitalMemberService;
-import com.team13.WaitDoc.hospital.service.HospitalService;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.repository.MemberRepository;
-import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.waiting.dto.WaitingInfo;
 import com.team13.WaitDoc.waiting.service.WaitingService;
-import com.team13.WaitDoc.hospital.repository.HospitalRepository;
+import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller

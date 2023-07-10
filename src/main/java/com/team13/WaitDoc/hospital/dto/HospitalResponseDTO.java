@@ -27,6 +27,16 @@ public class HospitalResponseDTO {
 
     private double wgs84Lon;
 
+    private String[] nightDays;
+
+    private boolean holiday;
+
+    private boolean saturday;
+
+    private boolean sunday;
+
+    private boolean canAdmit;
+
     @JsonProperty("hpid")
     private String hpid;
 }
