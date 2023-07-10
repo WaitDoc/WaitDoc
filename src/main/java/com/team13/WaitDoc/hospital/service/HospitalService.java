@@ -54,6 +54,7 @@ public class HospitalService {
     public List<HospitalResponseDTO> search(CategoryRequestDTO requestDTO) {
         Sort sort = Sort.by(Sort.Direction.ASC, "name ");
         Pageable pageable = PageRequest.of(requestDTO.getPage(), requestDTO.getRows(), sort);
+
         return hospitalRepository.search(requestDTO, pageable)
                 .getContent()
                 .stream()
