@@ -60,6 +60,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
         if(requestDTO.getNight() != null){
             builder.and(hospital.operatingTime.nightDays.isNotEmpty());
         }
+
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
                 .offset(pageable.getOffset())
@@ -67,6 +68,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
                 .fetch();
 
         return new PageImpl<>(hospitals, pageable, hospitals.size());
+
 
     }
 }
