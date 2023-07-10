@@ -60,8 +60,8 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
         if(requestDTO.getNight() != null){
             builder.and(hospital.operatingTime.nightDays.isNotEmpty());
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>1"+pageable.getOffset());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>2"+pageable.getPageSize());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>1>"+pageable.getOffset());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>2>"+pageable.getPageSize());
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
                 .offset(pageable.getOffset())
