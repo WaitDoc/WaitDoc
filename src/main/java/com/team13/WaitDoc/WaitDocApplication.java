@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
+@EnableJpaAuditing
 public class WaitDocApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WaitDocApplication.class, args);
 	}
+
 
 }
