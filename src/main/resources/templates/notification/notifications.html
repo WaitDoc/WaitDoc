@@ -17,9 +17,8 @@
   <ul>
     <li th:each="notification : ${notifications}">
       <!-- You can customize the following structure to display the notifications as you prefer -->
-      <p th:text="${notification.title}"></p>
       <p th:text="${notification.content}"></p>
-      <p th:text="${notification.time}"></p>
+      <p th:text="${notification.createDate}"></p>
       <form th:action="@{/notifications/{id}/read(id=${notification.id})}" method="post">
         <input type="submit" value="Mark as read"/>
       </form>
