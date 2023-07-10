@@ -2,6 +2,7 @@ package com.team13.WaitDoc.member.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.blacklist.entity.Blacklist;
@@ -60,5 +61,12 @@ public class Member extends BaseEntity {
         this.birthday = birthday;
         this.memberRole = memberRole;
     }
+
+    public List<Long> getHospitalIds() {
+        return waitings.stream()
+            .map(w -> w.getHospital().getId())
+            .collect(Collectors.toList());
+    }
+
 
 }

@@ -22,13 +22,21 @@ public class QHospitalInquiryMember extends EntityPathBase<HospitalInquiryMember
 
     public static final QHospitalInquiryMember hospitalInquiryMember = new QHospitalInquiryMember("hospitalInquiryMember");
 
+    public final com.team13.WaitDoc.base.entity.QBaseEntity _super = new com.team13.WaitDoc.base.entity.QBaseEntity(this);
+
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createDate = _super.createDate;
 
     public final QHospitalInquiry hospitalInquiry;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final com.team13.WaitDoc.member.entity.QMember member;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifyDate = _super.modifyDate;
 
     public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
