@@ -36,23 +36,28 @@ public class HospitalInquiryController {
         return "chatting/chatlist/chatlist";
     }
 
-    @GetMapping("/chatList")
+    @GetMapping("/member/chatList")
     public String memberInquiryList(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
         List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByMemberId(securityUser.getMemberId());
-        model.addAttribute("hospitalInquiry", hospitalInquiries);
+        model.addAttribute("hospitalInquiries", hospitalInquiries);
         return "chatting/chatlist/chatlist";
     }
+
+//    @PostMapping("/hospitalInquiry/{hospitalInquiryId}/endChat")
+//    public String endChat(@PathVariable Long hospitalInquiryId) {
+//        return endInquiry(hospitalInquiryId);
+//    }
 
     @PostMapping("/{hospitalInquiryId}/endChat")
     public String endInquiry(@PathVariable Long hospitalInquiryId) {
         hospitalInquiryService.endInquiry(hospitalInquiryId);
-        return "redirect:/chatList";
+        return "redirect:/member/chatList";
     }
 
     @PostMapping("/{hospitalInquiryId}/delete")
     public String deleteInquiry(@PathVariable Long hospitalInquiryId) {
         hospitalInquiryService.deleteInquiry(hospitalInquiryId);
-        return "redirect:/chatList";
+        return "redirect:/member/chatList";
     }
 
 }

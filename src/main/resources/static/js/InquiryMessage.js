@@ -2,6 +2,7 @@ let stompClient = null;
 let fromId = 0;
 let ChatMessageUl = null;
 
+
 function getChatMessages() {
     console.log("fromId : " + fromId);
     fetch(`/inquiry/${hospitalInquiryId}/messages?fromId=${fromId}`, {
@@ -30,6 +31,7 @@ function drawMessages(messages) {
 
         ChatMessageUl.appendChild(newItem);
     });
+    scrollToBottom();
 }
 
 function ChatWriteMessage(form) {
@@ -58,13 +60,7 @@ function connect() {
             getChatMessages();
         });
 
-        stompClient.subscribe(`/${hospitalInquiryId}/endChat`, function (data) {
-            console.log(data);
-            // if (data.body == memberId) {
-            //     disconnect();
-            //     location.reload();
-            // }
-        });
+
     });
 }
 
@@ -82,3 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
     connect();
 });
 
+function scrollToBottom() {
+    const chatMessages = document.querySelector('.chat-messages');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
