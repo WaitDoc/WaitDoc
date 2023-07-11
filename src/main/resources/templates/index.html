@@ -239,16 +239,13 @@
                                     <p>${item.tel}</p>
                                     <p>${item.addr}</p>
                                     ${tagsHTML}
-                                     <div class="card-actions justify-end mt-4">
-                                        <form action="/hospital/${item.id}/inquiry" method="post">
-                                            <input type="hidden" name="_csrf" value="token" />
-                                            <button class="btn btn-primary btn-sm">1:1 채팅하기</button>
-                                        </form>
+                                    <div class="card-actions justify-end">
+
+                                        <a class="btn btn-primary btn-sm" href="/hospital/${item.id}/inquiry">1:1 채팅하기</a>
                                         <a class="btn btn-sm bg-blue-400 text-white ml-2" href="/waiting/${item.id}">원격 줄서기</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         `;
                     }).join('');
 
