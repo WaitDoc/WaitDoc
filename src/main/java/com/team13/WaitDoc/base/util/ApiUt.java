@@ -29,8 +29,6 @@ public class ApiUt {
                     .page(requestDTO.getPage())
                     .rows(requestDTO.getRows())
                     .name(requestDTO.getName())
-//                    .region(requestDTO.getRegion())
-//                    .addr(requestDTO.getAddr())
                     .classify(requestDTO.getClassify())
                     .department(requestDTO.getDepartment())
                     .build();
@@ -117,11 +115,18 @@ public class ApiUt {
         }
         private static HospitalXml.Body getBody(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
             String url = Url.getByRequestDTO(requestDTO);
+            return getBody(url);
+        }
+
+        private static HospitalXml.Body getBody(int page, int rows) throws IOException, InterruptedException {
+            String url = Url.builder().page(page).rows(rows).build();
+            return getBody(url);
+        }
+
+        private static HospitalXml.Body getBody(String url) throws IOException, InterruptedException {
             ObjectMapper xmlMapper = new XmlMapper();
             HospitalXml.Response response = xmlMapper.readValue(responseToAPI(url), HospitalXml.Response.class);
-
             return response.getBody();
-
         }
 
         private static boolean isFail(HospitalXml.Body body) {
@@ -136,6 +141,15 @@ public class ApiUt {
 
             return body.getItems();
         }
+        public static List<HospitalXml.Item> getItems(int page, int rows) throws IOException, InterruptedException {
+            HospitalXml.Body body = getBody(page, rows);
+            while(isFail(body))
+                body = getBody(page, rows);
+
+            return body.getItems();
+        }
+
+
         public static List<HospitalResponseDTO> getResponseDTOs(CategoryRequestDTO requestDTO) throws IOException, InterruptedException {
             List<HospitalXml.Item> items = getItems(requestDTO);
             return new ObjectMapper().convertValue(items, new TypeReference<List<HospitalResponseDTO>>() {});

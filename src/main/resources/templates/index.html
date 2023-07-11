@@ -1,9 +1,24 @@
-<html lang="ko" layout:decorate="~{common/layout.html}">
+<html data-theme="lemonade" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <script th:inline="javascript">
-        const token = /*[[${_csrf.token}]]*/ '';
-    </script>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" th:content="${_csrf.token}" />
+    <!-- 폰트어썸 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 아이콘 목록 : https://fontawesome.com/search?o=r&m=free -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://kit.fontawesome.com/87140d707c.js" crossorigin="anonymous"></script>
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
+    <!--    <script th:src="@{/js/common/common.js}"></script>-->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
     <style>
         .main {
             display: flex;
@@ -83,23 +98,86 @@
             padding-top: 8px;
             padding-bottom: 8px;
         }
-        .dropdown {
-            display: none !important;
-        }
 
     </style>
 </head>
 <body class="min-h-screen w-screen flex flex-col">
 <script>
-    function find(event){
-        event.preventDefault(); // 폼의 기본 동작 중지
-        var form = event.target.form;
-        var formData = new FormData(form);
-        var queryParams = new URLSearchParams(formData).toString();
-        console.log("실행")
+    document.addEventListener('click', function(event) {
+        var clickedElement = event.target;
+        console.log(">>>>>>>>>"+clickedElement.type);
+        let page = parseInt(document.getElementById("page").value);
 
-        fetch("/hospital/category/find?"+queryParams, {
-            method: "GET"
+        if(clickedElement.id === 'search-btn'){
+            document.getElementById("page").value =0;
+        }
+
+        if(clickedElement.id === 'nextPage'){
+            document.getElementById("page").value = page+1;
+            find(null);
+        }
+
+        if(clickedElement.id === 'prePage' & page>0){
+            document.getElementById("page").value = page-1;
+            find(null);
+        }
+
+        //셀렉트를 클릭했을 때
+        if(clickedElement.type==='select-one' && clickedElement.classList.contains('dep-slct')){
+            var checkboxes = document.querySelectorAll('.dep-chck');
+            //체크박스 해제
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+            }
+        }
+        //체크박스를 클릭했을 때
+        if (clickedElement.type === 'checkbox' && clickedElement.classList.contains('dep-chck')) {
+            //체크박스 해제
+            var checkboxes = document.querySelectorAll('.dep-chck');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] !== clickedElement) {
+                    checkboxes[i].checked = false;
+                }
+            }
+            //병원과목 select 초기화
+            var selectElement = document.getElementById('department');
+            selectElement.selectedIndex = 0;
+            if(clickedElement.checked){
+                selectElement.selectedIndex = clickedElement.value;
+            }
+        }
+    });
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    function addToParams(formData){
+        let params = {};
+        let tags = document.querySelectorAll('.tag-chck');
+        for (let tag of tags){
+            if(tag.checked){
+                params[tag.name] = 'true';
+            }
+        }
+        for (let key of formData.keys()) {
+            params[key] = formData.get(key);
+        }
+        console.log(params)
+        return params;
+    }
+    function find(event){
+        if(event != null)
+            event.preventDefault(); // 폼의 기본 동작 중지
+
+        let searchForm = document.getElementById('searchForm');
+        let formData =new FormData(searchForm);
+        let params = addToParams(formData);
+        let url = searchForm.getAttribute('action');
+        console.log("token:"+token);
+        fetch(url, {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify(params)
         })
             .then(response => response.json()) // JSON 형식으로 응답 파싱
             .then(data => {
@@ -109,23 +187,67 @@
                 if (data.length === 0) {
                     resultContainer.textContent = "검색 결과가 없습니다.";
                 } else {
-                    var resultHTML = "";
-                    // 결과 데이터를 순회하며 HTML 생성
+                    let resultHTML = data.map(item => {
+                        let tagsHTML = '<div class="flex flex-wrap">';
+                        if (item.nightDays.length > 0 && item.nightDays[0].trim().length > 0) {
+                            tagsHTML += item.nightDays.map(day => `
+                                <div class="badge badge-neutral badge-sm m-[2px]">
+                                    <span class="label-text text-white text-xs">🌙${day}</span>
+                                </div>
+                            `).join('');
+                        }
 
-                    data.forEach(item => {
-                        resultHTML +=
-                            "<div class='card w-96 bg-base-100 shadow-xl mb-2'>" +
-                            "<div class='card-body'>" +
-                            "<h2 class='card-title'>" + item.name + "</h2>" +
-                            "<p>" + item.tel + "</p>" +
-                            "<p>" + item.addr + "</p>"+
-                            "<div class='card-actions justify-end'>"+
-                            `<form action='/hospital/${item.id}/inquiry' method='post'><input type='hidden' name='_csrf' value='${token}' /><button class='btn btn-primary btn-sm'>1:1 채팅하기</button></form>`+
-                            "<a class='btn btn-sm bg-blue-400 text-white ml-2' href='/waiting/"+item.id+"'>원격 줄서기</a>"+
-                            "</div></div></div>";
+                        if (item.holiday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">공휴일 진료</span>
+                                </div>
+                            `;
+                        }
 
-                        // 필요한 데이터를 포함한 다른 HTML 요소들을 추가
-                    });
+                        if (item.saturday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">토요일 진료</span>
+                                </div>
+                            `;
+                        }
+
+                        if (item.sunday){
+                            tagsHTML += `
+                                <div class="badge badge-error badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">일요일 진료</span>
+                                </div>
+                            `;
+                        }
+
+                        if (item.canAdmit){
+                            tagsHTML += `
+                                <div class="badge badge-secondary badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">입원가능</span>
+                                </div>
+                            `;
+                        }
+                        tagsHTML+='</div>';
+
+                        return `
+                            <div class="card w-96 bg-base-100 shadow-xl mb-2">
+                                <div class="card-body">
+                                    <div style="position: relative;">
+                                    <a style="position: absolute; right: 0; top: 0; font-size: 0.8rem;" href="/hospital/${item.id}">병원 관리자 신청 ></a>
+                                    <h2 class="card-title">${item.name}</h2>
+                                    <p>${item.tel}</p>
+                                    <p>${item.addr}</p>
+                                    ${tagsHTML}
+                                    <div class="card-actions justify-end">
+
+                                        <a class="btn btn-primary btn-sm" href="/hospital/${item.id}/inquiry">1:1 채팅하기</a>
+                                        <a class="btn btn-sm bg-blue-400 text-white ml-2" href="/waiting/${item.id}">원격 줄서기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
 
                     resultContainer.innerHTML = resultHTML;
                 }
@@ -135,10 +257,29 @@
             });
     }
 
-    find();
+
 </script>
 
-<section layout:fragment="main" class="main">
+
+<nav class="navbar bg-base-100 flex drop-shadow-md">
+    <div class="navbar-start">
+        <a href="/notifications" class="btn btn-ghost">
+            <i class="fas fa-bell"></i>
+        </a>
+    </div>
+    <div class="navbar-center justify-content">
+        <a href="/" class="btn btn-ghost normal-case">기다리닥</a>
+    </div>
+    <div class="navbar-end pr-4">
+        <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
+            Sign in
+        </a>
+        <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-sm btn-neutral">
+            Logout
+        </a>
+    </div>
+</nav>
+<div class="main">
     <div>
 
         <div class="inner-container">
@@ -150,13 +291,13 @@
                 <span class="text-center fa-regular fa-map fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">인근 병원 조회</span>
             </a>
-            <a href="/" class="item">
+            <a href="/waiting/waitinglist" class="item">
                 <span class="text-center fa-regular fa-bookmark fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">예약 목록</span>
             </a>
-            <a href="/" class="item">
+            <a href="/paper/register" class="item">
                 <span class="text-center fa-regular fa-folder fa-2xl"></span>
-                <span class="text-center text-black text-[12px] font-normal mt-6">서류보관함</span>
+                <span class="text-center text-black text-[12px] font-normal mt-6">서류 등록</span>
             </a>
             <a href="/member/mypage" class="item">
                 <span class="text-center fa-regular fa-user fa-2xl"></span>
@@ -173,8 +314,8 @@
             </th:block>
         </div>
         <div class="flex justify-end mt-[15px]">
-            <form class="input-group w-[500px]">
-                <select class="select" id="department" name="department">
+            <form id="searchForm" th:action="@{/hospital/category/find}" class="input-group w-[500px]">
+                <select id="department" class="select select-primary dep-slct" name="department">
                     <option value="">진료과목</option>
                     <option value="내과">내과</option>
                     <option value="치과">치과</option>
@@ -202,30 +343,88 @@
                     <option value="응급의학과">응급의학과</option>
                     <option value="구강악안면외과">구강악안면외과</option>
                 </select>
-                <input class="input input-bordered input-success max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
-                <input class="input input-bordered input-success max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
-                <button class="btn btn-primary" onclick="find(event)">검색</button>
-                <input type="hidden" name="page" value="1">
-                <input type="hidden" name="rows" value="10">
-                </form>
+                <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
+                <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
+                <button class="btn btn-primary" id="search-btn" onclick="find(event)">검색</button>
+                <input type="hidden" id="page" name="page" value="0">
+                <input type="hidden" id="rows" name="rows" value="10">
+                <input type='hidden' name='_csrf' value='token' />
+            </form>
         </div>
         <div class="container" style="margin-top: 15px">
             <div>
-                <div class="title">진료과</div>
-                <div class="tag">소아과</div>
-                <div class="tag">소아과</div>
-                <div class="tag">소아과</div>
-                <div class="tag">소아과</div>
+                <div class="title">진료과목</div>
+                <div class="flex">
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">소아과</span>
+                            <input type="checkbox" class="checkbox checkbox-primary checkbox-xs dep-chck" value="10"/>
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg">
+                            <span class="label-text text-white font-bold">내과</span>
+                            <input type="checkbox" class="checkbox checkbox-primary checkbox-xs dep-chck" value="1"/>
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg">
+                            <span class="label-text text-white font-bold">정형외과</span>
+                            <input type="checkbox" class="checkbox checkbox-primary checkbox-xs dep-chck" value="3"/>
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg">
+                            <span class="label-text text-white font-bold">치과</span>
+                            <input type="checkbox" class="checkbox checkbox-primary checkbox-xs dep-chck" value="2" />
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg">
+                            <span class="label-text text-white font-bold">이비인후과</span>
+                            <input type="checkbox" class="checkbox checkbox-primary checkbox-xs dep-chck" value="8"/>
+                        </div>
+                    </label>
+                </div>
             </div>
 
             <div class="divider"></div>
 
             <div>
                 <div class="title">카테고리</div>
-                <div class="tag">야간진료</div>
-                <div class="tag">주말진료</div>
-                <div class="tag">공휴일진료</div>
-                <div class="tag">주차장 보유</div>
+                <div class="flex">
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">바로 진찰</span>
+                            <input name="noWaiting" id="noWaiting" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">야간</span>
+                            <input name="night" id="night" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">주말</span>
+                            <input name="weekend" id="weekend" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">공휴일</span>
+                            <input name="holiday" id="holiday" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
+
+                    <label class="label cursor-pointer">
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">입원</span>
+                            <input name="admission" id="admission" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
+                </div>
             </div>
 
         </div>
@@ -234,7 +433,11 @@
 
         </div>
     </div>
-</section>
+    <div class="join grid grid-cols-2 m-2">
+        <button class="join-item btn btn-outline btn-primary" id="prePage">이전</button>
+        <button class="join-item btn btn-outline btn-primary" id="nextPage">다음</button>
+    </div>
+</div>
 </body>
 
 

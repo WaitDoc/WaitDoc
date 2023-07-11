@@ -2,7 +2,7 @@ package com.team13.WaitDoc.hospital.service;
 
 import com.team13.WaitDoc.hospital.entity.Department;
 import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.repository.DepartmentRepository;
+import com.team13.WaitDoc.hospital.repository.Department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
