@@ -6,6 +6,7 @@ import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalInquiryService;
 import com.team13.WaitDoc.hospital.service.HospitalService;
+import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.waiting.service.WaitingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,7 +39,7 @@ public class HospitalController {
     }
 
     @GetMapping("/hospital/{hospitalId}")
-    public String hospitalDetail(@PathVariable Long hospitalId, Model model){
+    public String hospitalDetail(@PathVariable Long hospitalId, Model model) {
         Hospital hospital = hospitalService.getHospital(hospitalId);
         String hospitalName = hospitalService.getHospitalName(hospitalId);
 
@@ -50,7 +51,7 @@ public class HospitalController {
 
     @GetMapping("/main")
     public String main(Model model, HttpSession session) {
-        SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) session.getAttribute("member");
 
         if (sessionMember != null) {
             Long memberId = sessionMember.getMemberId();
@@ -76,4 +77,12 @@ public class HospitalController {
 
         return "redirect:/hospitalInquiry/" + hospitalInquiryId;
     }
+
+//    @GetMapping("/hospital")
+//    public String showMyPage(Model model) {
+//        Hospital hospital =hospitalService.findByName();
+//        model.addAttribute("hospital", hospital);
+//
+//        return "hospital/hospitalMain";
+//    }
 }

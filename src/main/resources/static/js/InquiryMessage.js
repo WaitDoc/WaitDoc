@@ -27,7 +27,7 @@ function drawMessages(messages) {
     messages.forEach((message) => {
 
         const newItem = document.createElement("li");
-        newItem.textContent = `${message.sender.username} : ${message.content}`;
+        newItem.textContent = `${message.nickname} : ${message.content}`;
 
         ChatMessageUl.appendChild(newItem);
     });
@@ -82,3 +82,4 @@ function scrollToBottom() {
     const chatMessages = document.querySelector('.chat-messages');
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+

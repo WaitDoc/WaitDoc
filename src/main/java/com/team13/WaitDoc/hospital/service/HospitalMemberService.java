@@ -3,9 +3,8 @@ package com.team13.WaitDoc.hospital.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.team13.WaitDoc.hospital.entity.Hospital;
-import com.team13.WaitDoc.hospital.entity.HospitalMember;
-import com.team13.WaitDoc.hospital.entity.HospitalMemberRole;
+import com.team13.WaitDoc.hospital.entity.*;
+import com.team13.WaitDoc.hospital.repository.HospitalInquiryMemberRepository;
 import com.team13.WaitDoc.hospital.repository.HospitalMemberRepository;
 import com.team13.WaitDoc.member.entity.Member;
 
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class HospitalMemberService {
 
     private final HospitalMemberRepository hospitalMemberRepository;
+    private final HospitalInquiryMemberRepository hospitalInquiryMemberRepository;
 
     public HospitalMember findByMemberIdElseThrow(Long memberId) {
         return hospitalMemberRepository.findByMemberId(memberId)
@@ -40,6 +40,7 @@ public class HospitalMemberService {
         HospitalMember application = hospitalMemberRepository.findById(applicationId)
             .orElseThrow(() -> new NoSuchElementException("No application found with ID: " + applicationId));
         application.setRole(HospitalMemberRole.DIRECTOR);
+
         hospitalMemberRepository.save(application);
     }
 }

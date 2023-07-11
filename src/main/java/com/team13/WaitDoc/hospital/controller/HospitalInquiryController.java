@@ -29,10 +29,11 @@ public class HospitalInquiryController {
         return "chatting/hospitalInquiry/detail";
     }
 
+
     @GetMapping("/hospital/{hospitalId}/chatList")
     public String hospitalMemberInquiryList(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
         List<HospitalInquiry> hospitalInquiries = hospitalInquiryService.findAllByHospitalIdAndMemberId(hospitalId, securityUser.getMemberId());
-        model.addAttribute("hospitalInquires", hospitalInquiries);
+        model.addAttribute("hospitalInquiries", hospitalInquiries);
         return "chatting/chatlist/chatlist";
     }
 

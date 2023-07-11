@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.blacklist.entity.Blacklist;
+import com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole;
 import com.team13.WaitDoc.paper.entity.Paper;
 import com.team13.WaitDoc.waiting.entity.Waiting;
 
@@ -49,6 +50,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
+
     @Builder
     public Member(String username, String password) {
 
@@ -72,6 +74,7 @@ public class Member extends BaseEntity {
             .map(w -> w.getHospital().getId())
             .collect(Collectors.toList());
     }
+
 
 
 }

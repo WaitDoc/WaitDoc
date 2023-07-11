@@ -5,11 +5,14 @@ import com.team13.WaitDoc.hospital.repository.HospitalInquiryRepository;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
+import static com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole.COUNSELOR;
 import static com.team13.WaitDoc.hospital.entity.HospitalMemberRole.DIRECTOR;
 
 @Service
@@ -27,7 +30,7 @@ public class HospitalInquiryService {
         HospitalInquiry hospitalInquiry = createAndSave(hospitalId);
 
         Member member = memberService.findByIdElseThrow(memberId);
-        hospitalInquiry.addChatUser(member);
+        hospitalInquiry.addUser(member);
 
         return hospitalInquiry.getId();
     }
@@ -51,13 +54,25 @@ public class HospitalInquiryService {
     public HospitalInquiry enterHospitalInquiry(Long hospitalInquiryId, Long memberId) {
         HospitalInquiry hospitalInquiry = findByIdElseThrow(hospitalInquiryId);
 
-        hospitalInquiry.getHospitalInquiryMembers().stream()
-                .filter(chatUser -> chatUser.getMember().getId().equals(memberId))
-                .findFirst()
-                .orElseThrow();
+        Optional<HospitalInquiryMember> inquiryMemberOptional = hospitalInquiry.getHospitalInquiryMembers().stream()
+                .filter(hospitalInquiryMember -> hospitalInquiryMember.getMember().getId().equals(memberId))
+                .findFirst();
+
+        if(inquiryMemberOptional.isPresent()){
+            return hospitalInquiry;
+        }
+
+        HospitalMember hospitalMember = hospitalMemberService.findByMemberIdElseThrow(memberId);
+        if(hospitalMember.getRole()!=DIRECTOR){
+            throw new IllegalArgumentException("병원장이 아닙니다.");
+        }
+
+        hospitalInquiry.addCounselor(hospitalMember.getMember());
 
         return hospitalInquiry;
     }
+
+
 
 
     // 병원장이 모든 내역을 보고싶다

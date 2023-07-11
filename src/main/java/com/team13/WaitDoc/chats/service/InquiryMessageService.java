@@ -6,6 +6,7 @@ import com.team13.WaitDoc.chats.entity.InquiryMessageType;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiryMember;
 import com.team13.WaitDoc.chats.repository.InquiryMessageRepository;
+import com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole;
 import com.team13.WaitDoc.hospital.service.HospitalInquiryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+
+import static com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole.COUNSELOR;
 
 @Service
 @Transactional
@@ -30,10 +33,15 @@ public class InquiryMessageService {
                 .filter(hospitalInquiryMember -> hospitalInquiryMember.getMember().getId().equals(senderId))
                 .findFirst()
                 .orElseThrow();
+        String name = sender.getMember().getName();
+        if (sender.getHospitalInquiryMemberRole()== COUNSELOR) {
+            name = COUNSELOR.getNickname();
+        }
 
         InquiryMessage inquiryMessage = InquiryMessage.builder()
                 .content(content)
                 .sender(sender)
+                .senderName(name)
                 .type(type)
                 .hospitalInquiry(hospitalInquiry)
                 .build();

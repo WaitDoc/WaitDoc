@@ -2,10 +2,7 @@ package com.team13.WaitDoc.hospital.entity;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.member.entity.Member;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,10 +34,15 @@ public class HospitalInquiryMember extends BaseEntity { //hospitalInquiryMember
 
     private LocalDateTime updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    private HospitalInquiryMemberRole hospitalInquiryMemberRole;
+
+
     @Builder
-    public HospitalInquiryMember(Member member, HospitalInquiry hospitalInquiry) {
+    public HospitalInquiryMember(Member member, HospitalInquiry hospitalInquiry, HospitalInquiryMemberRole hospitalInquiryMemberRole) {
         this.member = member;
         this.hospitalInquiry = hospitalInquiry;
+        this.hospitalInquiryMemberRole = hospitalInquiryMemberRole;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -48,5 +50,13 @@ public class HospitalInquiryMember extends BaseEntity { //hospitalInquiryMember
     public void setName() {
         this.member = member;
     }
+    public Member getMember() {
+        return member;
+    }
+
+    public void setRole(HospitalInquiryMemberRole role) {
+        this.hospitalInquiryMemberRole = role;
+    }
+
 
 }
