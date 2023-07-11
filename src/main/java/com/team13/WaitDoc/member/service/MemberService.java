@@ -4,6 +4,9 @@ import com.team13.WaitDoc.base.config.auth.OAuthAttributes;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.entity.MemberRole;
 import com.team13.WaitDoc.member.repository.MemberRepository;
+import com.team13.WaitDoc.paper.dto.PaperDto;
+import com.team13.WaitDoc.paper.entity.Paper;
+import com.team13.WaitDoc.paper.repository.PaperRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +73,6 @@ public class MemberService {
         return memberRepository.findByName(name)
             .orElseThrow(() -> new IllegalArgumentException("Member with name " + name + " not found"));
     }
-
 
 
 }
