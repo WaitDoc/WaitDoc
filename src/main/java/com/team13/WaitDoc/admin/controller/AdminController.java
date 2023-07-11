@@ -91,7 +91,7 @@ public class AdminController {
 		}
 
 
-	@GetMapping("/admin/key-error")
+	@GetMapping("/key-error")
 	public String showAdminKeyErrorPage() {
 		return "admin/key-error";
 	}
