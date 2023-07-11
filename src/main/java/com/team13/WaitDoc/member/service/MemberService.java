@@ -22,6 +22,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
 
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElse(null);
+    }
+
     public Member findByIdElseThrow(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow();
     } //이게 맞나?
