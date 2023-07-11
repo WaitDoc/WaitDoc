@@ -11,34 +11,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.team13.WaitDoc.base.config.auth.SessionMember;
+import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.notification.entity.Notification;
 import com.team13.WaitDoc.notification.service.NotificationService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationController {
 	private final NotificationService notificationService;
 
 
 	@GetMapping("/notifications")
-	public String getNotifications(Model model, HttpSession session) {
-		SessionMember sessionMember = (SessionMember) session.getAttribute("member");
+	public String list(Model model, HttpSession session) {
+		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+		Long memberId = sessionMember.getMemberId();
 
-		if (sessionMember != null) {
-			Long memberId = sessionMember.getMemberId();
-			List<Notification> notifications = notificationService.getNotifications(memberId);
-			model.addAttribute("notifications", notifications);
-		}
+		List<Notification> notifications = notificationService.getNotifications(memberId);
+		model.addAttribute("notifications", notifications);
 
 		return "notification/notifications";
 	}
 
-	@PostMapping("/notifications/{id}/read")
-	public String readNotification(@PathVariable Long id) {
-		notificationService.readNotification(id);
-		return "redirect:/notifications";
-	}
 }

@@ -3,14 +3,15 @@ package com.team13.WaitDoc.waiting.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.repository.MemberRepository;
+import com.team13.WaitDoc.notification.event.NotificationEvent;
 import com.team13.WaitDoc.waiting.dto.WaitingInfo;
 import com.team13.WaitDoc.waiting.entity.Waiting;
 import com.team13.WaitDoc.waiting.repository.WaitingRepository;
@@ -25,6 +26,7 @@ public class WaitingService {
 	private final KafkaTemplate<String, String> kafkaTemplate;
 	private final HospitalRepository hospitalRepository;
 	private final MemberRepository memberRepository;
+	private final ApplicationEventPublisher eventPublisher;
 
 	public void send(String topic, String key, String value) {
 		kafkaTemplate.send(topic, key, value);
@@ -41,13 +43,22 @@ public class WaitingService {
 			.orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 		Waiting waiting = new Waiting(hospital, member);
 		waitingRepository.save(waiting);
+		// Event 발생
+		eventPublisher.publishEvent(new NotificationEvent(this, member, hospital, waiting));
+
 	}
 
 	//대기자 수 감소
 	public void cancelWaiting(Long hospitalId, Long memberId) {
 		Waiting waiting = waitingRepository.findByHospitalIdAndMemberId(hospitalId, memberId);
 		if (waiting != null) {
+			Member member = waiting.getMember();
+			Hospital hospital = waiting.getHospital();
+
 			waitingRepository.delete(waiting);
+			// Event 발생
+			eventPublisher.publishEvent(new NotificationEvent(this, member, hospital, waiting));
+
 		}
 	}
 
@@ -86,7 +97,6 @@ public class WaitingService {
 		}
 		return 0;
 	}
-
 
 
 

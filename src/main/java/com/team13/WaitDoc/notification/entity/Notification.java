@@ -33,5 +33,4 @@ public class Notification {
 	@JoinColumn(name = "member_id")
 	private Member member; // 알림 받는 회원
 
-	private LocalDateTime createdAt; // 알림 생성 시간
 }

@@ -1,29 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{common/layout.html}">
 <head>
-  <title>Notifications</title>
-  <style>
-    /* Add your custom styles here */
-  </style>
+  <meta charset="UTF-8">
+  <title>줄서기 알림</title>
 </head>
 <body>
-<h1>Notifications</h1>
+<section layout:fragment="main" class="relative py-3 sm:max-w-xl sm:mx-auto">
+  <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+    <h1 class="font-semibold text-center text-2xl mb-6">알림</h1>
 
-<div th:if="${notifications.isEmpty()}">
-  <p>No notifications.</p>
-</div>
+    <!-- 알림을 순회하며 보여줍니다. -->
+    <div th:each="notification : ${notifications}" class="mb-4">
+      <!-- 각 알림의 내용을 출력합니다. -->
+      <div th:attr="class=${notification.read ? 'bg-green-100 p-4 rounded-md' : 'bg-blue-100 p-4 rounded-md'}">
+        <p class="font-semibold text-sm" th:text="${notification.content}"></p>
+      </div>
+    </div>
+  </div>
 
-<div th:if="${!notifications.isEmpty()}">
-  <ul>
-    <li th:each="notification : ${notifications}">
-      <!-- You can customize the following structure to display the notifications as you prefer -->
-      <p th:text="${notification.content}"></p>
-      <p th:text="${notification.createDate}"></p>
-      <form th:action="@{/notifications/{id}/read(id=${notification.id})}" method="post">
-        <input type="submit" value="Mark as read"/>
-      </form>
-    </li>
-  </ul>
-</div>
+</section>
 </body>
 </html>
