@@ -18,6 +18,8 @@ public class QHospital extends EntityPathBase<Hospital> {
 
     private static final long serialVersionUID = -1035863074L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QHospital hospital = new QHospital("hospital");
 
     public final com.team13.WaitDoc.base.entity.QBaseEntity _super = new com.team13.WaitDoc.base.entity.QBaseEntity(this);
@@ -37,15 +39,7 @@ public class QHospital extends EntityPathBase<Hospital> {
 
     public final ListPath<Department, QDepartment> departments = this.<Department, QDepartment>createList("departments", Department.class, QDepartment.class, PathInits.DIRECT2);
 
-    public final TimePath<java.time.LocalTime> friEndTime = createTime("friEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> friStartTime = createTime("friStartTime", java.time.LocalTime.class);
-
     public final BooleanPath hasER = createBoolean("hasER");
-
-    public final TimePath<java.time.LocalTime> holidayEndTime = createTime("holidayEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> holidayStartTime = createTime("holidayStartTime", java.time.LocalTime.class);
 
     public final SetPath<HospitalInquiry, QHospitalInquiry> hospitalInquiries = this.<HospitalInquiry, QHospitalInquiry>createSet("hospitalInquiries", HospitalInquiry.class, QHospitalInquiry.class, PathInits.DIRECT2);
 
@@ -63,46 +57,33 @@ public class QHospital extends EntityPathBase<Hospital> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifyDate = _super.modifyDate;
 
-    public final TimePath<java.time.LocalTime> monEndTime = createTime("monEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> monStartTime = createTime("monStartTime", java.time.LocalTime.class);
-
     public final StringPath name = createString("name");
 
-    public final TimePath<java.time.LocalTime> satEndTime = createTime("satEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> satStartTime = createTime("satStartTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> sunEndTime = createTime("sunEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> sunStartTime = createTime("sunStartTime", java.time.LocalTime.class);
+    public final QOperatingTime operatingTime;
 
     public final StringPath tel = createString("tel");
 
-    public final TimePath<java.time.LocalTime> thuEndTime = createTime("thuEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> thuStartTime = createTime("thuStartTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> tueEndTime = createTime("tueEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> tueStartTime = createTime("tueStartTime", java.time.LocalTime.class);
-
     public final NumberPath<Integer> waitingNumber = createNumber("waitingNumber", Integer.class);
 
-    public final TimePath<java.time.LocalTime> wedEndTime = createTime("wedEndTime", java.time.LocalTime.class);
-
-    public final TimePath<java.time.LocalTime> wedStartTime = createTime("wedStartTime", java.time.LocalTime.class);
-
     public QHospital(String variable) {
-        super(Hospital.class, forVariable(variable));
+        this(Hospital.class, forVariable(variable), INITS);
     }
 
     public QHospital(Path<? extends Hospital> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QHospital(PathMetadata metadata) {
-        super(Hospital.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QHospital(PathMetadata metadata, PathInits inits) {
+        this(Hospital.class, metadata, inits);
+    }
+
+    public QHospital(Class<? extends Hospital> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.operatingTime = inits.isInitialized("operatingTime") ? new QOperatingTime(forProperty("operatingTime"), inits.get("operatingTime")) : null;
     }
 
 }

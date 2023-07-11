@@ -1,12 +1,15 @@
 package com.team13.WaitDoc.member.controller;
 
 
+import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.paper.dto.PaperDto;
 import com.team13.WaitDoc.paper.entity.Paper;
 import com.team13.WaitDoc.paper.service.PaperService;
 import com.team13.WaitDoc.security.SecurityUser;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +36,16 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String showMyPage(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        Member member = memberService.findByName(securityUser.getName());
-        model.addAttribute("member", member);
+    public String showMyPage(Model model, HttpSession session) {
+        Object memberObj = session.getAttribute("member");
+        if (memberObj instanceof SessionMember) {
+            SessionMember sessionMember = (SessionMember) memberObj;
+            String memberName = sessionMember.getName();
+            model.addAttribute("member", memberName);
+
+        } else {
+
+        }
         return "member/mypage";
     }
 
@@ -52,7 +62,6 @@ public class MemberController {
         model.addAttribute("member", member);
         return "member/modify";
     }
-
 
 
 
