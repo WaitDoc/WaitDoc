@@ -1,0 +1,52 @@
+<html data-theme="lemonade" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="csrf-token" th:content="${_csrf.token}" />
+    <!-- 폰트어썸 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 아이콘 목록 : https://fontawesome.com/search?o=r&m=free -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.2.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://kit.fontawesome.com/87140d707c.js" crossorigin="anonymous"></script>
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
+    <!--    <script th:src="@{/js/common/common.js}"></script>-->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <style>
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 32px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<main layout:fragment="main" class="w-screen h-full">
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <article class="start text-center">
+            <div class="max-w-4xl">
+                <img src="https://yuwqazsqjkjf18213679.cdn.ntruss.com/%EA%B8%B0%EB%8B%A4%EB%A6%AC%EB%8B%A5%EB%A9%94%EC%9D%B8.jpg"/>
+            </div>
+            <button class="btn btn-outline bg-blue" onclick="startService()">서비스 시작하기</button>
+        </article>
+    </div>
+</main>
+
+<script>
+    function startService() {
+        window.location.href = "/member/login";
+    }
+</script>
+</body>
+</html>

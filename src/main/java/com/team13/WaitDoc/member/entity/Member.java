@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.blacklist.entity.Blacklist;
+import com.team13.WaitDoc.paper.entity.Paper;
 import com.team13.WaitDoc.waiting.entity.Waiting;
 
 import jakarta.persistence.CascadeType;
@@ -35,11 +36,15 @@ public class Member extends BaseEntity {
     private String gender;
     private String birthday;
 
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Waiting> waitings = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blacklist> blacklists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paper> papers = new ArrayList<>(); //???
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
