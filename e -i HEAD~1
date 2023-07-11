@@ -1,0 +1,554 @@
+[33mcommit e93181a80c501704c713f9649ae5c90abf4a6ab2[m[33m ([m[1;36mHEAD -> [m[1;32mFix/87[m[33m)[m
+Author: Cualone <june568@naver.com>
+Date:   Tue Jul 11 20:41:03 2023 +0900
+
+    add @
+
+[33mcommit f6880a65d25f302d5840d25521feb140a14b3e0d[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Fix/87[m[33m, [m[1;32mmain[m[33m)[m
+Author: Cualone <125931703+Cualone@users.noreply.github.com>
+Date:   Tue Jul 11 20:14:54 2023 +0900
+
+    가입 된 계정으로 로그인 (#77)
+    
+    * Fix : Can Login with Subscribed Id
+
+[33mcommit 739f0d6ab18ba194f1977ef0d96faf9df64fd1c8[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Tue Jul 11 14:10:38 2023 +0900
+
+    대기 알림 기능 구현 및 메인페이지에 병원마다 대기자 수 나타내기 (#86)
+    
+    * feat: index 페이지에 예약ëª목록 링크 연결
+    
+    * feat: 알림 페이지 생성
+    
+    * refactor: 마이페이지의 줄서기 내역 링크 변경
+    
+    * feat: 알림기능 구현
+    
+    * feat: 알림 기능 이벤트리스너 기반으로 구현
+    
+    * design: 알림 아이콘 네비바에 추가
+    
+    * feat: 마이페이지 중복로그인시 안들어가지던 오류 수정
+    
+    * feat: 병원 카드에 관리자 신청 페이지 링크 연결
+    
+    * feat: 자정이 지나면 자동으로 알림기록이 삭제되도록
+    
+    * refactor: waitinglist 수정
+    
+    * design: 메인페이지 시작하기 hover 설정
+
+[33mcommit be590e8bf41867136c7fb803000f611df29c6a62[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Tue Jul 11 13:33:04 2023 +0900
+
+    서류 보관,등록 & 회원 정보 수정, 조회 로직 구현&메인페이지 생성 (#84)
+    
+    * feat : s3,MIME 타입 검증을 위한 의존성 추가
+    
+    * feat : @EnableJpaAuiting 추가
+    
+    * feat : @NoArgsContructor로 변경
+    
+    * feat : 로그인 후 /main 으로 redirect
+    
+    * feat : 시작페이지 main.html로 변경
+    
+    * paper 처리 위해 수정 후 코드 복구
+    
+    * feat : Paper과일대다 관계 형성
+    
+    * feat : 로고 클릭시 /main으로 이동하도록 변경
+    
+    * feat : 서류 등록 아이콘 연결
+    
+    * feat : 서류 등록 내역 조회 기능 추가
+    
+    * feat : 서류(이미지) 등록 기능 구현
+    
+    * feat : 회원정보 조회, 수정 기능 구현
+
+[33mcommit b411cf4d8ee6b3e21c89c12f55650fe1c226a6dc[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Tue Jul 11 13:15:14 2023 +0900
+
+    getMapping으로 구현 및 preAuthorize 적용 (#83)
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit f11cf743cb185ec15141a1bfdc15f284c5a5ef59[m[33m ([m[1;31morigin/enhancement-79[m[33m)[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Mon Jul 10 15:21:16 2023 +0900
+
+    검색 세부 오류 해결 (#78)
+    
+    * Feat: 주말, 공휴일, 입원여부에 따른 검색
+    
+    * Feat: hospital entity 분리 및 index.html csrf 토큰 meta로 받아오기
+    
+    * Feat: 병원 정보에서 태그 확인
+    
+    * Feat: page 기능 추가
+    
+    * Chore: git conflict 해결
+    
+    * Fix: page 다음 작동되지 않음 해결
+    
+    * Fix: 검색시 page 0으로 초기화 및 야간 태그 출력 오류 해결
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 45fb4c02e204bd70a70fb3ea9988f75342fd81cf[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Mon Jul 10 14:03:47 2023 +0900
+
+    검색 QueryDsl 적용 및 메인 페이지 UI 변경 (#76)
+    
+    * Feat: 주말, 공휴일, 입원여부에 따른 검색
+    
+    * Feat: hospital entity 분리 및 index.html csrf 토큰 meta로 받아오기
+    
+    * Feat: 병원 정보에서 태그 확인
+    
+    * Feat: page 기능 추가
+    
+    * Chore: git conflict 해결
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 73cf07f38079b19142c50da4c83274068840f5e8[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Mon Jul 10 09:29:09 2023 +0900
+
+    마이페이지 채팅 목록, 문의 종료 오류 해결 & ui 변경 (#74)
+    
+    * fix : 채팅목록 오류 해결 , ui 변경
+    
+    * fix: 문의종료 오류 수정, ui 수정
+    
+    * style : 코드 복구
+
+[33mcommit b064de9c1986b5785822b533cb84e7e37e75b7fd[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Fri Jul 7 13:08:38 2023 +0900
+
+    줄서기 대기 순서 구현  (#71)
+    
+    * feat: 대기 순서 구현
+    
+    * feat: 마이페이지의 줄서기 페이지 구현
+    
+    * feat: 마이페이지 줄서기내역에도 순서 구현
+    
+    * feat: 메인페이지에서 대기 리스트 누르면 waitinglist 페이지로 갈수 있도록 구현
+
+[33mcommit fd6b89c4a718358084abaa3a72a4ac091d3cc440[m[33m ([m[1;31morigin/enhancement/49[m[33m, [m[1;32menhancement/49[m[33m)[m
+Author: Cualone <125931703+Cualone@users.noreply.github.com>
+Date:   Thu Jul 6 16:21:17 2023 +0900
+
+    Fix : add @Column to department (#69)
+
+[33mcommit 926e30fe95867f7d8e3ed7d19085d361b93ececc[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Thu Jul 6 13:08:44 2023 +0900
+
+    member 데이터가 초기화되지 않는 문제해결 (#64)
+    
+    * fix: member 데이터가 초기화되지 않는 문제해결
+    
+    * fix: member 데이터가 초기화되지 않는 문제해결1
+
+[33mcommit 5501c04f736080861bb5be2cb8f0c2111b34a938[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Thu Jul 6 13:04:24 2023 +0900
+
+    마이페이지 , 채팅방 오류 해결 (#63)
+    
+    * feat : mypate 404 오류 해결
+    
+    * feat : mypage 오류 해결을 위한 findByName 메소드 생성
+    
+    * feat : mypage 경로 수정
+    
+    * fix : 코드복구
+    
+    * feat : 채팅기능 ui & 로직 연결
+
+[33mcommit 301df29b00d01e285da1d46523b07b53f06b4592[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Wed Jul 5 14:46:08 2023 +0900
+
+    줄서기 기능 & 대기 현황 main에 구현 (#61)
+    
+    * feat: index 페이지에 원격줄서기 추가
+    
+    * feat: main 페이지에 대기병원 리스트 추가
+    
+    * fix: 충돌해결 및 네비바 링크 변경
+    
+    * design: 1:1채팅 옆의 < 삭제
+    
+    * fix: 삭제되었던 sessionMember 객체 추가
+
+[33mcommit 39e8f8f1d2f9b0be26de7135e5e59038ca6b73b8[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Wed Jul 5 13:01:25 2023 +0900
+
+    1:1 채팅하기 연결 & 로그인 오류 해결 & ui 글씨체 적용 (#60)
+    
+    * feat : configuration 어노테이션 추가
+    
+    * 코드복구
+    
+    * feat : 사용하지 않는 파일 삭제 & 파일 위치 변경
+    
+    * fix : 글씨체 적용 안되는 오류 해결
+    
+    * refactor : 불필요한 코드 수정 태그 수정
+    
+    * feat : 불필요한 태그 삭제 및 태그 수정
+    
+    * fix : 404 오류 해결을 위한 코드 수정
+    
+    * fix : 로그인 오류 해결
+    
+    * fix : 채팅방 오류 해결
+
+[33mcommit 093ce1a1dfa47d9a1ee3e557c7b0cd0e3da2088a[m
+Author: Cualone <125931703+Cualone@users.noreply.github.com>
+Date:   Wed Jul 5 09:03:11 2023 +0900
+
+    Feat : ã add Dockerfile (#59)
+
+[33mcommit a1d898ec9eab97e9da9295267a142331d17497bb[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Tue Jul 4 13:53:44 2023 +0900
+
+    Fix: build.default를 적용하여 warning 해결 (#56)
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 6ffe90a3f0dbe9586238b5cfba8f02ebf2447f21[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Tue Jul 4 13:40:32 2023 +0900
+
+    DB 검색 및 카테고리 UI 적용 (#54)
+    
+    * Feat: addr을 queryDSL을 이용하여 검색
+    
+    * Feat: Query dsl를 적용해서 검색기능 구현
+    
+    * Feat: 병원 진료 과목으로 검색 기능 구현
+    
+    * Refactor: 사용하지 않는 파일과 주석 삭제
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 64b7c80a30dffe210a7740fe1f6c1d865b68c2ba[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Tue Jul 4 13:08:15 2023 +0900
+
+    noShow 처리 및 병원 관리자 허가기능 구현 (#50)
+    
+    * fix: 오류 수정
+    
+    * feat: 3회이상 미방문시 줄서기 등록 금지 처리
+    
+    * feat: 병원 상세 페이지 임시로 생성
+    
+    * feat: 관리자 신청 리스트 구현
+    
+    * feat: 관리자 role 전환 기능 구현 완료
+    
+    * design: apply페이지 수정
+    
+    * fix: 오류 수정
+    
+    * feat: 3회이상 미방문시 줄서기 등록 금지 처리
+    
+    * feat: 병원 상세 페이지 임시로 생성
+    
+    * feat: 관리자 신청 리스트 구현
+    
+    * feat: 관리자 role 전환 기능 구현 완료
+    
+    * design: apply페이지 수정
+    
+    * design: navbar 기다리닥 누르면 메인페이지로 이동
+
+[33mcommit ff2d858ef86462ab086858123cbfec3bc195df00[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Tue Jul 4 11:31:24 2023 +0900
+
+    Feat: addr을 queryDSL을 이용하여 검색 (#47)
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 2bd7f5d6e570dce1d3cfb1533c1d443ef1d4936e[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Sat Jul 1 23:17:01 2023 +0900
+
+    채팅 종료 , 삭제 기능 구현 & ui 작업 (#46)
+    
+    * feat : 글꼴 적용
+    
+    * rename : chat을 Inquiry로 이름을 변경함
+    
+    * feat : Querydsl을 위한 의존성 추가
+    
+    * feat : 메세지ajax로 처리
+    
+    * feat : 채팅목록 구현시 querydsl 사용
+    
+    * chore : vm에 띄운 kafka 적용 위한 코드 변경 후 복구
+    
+    * feat : 채팅방 목록조회html 파일 수정
+    
+    * chore : 메세지 통신 url 변경
+    
+    * feat : 채팅종료 & 수정 기능 구현 & rename 적용
+
+[33mcommit fa914252c39d3322b11a4a4d270b51e3ad17120a[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Thu Jun 29 15:53:57 2023 +0900
+
+    InitData 적용 & 운영시간 LocalTime 타입 변경 (#44)
+    
+    * Fix: int 타입의 시간을 LocalTime으로 설정 & init Data로 데이터 100개만 사용
+    
+    * Chore: init 데이터 1000개로 증가
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 4a36bc16428e027bb1ecc38d560492bb4f5c67d7[m
+Author: Cualone <125931703+Cualone@users.noreply.github.com>
+Date:   Thu Jun 29 15:52:42 2023 +0900
+
+    주변 병원/약국 탐색 (#43)
+    
+    * Feat : Map Init
+    
+    카카오맵, 공공 데이터 연결 (현재 둘 이상의 데이터를 불러오는 데 오류가
+    발생함)
+    
+    * Fix : set Center Coordinates to My Location
+    
+    중심 좌표 현재 내 위치로
+    
+    * Feat : Change Center Coordinates by Receiving an Address
+    
+    주소를 입력 받아 중심 좌표를 변경
+    
+    * Fix : Use KakaoMap Search for Map instead data.go.kr
+    
+    공공데이터 대신 카카오맵 카테고리 검색 활용하여 지도 표시
+    
+    * Fix : Fix Map Size
+    
+    지도 비율 수정
+    
+    * Delete gitmessage.txt
+    
+    * Fix : Remove Garbage
+
+[33mcommit 9d2db3b016a1505007ee07461b13fbd1f0f38ec3[m
+Author: Cualone <125931703+Cualone@users.noreply.github.com>
+Date:   Thu Jun 29 14:27:32 2023 +0900
+
+    메인 프론트 작업 (#40)
+    
+    * Feat : Main Init
+    
+    메인 화면 초안
+
+[33mcommit ca2a22a4bccfa25ac0e9656325ca42c8ec4a5182[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Thu Jun 29 13:57:54 2023 +0900
+
+    병원 관리자 페이지 및 줄서기 관리 기능 구현 (#39)
+    
+    * feat: kafkaConsumerConfig 작성
+    
+    * feat: KafkaConsumerService 작성
+    
+    * feat: WaitingInfo 작성
+    
+    * feat: 병원관리자 컨트롤러 작성
+    
+    * feat: WaitingList 구현할 메서드 작성
+    
+    * feat: 병원 관리자용 페이지 작성
+    
+    * refactor: 기존 waitingpage 레이아웃적용
+    
+    * env: yml파일에서 kafka관련 주석처리
+    
+    * feat: kafkaConsumerConfig 작성
+    
+    * feat: KafkaConsumerService 작성
+    
+    * feat: WaitingInfo 작성
+    
+    * feat: 병원관리자 컨트롤러 작성
+    
+    * feat: WaitingList 구현할 메서드 작성
+    
+    * feat: 병원 관리자용 페이지 작성
+    
+    * refactor: 기존 waitingpage 레이아웃적용
+    
+    * env: yml파일에서 kafka관련 주석처리
+    
+    * fix: memberId를 받아오던 오류 수정
+
+[33mcommit 371075b413df8d6fa5273190ce76a6879753b496[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Thu Jun 29 13:17:16 2023 +0900
+
+    App data 생성 오류 해결 (#38)
+    
+    * Fix: 정상 요청이 올때 까지 반복 요청 기능 추가
+    
+    * Fix: bulk save date data 오류 수정
+    
+    * Doc: servicekey 추가
+    
+    * Chore: 카테고리 html page, rows input 추가
+    
+    * Chore: batch size Appconfig로 관리하도록 수정
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit 3b7a57c5ea100a75384a17df3b26a3397f93d2a0[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Thu Jun 29 13:04:54 2023 +0900
+
+    로그인 로직 수정 & ui 구현&마이페이지 생성 (#36)
+    
+    * feat : footer 삭제
+    
+    * feat : mypage.html 생성
+    
+    * feat : 로그인 에러 해결 & ui 수정
+    
+    * feat : chatlist.html 생성
+    
+    * design : 글씨체 적용 위한 수정
+    
+    * feat : inquriy 메소드 수정
+
+[33mcommit 79a6ea73d1c342a49edf830f3146f72906ceb35c[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Wed Jun 28 18:06:09 2023 +0900
+
+    기본 레이아웃 생성 (#33)
+    
+    * rename : 안쓰는 파일 삭제  & 파일명 소문자로 변경
+    
+    * feat :기본 레이아웃 생성
+
+[33mcommit 197b4b8ccd0a4dda4ff472b943b83c1580955f32[m[33m ([m[1;32menhancement/26[m[33m)[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Wed Jun 28 16:25:40 2023 +0900
+
+    waiting 도메인 및 코드 복구 (#30)
+    
+    * env: yml 수정
+    
+    * env: yml 수정
+    
+    * fix: 충돌해결
+    
+    * feat: kafka, waiting 추가
+    
+    * feat: 필요 메서드 및 html 추가
+
+[33mcommit 5b30bb8bd510d0738eb77617debc09b98f8c252a[m[33m ([m[1;31morigin/enhancement-29[m[33m)[m
+Author: Y39 <102135011+39-Y@users.noreply.github.com>
+Date:   Wed Jun 28 14:01:48 2023 +0900
+
+    전체 병원 API DB에 저장 (#28)
+    
+    * Doc: 카테고리 검색 UI 변경 및 옵션 추가
+    
+    * Feat: API 데이터 DB에 저장
+    
+    * Chore: 8080 포트로 변경
+    
+    ---------
+    
+    Co-authored-by: Y39 <rla4878@gmail.com>
+
+[33mcommit d065c1643db988f575fdc12e376c0e24844ccf0d[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Wed Jun 28 13:12:20 2023 +0900
+
+    로그인 기능 수정 & 채팅방 html 파일 생성 (#25)
+    
+    * feat : 로그인 페이지 수정
+    
+    * fix :로그인 오류 수정
+    
+    * feat : 채팅방 html 파일 생성
+    
+    * fix : merge 오류 파일 삭제
+    
+    * feat : member 엔티티 nickname컬럼명 변경에 따른 코드 수정
+
+[33mcommit 0f3e69c6359a12c0e09cefd5bd0b216aae8cf600[m[33m ([m[1;31morigin/enhancement/26[m[33m)[m
+Author: ❤*.(๓´͈ ˘ `͈๓).*❤ <74054487+jojeongbin@users.noreply.github.com>
+Date:   Tue Jun 27 16:18:28 2023 +0900
+
+    1:1 채팅 기능 구현 (#22)
+    
+    * delete : 1:1 채팅을 위한 테이블 변경으로 기존 파일 삭제
+    
+    * feat : 채팅방 대화창 html 파일 추가
+    
+    * feat : 메세지 반환을 위한 rq 생성
+    
+    * feat : 1:1 채팅 기능 구현(사용자-병원)
+
+[33mcommit 7bd88bb4259bb6f611dd4e6967fd1f3ad409e040[m
+Author: Heeesuu <103115883+Heeesuu@users.noreply.github.com>
+Date:   Tue Jun 27 16:18:05 2023 +0900
+
+    원격 줄서기 기능 구현 (#21)
+    
+    * env : yml에 kafka 추가
+    
+    * feat :W itingRequest 추가
+    
+    * feat: Session에 memberId 추가
+    
+    * feat: KafkaProducerConfig 추가
+    
+    * build: build.gradle에 kafka 추가
+    
+    * feat: hospital Repo 추가
+    
+    * feat: hospital Service 추가
+    
+    * feat: Waiting 엔티티 구현
+    
+    * feat: 대기자 수 서비스 구현
+    
+    * feat: kafka에 메시지 전송하는 로직 구현
+    
+    * feat: getMember 메서드 구현
+    
+    * feat: waiting 페이지 구현
+    
+    * test: kafkaProducer 테스트 작성
