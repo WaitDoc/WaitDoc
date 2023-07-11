@@ -57,7 +57,7 @@ public class QBlacklist extends EntityPathBase<Blacklist> {
 
     public QBlacklist(Class<? extends Blacklist> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.hospital = inits.isInitialized("hospital") ? new com.team13.WaitDoc.hospital.entity.QHospital(forProperty("hospital")) : null;
+        this.hospital = inits.isInitialized("hospital") ? new com.team13.WaitDoc.hospital.entity.QHospital(forProperty("hospital"), inits.get("hospital")) : null;
         this.member = inits.isInitialized("member") ? new com.team13.WaitDoc.member.entity.QMember(forProperty("member")) : null;
     }
 

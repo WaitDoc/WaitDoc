@@ -55,7 +55,7 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public QDepartment(Class<? extends Department> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.hospital = inits.isInitialized("hospital") ? new QHospital(forProperty("hospital")) : null;
+        this.hospital = inits.isInitialized("hospital") ? new QHospital(forProperty("hospital"), inits.get("hospital")) : null;
     }
 
 }

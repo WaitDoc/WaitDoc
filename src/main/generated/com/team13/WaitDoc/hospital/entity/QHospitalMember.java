@@ -48,7 +48,7 @@ public class QHospitalMember extends EntityPathBase<HospitalMember> {
 
     public QHospitalMember(Class<? extends HospitalMember> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.hospital = inits.isInitialized("hospital") ? new QHospital(forProperty("hospital")) : null;
+        this.hospital = inits.isInitialized("hospital") ? new QHospital(forProperty("hospital"), inits.get("hospital")) : null;
         this.member = inits.isInitialized("member") ? new com.team13.WaitDoc.member.entity.QMember(forProperty("member")) : null;
     }
 
