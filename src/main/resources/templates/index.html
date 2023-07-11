@@ -233,6 +233,8 @@
                         return `
                             <div class="card w-96 bg-base-100 shadow-xl mb-2">
                                 <div class="card-body">
+                                    <div style="position: relative;">
+                                    <a style="position: absolute; right: 0; top: 0; font-size: 0.8rem;" href="/hospital/${item.id}">병원 관리자 신청 ></a>
                                     <h2 class="card-title">${item.name}</h2>
                                     <p>${item.tel}</p>
                                     <p>${item.addr}</p>
@@ -261,7 +263,9 @@
 
 <nav class="navbar bg-base-100 flex drop-shadow-md">
     <div class="navbar-start">
-
+        <a href="/notifications" class="btn btn-ghost">
+            <i class="fas fa-bell"></i>
+        </a>
     </div>
     <div class="navbar-center justify-content">
         <a href="/" class="btn btn-ghost normal-case">기다리닥</a>
@@ -287,7 +291,7 @@
                 <span class="text-center fa-regular fa-map fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">인근 병원 조회</span>
             </a>
-            <a href="/" class="item">
+            <a href="/waiting/waitinglist" class="item">
                 <span class="text-center fa-regular fa-bookmark fa-2xl"></span>
                 <span class="text-center text-black text-[12px] font-normal mt-6">예약 목록</span>
             </a>

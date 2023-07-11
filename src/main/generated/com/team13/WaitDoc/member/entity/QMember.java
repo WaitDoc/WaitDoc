@@ -43,6 +43,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath name = createString("name");
 
+    public final ListPath<com.team13.WaitDoc.paper.entity.Paper, com.team13.WaitDoc.paper.entity.QPaper> papers = this.<com.team13.WaitDoc.paper.entity.Paper, com.team13.WaitDoc.paper.entity.QPaper>createList("papers", com.team13.WaitDoc.paper.entity.Paper.class, com.team13.WaitDoc.paper.entity.QPaper.class, PathInits.DIRECT2);
+
     public final ListPath<com.team13.WaitDoc.waiting.entity.Waiting, com.team13.WaitDoc.waiting.entity.QWaiting> waitings = this.<com.team13.WaitDoc.waiting.entity.Waiting, com.team13.WaitDoc.waiting.entity.QWaiting>createList("waitings", com.team13.WaitDoc.waiting.entity.Waiting.class, com.team13.WaitDoc.waiting.entity.QWaiting.class, PathInits.DIRECT2);
 
     public QMember(String variable) {
