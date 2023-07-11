@@ -64,6 +64,12 @@ public class NotificationService {
 		notificationRepository.save(notification);
 	}
 
+	@Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+	public void deleteExpiredNotifications() {
+		LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+		notificationRepository.deleteByCreateDateBefore(yesterday);
+	}
+
 
 }
 
