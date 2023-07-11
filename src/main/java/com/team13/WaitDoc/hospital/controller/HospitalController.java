@@ -11,6 +11,7 @@ import com.team13.WaitDoc.waiting.service.WaitingService;
 import jakarta.servlet.http.HttpSession;
 import com.team13.WaitDoc.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,13 +61,15 @@ public class HospitalController {
         return "index";
     }
 
+
     @GetMapping("/")
     public String home() {
 
         return "main";
     }
 
-    @PostMapping("/hospital/{hospitalId}/inquiry")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/hospital/{hospitalId}/inquiry")
     public String inquiry(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser) {
 
         Long hospitalInquiryId = hospitalInquiryService.inquiry(hospitalId, securityUser.getMemberId());
