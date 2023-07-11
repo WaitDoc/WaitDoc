@@ -39,6 +39,22 @@ public class MemberController {
         return "member/mypage";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
+        Member member = memberService.findByName(securityUser.getName());
+        model.addAttribute("member", member);
+        return "member/profile";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
+        Member member = memberService.findByName(securityUser.getName());
+        model.addAttribute("member", member);
+        return "member/modify";
+    }
+
+
+
 
 
 
