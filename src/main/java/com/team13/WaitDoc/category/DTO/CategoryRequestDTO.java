@@ -6,7 +6,6 @@ import java.util.List;
 
 @Getter
 @ToString
-//@AllArgsConstructor
 @NoArgsConstructor
 public class CategoryRequestDTO {
     private String location;//병원 위치
