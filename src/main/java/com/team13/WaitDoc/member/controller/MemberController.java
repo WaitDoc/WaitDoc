@@ -3,6 +3,9 @@ package com.team13.WaitDoc.member.controller;
 
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
+import com.team13.WaitDoc.paper.dto.PaperDto;
+import com.team13.WaitDoc.paper.entity.Paper;
+import com.team13.WaitDoc.paper.service.PaperService;
 import com.team13.WaitDoc.security.SecurityUser;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
+
 
     @GetMapping("/login")
     public String join() {
@@ -32,6 +38,25 @@ public class MemberController {
         model.addAttribute("member", member);
         return "member/mypage";
     }
+
+    @GetMapping("/profile")
+    public String profile(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
+        Member member = memberService.findByName(securityUser.getName());
+        model.addAttribute("member", member);
+        return "member/profile";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
+        Member member = memberService.findByName(securityUser.getName());
+        model.addAttribute("member", member);
+        return "member/modify";
+    }
+
+
+
+
+
 
 
 
