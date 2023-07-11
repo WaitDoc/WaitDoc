@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface HospitalDslRepository {
-    public Page<Hospital> search(CategoryRequestDTO categoryRequestDTO, Pageable pageable);
+    public List<Hospital> search(CategoryRequestDTO categoryRequestDTO, Pageable pageable);
 }
