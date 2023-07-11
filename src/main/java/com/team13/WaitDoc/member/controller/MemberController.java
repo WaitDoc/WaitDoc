@@ -36,13 +36,12 @@ public class MemberController {
             SessionMember sessionMember = (SessionMember) memberObj;
             String memberName = sessionMember.getName();
             model.addAttribute("member", memberName);
-        } else {
-            // handle error or redirect to login page
-        }
 
+        } else {
+
+        }
         return "member/mypage";
     }
-
 
 
 }

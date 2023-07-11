@@ -1,11 +1,14 @@
 package com.team13.WaitDoc.waiting.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.repository.Hospital.HospitalRepository;
@@ -96,6 +99,14 @@ public class WaitingService {
 			}
 		}
 		return 0;
+	}
+
+	//자정이 지나면 자동삭제
+	@Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+	@Transactional
+	public void deleteExpiredWaitings() {
+		LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+		waitingRepository.deleteByCreateDateBefore(yesterday);
 	}
 
 

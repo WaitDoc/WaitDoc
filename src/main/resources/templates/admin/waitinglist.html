@@ -2,7 +2,6 @@
 <html layout:decorate="~{common/layout.html}">
 <head>
   <title>줄서기 관리 페이지</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-200">
 <section layout:fragment="main" class="max-w-4xl mx-auto py-10 px-5">
@@ -24,7 +23,7 @@
         <td class="py-2 px-3" th:text="${waiting.warningCount}"></td>
         <td class="py-2 px-3 flex gap-2">
           <form th:action="@{'/admin/waiting/delete/'+${waiting.hospitalId}+'/'+${waiting.memberId}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove</button>
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">진료 완료</button>
           </form>
           <form th:action="@{'/admin/waiting/noShow/'+${waiting.hospitalId}+'/'+${waiting.memberId}}" method="post" onsubmit="return confirm('정말로 NoShow 처리하시겠습니까?');">
             <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">NoShow</button>
