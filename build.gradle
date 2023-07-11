@@ -38,6 +38,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+
 	// 채팅방 구현
 	implementation 'org.springframework.security:spring-security-messaging'
 	// webSocket 추가
@@ -55,8 +56,16 @@ dependencies {
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
+	// amazonaws s3
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.476'
+
+	// MIME 타입 검증
+	implementation 'org.apache.tika:tika-core:1.28'
 
 }
+
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()
