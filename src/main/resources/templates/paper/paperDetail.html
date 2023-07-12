@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${paper.title}"></title>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 <main class="min-w-full" layout:fragment="main">
@@ -14,7 +12,12 @@
         <div class=" flex flex-col justify-center align-items gap-3 mt-3">
             <h1 class="text-center text-green-800 text-3xl font-bold my-12" th:text="${paper.title}"></h1>
             <img id="imgId" th:src="${paper.imageUrl}" th:if="${paper.imageUrl != null}"/>
+            <p class="m-12 text-lg">
+                <span>서류 등록일: </span>
+                <span th:text="${#temporals.format(paper.createDate, 'yyyy-MM-dd')}"></span>
+            </p>
             <p class="m-12 text-lg" th:text="${paper.content}"></p>
+            <a class="btn btn-blue" th:href="@{/paper/delete/{id}(id=${paper.id})}">서류 삭제</a>
         </div>
     </div>
 </main>

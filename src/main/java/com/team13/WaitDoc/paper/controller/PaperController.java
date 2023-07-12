@@ -46,7 +46,7 @@ public class PaperController {
         Paper paper= paperService.findById(productId);
         model.addAttribute("paper", paper);
 
-        return "paper/detail";
+        return "paper/paperDetail";
     }
 
     @GetMapping("/list")
@@ -56,6 +56,13 @@ public class PaperController {
         model.addAttribute("papers", papers);
         return "paper/paperList";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deletePaper(@PathVariable(name = "id") Long paperId) {
+        paperService.delete(paperId);
+        return "redirect:/paper/list";
+    }
+
 
 
 }

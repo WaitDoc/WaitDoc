@@ -17,13 +17,13 @@
                 <div class="card-body">
                     <h2 class="card-title" th:text="${paper.title}"></h2>
                     <div class="card-actions justify-end">
-                        <button class="btn btn-blue">상세정보</button>
+                        <a class="btn btn-blue" th:href="@{/paper/detail/{id}(id=${paper.id})}">상세정보</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </main>
+
 </body>
 </html>
