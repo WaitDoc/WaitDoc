@@ -5,13 +5,46 @@
     <meta charset="utf-8">
     <title>카테고리로 장소 검색하기</title>
     <style>
+        .map-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-opacity: 0;
+            border-radius: 20px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1.5px solid rgba(0, 128, 0, 0.3);
+            padding: 16px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .styled-button {
+            padding: 8px 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #108f00;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .styled-button:hover {
+            background-color: #207f00;
+        }
         #map {
-            width: 50%;
-            height:  400px;
-            display: inline-block;
+            width: 500px;
+            height: 400px;
+            margin-bottom: 20px;
         }
         #placesList {
-            width: 250px;
+            width: 500px;
             height: 400px;
             overflow-y: scroll;
             padding: 8px;
@@ -42,14 +75,20 @@
 </head>
 <body>
 <section layout:fragment="main">
-    <div id="map"></div>
-    <div id="placesList"></div>
+    <div class="map-wrapper">
+        <div id="map"></div>
+        <div class="buttons">
+            <label for="address">주소: </label>
+            <input type="text" id="address" placeholder="예: 서울시 강남구">
+            <button id="setAddress">주소 설정</button>
+            <button id="searchPharmacy" class="styled-button">약국</button>
+            <button id="searchHospital" class="styled-button">병원</button>
+        </div>
+        <div id="placesList"></div>
+    </div>
 
-    <label for="address">주소: </label>
-    <input type="text" id="address" placeholder="예: 서울시 강남구">
-    <button id="setAddress">주소 설정</button>
-    <button id="searchPharmacy">약국</button>
-    <button id="searchHospital">병원</button>
+
+
 
 
     <script th:attr="src=${'https://dapi.kakao.com/v2/maps/sdk.js?appkey=' + appKey + '&libraries=services'}"></script>
