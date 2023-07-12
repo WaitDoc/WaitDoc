@@ -19,20 +19,45 @@ function getChatMessages() {
         });
 }
 
+
 function drawMessages(messages) {
     if (messages.length > 0) {
         fromId = messages[messages.length - 1].message_id;
     }
 
     messages.forEach((message) => {
-
         const newItem = document.createElement("li");
-        newItem.textContent = `${message.nickname} : ${message.content}`;
+        console.log(message);
+
+        if (message.nickname === "상담사") {
+            newItem.classList.add("counselor"); // 상담사인 경우 왼쪽 정렬
+            newItem.textContent = `${message.nickname} : ${message.content}`;
+        } else {
+            newItem.classList.add("user"); // 상담사가 아닌 경우 오른쪽 정렬
+            newItem.textContent = `${message.nickname} : ${message.content}`;
+        }
+
+        // const senderName = document.createElement("span");
+        // senderName.classList.add("message-sender");
+        // senderName.textContent = message.nickname;
+        // newItem.appendChild(senderName);
+
+
 
         ChatMessageUl.appendChild(newItem);
     });
+
     scrollToBottom();
 }
+
+function ChatWriteMessage(form) {
+    const content = form.content.value;
+
+    // 메시지 전송 로직 추가
+
+    form.content.value = ""; // 메시지 입력 필드 초기화
+}
+
 
 function ChatWriteMessage(form) {
 

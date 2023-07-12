@@ -88,48 +88,50 @@
             max-width: 45%;
             word-break: break-all;
         }
-        .chat__message-ul li.sender {
+        .chat__message-ul li.user{
             margin-left: auto;
-            text-align: left;
+            text-align:left;
             border-radius: 15px;
         }
 
-        .chat__message-ul li.receiver {
+        .chat__message-ul li.counselor {
             margin-right: auto;
-            text-align: left;
+            text-align:left;
             border-radius: 15px;
         }
-        .chat__message-ul li.center {
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            border-radius: 15px;
-        }
+
         .chat__message-ul li .message-time {
             font-size: 10px; /* 폰트 크기 조정 */
         }
+
+
+
+
     </style>
 </head>
 
 <body>
 <main layout:fragment="main">
-<section class="container3 flex justify-end">
-    <form class="mt-10 mr-10" th:action="@{/{hospitalInquiryId}/endChat(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="if (!confirm('문의를 종료하시겠습니까?')) return false; disconnect()">
-        <button class="btn btn-primary ml-2" type="submit" style="background-color: #f55e56; color: white; border-color: transparent;">문의 종료</button>
-    </form>
-</section>
-<section class="container">
-
-    <div class="room-info">
+    <section class="container3 flex justify-between" style="align-items: center;">
+        <div class="center-align" style="text-align: center; width: 100%; margin-top: 32px;">
+            <span class="hospital-name">[[${hospitalName}]]</span> <!-- 병원 이름 표시 -->
+        </div>
+        <div>
+            <form class="mt-10 mr-10" th:action="@{/{hospitalInquiryId}/endChat(hospitalInquiryId=${hospitalInquiry.id})}" method="post" onsubmit="if (!confirm('문의를 종료하시겠습니까?')) return false; disconnect()">
+                <button class="btn btn-primary ml-2" type="submit" style="background-color: #f55e56; color: white; border-color: transparent;">문의 종료</button>
+            </form>
+        </div>
+    </section>
+    <section class="container">
         <table>
             <tbody>
             <tr>
-                    </ul>
+                <td></td>
             </tr>
             </tbody>
         </table>
-    </div>
-</section>
+    </section>
+
 
 <section class="container2">
     <section class="chat-messages">
