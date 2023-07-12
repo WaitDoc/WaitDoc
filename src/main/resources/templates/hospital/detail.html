@@ -38,6 +38,22 @@
                 </button>
             </form>
         </div>
+        <div class="mt-8">
+            <form th:action="@{'/admin/waiting/' + ${hospital.id}}" method="get">
+                <input type="hidden" name="memberId" th:value="${memberId}" />
+                <button type="submit" class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
+                    줄서기 대기 관리
+                </button>
+            </form>
+        </div>
+        <div class="mt-8">
+            <form th:action="@{'/hospital/' + ${hospital.id} + '/inquiry'}" method="get">
+                <input type="hidden" name="memberId" th:value="${memberId}" />
+                <button type="submit" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded">
+                    1:1 채팅하기
+                </button>
+            </form>
+        </div>
     </div>
 </section>
 </body>
