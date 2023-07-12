@@ -35,17 +35,17 @@ spring:
             scope: profile_nickname, account_email, gender,	birthday
             client-name: Kakao
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
             client-authentication-method: POST
           naver:
             scope:
             client-name: Naver
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
           google:
             scope: profile,email
             client-name: Google
-            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize

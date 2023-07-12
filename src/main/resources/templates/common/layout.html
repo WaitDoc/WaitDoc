@@ -47,9 +47,12 @@
         <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
             Sign in
         </a>
-        <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-sm btn-neutral">
+        <a sec:authorize="isAuthenticated()" href="/member/logout" class="btn btn-sm btn-neutral" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Logout
         </a>
+        <form id="logout-form" th:action="@{/member/logout}" method="post" style="display: none;">
+            <input type="submit" value="Logout" />
+        </form>
     </div>
 </nav>
 

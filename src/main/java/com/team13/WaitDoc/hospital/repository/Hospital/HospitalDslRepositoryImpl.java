@@ -5,6 +5,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.team13.WaitDoc.base.util.LocationDistance;
 import com.team13.WaitDoc.category.DTO.CategoryRequestDTO;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.QDepartment;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.team13.WaitDoc.hospital.entity.QHospital.hospital;
@@ -22,7 +24,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<Hospital> search(CategoryRequestDTO requestDTO, Pageable pageable) {
+    public List<Hospital> search(CategoryRequestDTO requestDTO, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         if(requestDTO.getAddrs() != null){
             for(String addr:requestDTO.getAddrs()){
@@ -63,11 +65,18 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
 
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
                 .fetch();
-
-        return new PageImpl<>(hospitals, pageable, hospitals.size());
+        hospitals.sort(Comparator.comparingDouble(
+                h -> LocationDistance.calc(h.getLatitude(), h.getLongitude(), requestDTO.getLatitude(), requestDTO.getLongitude())
+        ));
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        int start = pageNumber * pageSize;
+        int end = Math.min((start + pageSize), hospitals.size());
+        return hospitals.subList(start, end);
+        //return new PageImpl<>(hospitals, pageable, hospitals.size());
 
 
     }

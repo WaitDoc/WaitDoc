@@ -17,6 +17,8 @@ public class CategoryRequestDTO {
     private Boolean weekend;//주말 진료 가능 병원
     private Boolean holiday;//공휴일 진료 가능 병원
     private Boolean admission;//입원 가능 병원
+    private Double latitude; //사용자 현재 위치 위도
+    private Double longitude; // 사용자 현재 위치 경도
     @Setter
     private int page = 0;
     @Setter
@@ -39,7 +41,9 @@ public class CategoryRequestDTO {
                               Boolean night,
                               Boolean weekend,
                               Boolean holiday,
-                              Boolean admission) {
+                              Boolean admission,
+                              Double latitude,
+                              Double longitude) {
         this.location = location;
         this.name = name;
         this.department = department;
@@ -49,6 +53,9 @@ public class CategoryRequestDTO {
         this.weekend = weekend;
         this.holiday = holiday;
         this.admission = admission;
+        this.latitude = latitude;
+        this.longitude = longitude;
+
 
         if (page != null && page > 0) this.page = page;
         if (rows != null && rows > 0) this.rows = rows;

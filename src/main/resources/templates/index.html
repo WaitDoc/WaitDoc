@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" href="https://jhs512.github.io/toastr/toastr.css">
-<!--    <script th:src="@{/js/common/common.js}"></script>-->
+    <!--    <script th:src="@{/js/common/common.js}"></script>-->
     <link th:href="@{/css/common.css}" rel="stylesheet">
     <style>
         .main {
@@ -103,6 +103,20 @@
 </head>
 <body class="min-h-screen w-screen flex flex-col">
 <script>
+    //위치정보
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    function errorCallback(error) {
+        console.error("위치 정보를 가져오는데 실패했습니다.", error);
+    }
+    function successCallback(position) {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+    }
+
+    //변수들
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); //csrf 토큰
+
+    //클릭 이벤트
     document.addEventListener('click', function(event) {
         var clickedElement = event.target;
         console.log(">>>>>>>>>"+clickedElement.type);
@@ -147,7 +161,7 @@
             }
         }
     });
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     function addToParams(formData){
         let params = {};
         let tags = document.querySelectorAll('.tag-chck');
@@ -189,6 +203,26 @@
                 } else {
                     let resultHTML = data.map(item => {
                         let tagsHTML = '<div class="flex flex-wrap">';
+
+                        if(item.distance != null){
+                            if(item.distance > 1000){
+                                tagsHTML +=`
+                                <div class="badge badge-info badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">거리:`+item.distance/1000+
+                                    `km</span>
+                                </div>
+                            `;
+                            }
+                            else {
+                                tagsHTML +=
+                                    `
+                                <div class="badge badge-info badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">거리:`+item.distance+
+                                    `m</span>
+                                </div>
+                            `;
+                            }
+                        }
                         if (item.nightDays.length > 0 && item.nightDays[0].trim().length > 0) {
                             tagsHTML += item.nightDays.map(day => `
                                 <div class="badge badge-neutral badge-sm m-[2px]">
@@ -196,6 +230,8 @@
                                 </div>
                             `).join('');
                         }
+
+
 
                         if (item.holiday){
                             tagsHTML += `
@@ -275,9 +311,12 @@
         <a sec:authorize="isAnonymous()" href="/member/login" class="btn btn-sm btn-neutral">
             Sign in
         </a>
-        <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-sm btn-neutral">
+        <a sec:authorize="isAuthenticated()" href="/member/logout" class="btn btn-sm btn-neutral" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Logout
         </a>
+        <form id="logout-form" th:action="@{/member/logout}" method="post" style="display: none;">
+            <input type="submit" value="Logout" />
+        </form>
     </div>
 </nav>
 <div class="main">
@@ -346,11 +385,13 @@
                 </select>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
+                <input type="hidden" name="latitude" id = "latitude">
+                <input type="hidden" name="longitude" id = "longitude">
                 <button class="btn btn-primary" id="search-btn" onclick="find(event)">검색</button>
                 <input type="hidden" id="page" name="page" value="0">
                 <input type="hidden" id="rows" name="rows" value="10">
                 <input type='hidden' name='_csrf' value='token' />
-                </form>
+            </form>
         </div>
         <div class="container" style="margin-top: 15px">
             <div>
@@ -395,11 +436,11 @@
                 <div class="title">카테고리</div>
                 <div class="flex">
                     <label class="label cursor-pointer">
-                    <div class="badge badge-primary badge-lg ">
-                        <span class="label-text text-white font-bold">바로 진찰</span>
-                        <input name="noWaiting" id="noWaiting" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
-                    </div>
-                </label>
+                        <div class="badge badge-primary badge-lg ">
+                            <span class="label-text text-white font-bold">바로 진찰</span>
+                            <input name="noWaiting" id="noWaiting" value="true" type="checkbox" class="tag-chck checkbox checkbox-primary checkbox-xs" />
+                        </div>
+                    </label>
                     <label class="label cursor-pointer">
                         <div class="badge badge-primary badge-lg ">
                             <span class="label-text text-white font-bold">야간</span>
