@@ -15,6 +15,8 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> , Hosp
 
     Optional<Hospital> findByName(String name);
 
+    Optional<Hospital> findById(Long id);
+
 
 
 

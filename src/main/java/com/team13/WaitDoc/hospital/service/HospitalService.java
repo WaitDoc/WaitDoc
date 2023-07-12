@@ -24,6 +24,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -56,10 +58,12 @@ public class HospitalService {
         Pageable pageable = PageRequest.of(requestDTO.getPage(), requestDTO.getRows(), sort);
 
         return hospitalRepository.search(requestDTO, pageable)
-                .getContent()
+                //.getContent()
                 .stream()
                 .map(Hospital::mapToDTO)
+                .map(dto -> dto.setDistance(requestDTO) )
                 .collect(Collectors.toList());
+
     }
 
     public void applyForAdmin(Long memberId, Long hospitalId) {

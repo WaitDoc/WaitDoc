@@ -4,16 +4,15 @@ import com.team13.WaitDoc.base.config.auth.OAuthAttributes;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.entity.MemberRole;
 import com.team13.WaitDoc.member.repository.MemberRepository;
-import com.team13.WaitDoc.paper.dto.PaperDto;
-import com.team13.WaitDoc.paper.entity.Paper;
-import com.team13.WaitDoc.paper.repository.PaperRepository;
+import com.team13.WaitDoc.security.SecurityUser;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -75,5 +74,22 @@ public class MemberService {
     }
 
 
+
+    @Transactional
+    public void setRoleAsAdmin(Long memberId, String adminKey) {
+
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
+
+        if (adminKey.equals("1122334455")) {
+            member.setMemberRole(MemberRole.ROLE_ADMIN);
+        } else {
+            throw new IllegalArgumentException("Invalid admin key");
+        }
+
+        memberRepository.save(member);
+    }
 }
+
+
 

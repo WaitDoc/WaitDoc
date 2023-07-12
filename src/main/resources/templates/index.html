@@ -103,6 +103,20 @@
 </head>
 <body class="min-h-screen w-screen flex flex-col">
 <script>
+    //위치정보
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    function errorCallback(error) {
+        console.error("위치 정보를 가져오는데 실패했습니다.", error);
+    }
+    function successCallback(position) {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+    }
+
+    //변수들
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); //csrf 토큰
+
+    //클릭 이벤트
     document.addEventListener('click', function(event) {
         var clickedElement = event.target;
         console.log(">>>>>>>>>"+clickedElement.type);
@@ -147,7 +161,7 @@
             }
         }
     });
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     function addToParams(formData){
         let params = {};
         let tags = document.querySelectorAll('.tag-chck');
@@ -189,6 +203,26 @@
                 } else {
                     let resultHTML = data.map(item => {
                         let tagsHTML = '<div class="flex flex-wrap">';
+
+                        if(item.distance != null){
+                            if(item.distance > 1000){
+                                tagsHTML +=`
+                                <div class="badge badge-info badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">거리:`+item.distance/1000+
+                                    `km</span>
+                                </div>
+                            `;
+                            }
+                            else {
+                                tagsHTML +=
+                                    `
+                                <div class="badge badge-info badge-sm m-[2px]">
+                                    <span class="label-text text-black text-xs">거리:`+item.distance+
+                                    `m</span>
+                                </div>
+                            `;
+                            }
+                        }
                         if (item.nightDays.length > 0 && item.nightDays[0].trim().length > 0) {
                             tagsHTML += item.nightDays.map(day => `
                                 <div class="badge badge-neutral badge-sm m-[2px]">
@@ -196,6 +230,8 @@
                                 </div>
                             `).join('');
                         }
+
+
 
                         if (item.holiday){
                             tagsHTML += `
@@ -231,22 +267,23 @@
                         tagsHTML+='</div>';
 
                         return `
-                            <div class="card w-96 bg-base-100 shadow-xl mb-2">
-                                <div class="card-body">
-                                    <div style="position: relative;">
-                                    <a style="position: absolute; right: 0; top: 0; font-size: 0.8rem;" href="/hospital/${item.id}">병원 관리자 신청 ></a>
-                                    <h2 class="card-title">${item.name}</h2>
-                                    <p>${item.tel}</p>
-                                    <p>${item.addr}</p>
-                                    ${tagsHTML}
-                                    <div class="card-actions justify-end">
-
-                                        <a class="btn btn-primary btn-sm" href="/hospital/${item.id}/inquiry">1:1 채팅하기</a>
-                                        <a class="btn btn-sm bg-blue-400 text-white ml-2" href="/waiting/${item.id}">원격 줄서기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+    <div class="card w-96 bg-base-100 shadow-xl mb-2">
+        <div class="card-body">
+            <div style="position: relative;">
+                <a href="/hospital/${item.id}" style="text-decoration: none;">
+                <h2 class="card-title" style="margin-bottom: 0;">${item.name}</h2>
+            </a>
+                <p>${item.tel}</p>
+                <p>${item.addr}</p>
+                ${tagsHTML}
+                <div class="card-actions justify-end">
+                    <a class="btn btn-primary btn-sm" href="/hospital/${item.id}/inquiry">1:1 채팅하기</a>
+                    <a class="btn btn-sm bg-blue-400 text-white ml-2" href="/waiting/${item.id}">원격 줄서기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
                     }).join('');
 
                     resultContainer.innerHTML = resultHTML;
@@ -348,6 +385,8 @@
                 </select>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원위치" id="location" name="location"/>
                 <input class="input input-bordered input-primary max-w-xs text-black w-[30%]" type="text" placeholder="병원명" name="name"/>
+                <input type="hidden" name="latitude" id = "latitude">
+                <input type="hidden" name="longitude" id = "longitude">
                 <button class="btn btn-primary" id="search-btn" onclick="find(event)">검색</button>
                 <input type="hidden" id="page" name="page" value="0">
                 <input type="hidden" id="rows" name="rows" value="10">

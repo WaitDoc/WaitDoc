@@ -44,7 +44,6 @@ public class WaitingController {
 
 
 		SessionMember sessionMember = (SessionMember)session.getAttribute("member");
-
 		Long memberId = sessionMember.getMemberId();
 
 		int myOrder = waitingService.getMyWaitingOrder(hospitalId, memberId);
