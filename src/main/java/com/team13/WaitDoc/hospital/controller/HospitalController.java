@@ -42,6 +42,7 @@ public class HospitalController {
         return "hospital/map";
     }
 
+
     @GetMapping("/hospital/{hospitalId}")
     public String hospitalDetail(@PathVariable Long hospitalId, Model model, @AuthenticationPrincipal SecurityUser securityUser){
         Hospital hospital = hospitalService.getHospital(hospitalId);
@@ -57,9 +58,10 @@ public class HospitalController {
         return "hospital/detail";
     }
 
+
     @GetMapping("/main")
     public String main(Model model, HttpSession session) {
-        SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) session.getAttribute("member");
 
         if (sessionMember != null) {
             Long memberId = sessionMember.getMemberId();
@@ -85,4 +87,12 @@ public class HospitalController {
 
         return "redirect:/hospitalInquiry/" + hospitalInquiryId;
     }
+
+//    @GetMapping("/hospital")
+//    public String showMyPage(Model model) {
+//        Hospital hospital =hospitalService.findByName();
+//        model.addAttribute("hospital", hospital);
+//
+//        return "hospital/hospitalMain";
+//    }
 }
