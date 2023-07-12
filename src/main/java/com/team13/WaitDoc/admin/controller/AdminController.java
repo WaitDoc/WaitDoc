@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.HospitalMember;
@@ -45,12 +46,15 @@ public class AdminController {
 	private final String adminKey = "1122334455";
 
 	@PostMapping("/apply/{hospitalId}")
-	public String applyForAdmin(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser){
+	public String applyForAdmin(@PathVariable Long hospitalId, @AuthenticationPrincipal SecurityUser securityUser, RedirectAttributes redirectAttributes){
 
 		Member member = memberService.findById(securityUser.getMemberId());
 		Hospital hospital = hospitalService.getHospital(hospitalId);
 
-		hospitalMemberService.applyForAdmin(member, hospital);
+		if (!hospitalMemberService.hasAlreadyApplied(member, hospital)) {
+			// 아직 신청하지 않은 경우에만 신청을 처리
+			hospitalMemberService.applyForAdmin(member, hospital);
+		}
 
 		return "redirect:/hospital/" + hospitalId;
 	}
