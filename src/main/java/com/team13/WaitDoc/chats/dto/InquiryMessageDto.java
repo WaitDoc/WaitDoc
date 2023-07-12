@@ -27,6 +27,9 @@ public class InquiryMessageDto {
     @JsonProperty("sender")
     private MemberDto sender;
 
+    @JsonProperty("nickname")
+    private String nickname;
+
     @JsonProperty("type")
     private InquiryMessageType type;
 
@@ -44,6 +47,7 @@ public class InquiryMessageDto {
                 .id(inquiryMessage.getId())
                 .type(inquiryMessage.getType())
                 .sender(userDto)
+                .nickname(inquiryMessage.getSenderName())
                 .content(inquiryMessage.getContent())
                 .type(inquiryMessage.getType())
                 .createdAt(inquiryMessage.getCreatedAt())

@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole.COUNSELOR;
+import static com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole.USER;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -49,9 +51,19 @@ public class HospitalInquiry extends BaseEntity {
                 .build();
     }
 
-    public void addChatUser(Member member) {
+    public void addUser(Member member) {
         HospitalInquiryMember hospitalInquiryMember = HospitalInquiryMember.builder()
                 .member(member)
+                .hospitalInquiryMemberRole(USER)
+                .hospitalInquiry(this)
+                .build();
+        hospitalInquiryMembers.add(hospitalInquiryMember);
+    }
+
+    public void addCounselor(Member member) {
+        HospitalInquiryMember hospitalInquiryMember = HospitalInquiryMember.builder()
+                .member(member)
+                .hospitalInquiryMemberRole(COUNSELOR)
                 .hospitalInquiry(this)
                 .build();
         hospitalInquiryMembers.add(hospitalInquiryMember);
