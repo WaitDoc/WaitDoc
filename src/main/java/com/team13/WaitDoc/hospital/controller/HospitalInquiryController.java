@@ -1,5 +1,6 @@
 package com.team13.WaitDoc.hospital.controller;
 
+import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiry;
 import com.team13.WaitDoc.hospital.service.HospitalInquiryService;
 import com.team13.WaitDoc.security.SecurityUser;
@@ -24,8 +25,11 @@ public class HospitalInquiryController {
             Model model
             ) {
         HospitalInquiry hospitalInquiry = hospitalInquiryService.enterHospitalInquiry(hospitalInquiryId, securityUser.getMemberId());
+        Hospital hospital = hospitalInquiry.getHospital(); // HospitalInquiry 엔티티에서 Hospital 엔티티 가져오기
+        String hospitalName = hospital.getName(); // Hospital 엔티티에서 이름 가져오기
 
         model.addAttribute("hospitalInquiry", hospitalInquiry);
+        model.addAttribute("hospitalName", hospitalName); // hospitalName을 모델에 추가
         return "chatting/hospitalInquiry/detail";
     }
 
