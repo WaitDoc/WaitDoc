@@ -42,4 +42,8 @@ public class HospitalMemberService {
         application.setRole(HospitalMemberRole.DIRECTOR);
         hospitalMemberRepository.save(application);
     }
+
+    public boolean hasAlreadyApplied(Member member, Hospital hospital) {
+        return hospitalMemberRepository.existsByMemberAndHospital(member, hospital);
+    }
 }

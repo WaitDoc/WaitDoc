@@ -1,7 +1,9 @@
 package com.team13.WaitDoc.hospital.repository;
 
+import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.entity.HospitalMember;
 import com.team13.WaitDoc.hospital.entity.HospitalMemberRole;
+import com.team13.WaitDoc.member.entity.Member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +14,5 @@ public interface HospitalMemberRepository extends JpaRepository<HospitalMember, 
     Optional<HospitalMember> findByMemberId(Long memberId);
 
     List<HospitalMember> findAllByRole(HospitalMemberRole role);
+    boolean existsByMemberAndHospital(Member member, Hospital hospital);
 }

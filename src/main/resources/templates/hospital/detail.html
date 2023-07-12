@@ -3,6 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>병원 상세 페이지</title>
+    <script>
+        var alreadyApplied = [[${hasAlreadyApplied}]];
+
+        if (alreadyApplied) {
+            document.getElementById("applyButton").disabled = true;
+        }
+
+        function disableButton() {
+            if(alreadyApplied) {
+                alert("이미 신청을 완료했습니다");  // alert 메시지 표시
+                return false; // 폼 제출 중지
+            }
+
+            var confirmAction = confirm("관리자를 신청하시겠습니까?");
+            if (confirmAction == true) {
+                alreadyApplied = true;
+                document.getElementById("applyButton").disabled = true;
+                document.getElementById("applyForm").submit(); // 폼 직접 제출
+            }
+        }
+    </script>
 </head>
 <body>
 <section layout:fragment="main">
@@ -10,9 +31,9 @@
         <h1 class="text-4xl mb-4 mt-8" th:text="${hospitalName}"></h1>
 
         <div class="mt-8">
-            <form th:action="@{'/admin/apply/' + ${hospital.id}}" method="post">
+            <form th:action="@{'/admin/apply/' + ${hospital.id}}" method="post" id="applyForm">
                 <input type="hidden" name="memberId" th:value="${memberId}" />
-                <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                <button type="submit" id="applyButton" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onclick="disableButton()">
                     관리자 신청하기
                 </button>
             </form>
@@ -20,4 +41,5 @@
     </div>
 </section>
 </body>
+
 </html>

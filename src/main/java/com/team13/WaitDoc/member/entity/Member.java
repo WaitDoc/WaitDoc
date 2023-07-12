@@ -76,5 +76,7 @@ public class Member extends BaseEntity {
             .collect(Collectors.toList());
     }
 
-
+    public void setMemberRole(MemberRole memberRole) {
+        this.memberRole = memberRole;
+    }
 }

@@ -5,7 +5,10 @@ import com.team13.WaitDoc.base.config.AppConfig;
 import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.hospital.entity.Hospital;
 import com.team13.WaitDoc.hospital.service.HospitalInquiryService;
+import com.team13.WaitDoc.hospital.service.HospitalMemberService;
 import com.team13.WaitDoc.hospital.service.HospitalService;
+import com.team13.WaitDoc.member.entity.Member;
+import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.waiting.service.WaitingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +32,8 @@ public class HospitalController {
     private final HospitalService hospitalService;
     private final WaitingService waitingService;
     private final HospitalInquiryService hospitalInquiryService;
+    private final MemberService memberService;
+    private final HospitalMemberService hospitalMemberService;
 
     @GetMapping("/map")
     public String mapHospital(Model model) throws IOException {
@@ -38,12 +43,16 @@ public class HospitalController {
     }
 
     @GetMapping("/hospital/{hospitalId}")
-    public String hospitalDetail(@PathVariable Long hospitalId, Model model){
+    public String hospitalDetail(@PathVariable Long hospitalId, Model model, @AuthenticationPrincipal SecurityUser securityUser){
         Hospital hospital = hospitalService.getHospital(hospitalId);
         String hospitalName = hospitalService.getHospitalName(hospitalId);
+        Member member = memberService.findById(securityUser.getMemberId());
+
+        boolean hasAlreadyApplied = hospitalMemberService.hasAlreadyApplied(member, hospital);
 
         model.addAttribute("hospital", hospital);
         model.addAttribute("hospitalName", hospitalName);
+        model.addAttribute("hasAlreadyApplied", hasAlreadyApplied);
 
         return "hospital/detail";
     }
