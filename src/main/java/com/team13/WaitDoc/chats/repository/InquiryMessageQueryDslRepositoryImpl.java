@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class InquiryMessageQueryDslRepositoryImpl implements InquiryMessageQueryDslRepository{
+public class InquiryMessageQueryDslRepositoryImpl {
 
     private final JPAQueryFactory queryFactory;
 }

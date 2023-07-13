@@ -48,10 +48,6 @@ public class HospitalInquiryController {
         return "chatting/chatlist/chatlist";
     }
 
-//    @PostMapping("/hospitalInquiry/{hospitalInquiryId}/endChat")
-//    public String endChat(@PathVariable Long hospitalInquiryId) {
-//        return endInquiry(hospitalInquiryId);
-//    }
 
     @PostMapping("/{hospitalInquiryId}/endChat")
     public String endInquiry(@PathVariable Long hospitalInquiryId) {

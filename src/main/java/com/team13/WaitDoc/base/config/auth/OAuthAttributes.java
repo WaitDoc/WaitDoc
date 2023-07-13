@@ -82,15 +82,5 @@ public class OAuthAttributes {
                 .build();
     }
 
-    /*public Member toEntity() {
-        return Member.builder()
-                .nickname(nickname)
-                .email(email)
-                .gender(gender)
-                .birthday(birthday)
-                .memberRole(MemberRole.ROLE_USER)
-                .build();
-    }
 
-     */
 }
