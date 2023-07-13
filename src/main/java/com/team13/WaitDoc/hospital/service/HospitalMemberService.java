@@ -24,15 +24,6 @@ public class HospitalMemberService {
                 .orElseThrow();
     }
 
-//    public HospitalMemberRole findRoleByMemberId(Long memberId){
-//        Optional<HospitalMember> opHospitalMember=hospitalMemberRepository.findByMemberId(memberId);
-//        if(opHospitalMember.isEmpty()){
-//            return HospitalMemberRole.NONE;
-//        }
-//        HospitalMember hospitalMember= opHospitalMember.get();
-//        return hospitalMember.getRole();
-//    }
-
 
     public void applyForAdmin(Member member, Hospital hospital) {
         HospitalMember hospitalMember = new HospitalMember();

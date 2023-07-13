@@ -93,9 +93,5 @@ public class HospitalService {
         hospitalRepository.saveAll(hospitals);
     }
 
-//    public Member findByName(String name) {
-//        return hospitalRepository.findByName(name)
-//                .orElseThrow(() -> new IllegalArgumentException("Member with name " + name + " not found"));
-//    }
 
 }

@@ -77,7 +77,7 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
         int start = pageNumber * pageSize;
         int end = Math.min((start + pageSize), hospitals.size());
         return hospitals.subList(start, end);
-        //return new PageImpl<>(hospitals, pageable, hospitals.size());
+
 
 
     }
