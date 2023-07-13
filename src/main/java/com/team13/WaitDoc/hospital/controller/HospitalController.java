@@ -44,7 +44,7 @@ public class HospitalController {
 
 
     @GetMapping("/hospital/{hospitalId}")
-    public String hospitalDetail(@PathVariable Long hospitalId, Model model, @AuthenticationPrincipal SecurityUser securityUser){
+    public String hospitalDetail(@PathVariable Long hospitalId, Model model, @AuthenticationPrincipal SecurityUser securityUser) {
         Hospital hospital = hospitalService.getHospital(hospitalId);
         String hospitalName = hospitalService.getHospitalName(hospitalId);
         Member member = memberService.findById(securityUser.getMemberId());
@@ -87,12 +87,5 @@ public class HospitalController {
 
         return "redirect:/hospitalInquiry/" + hospitalInquiryId;
     }
-
-//    @GetMapping("/hospital")
-//    public String showMyPage(Model model) {
-//        Hospital hospital =hospitalService.findByName();
-//        model.addAttribute("hospital", hospital);
-//
-//        return "hospital/hospitalMain";
-//    }
 }
+

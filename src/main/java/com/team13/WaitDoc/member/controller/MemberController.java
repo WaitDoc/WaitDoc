@@ -2,6 +2,9 @@ package com.team13.WaitDoc.member.controller;
 
 
 import com.team13.WaitDoc.base.config.auth.SessionMember;
+import com.team13.WaitDoc.hospital.entity.HospitalMember;
+import com.team13.WaitDoc.hospital.entity.HospitalMemberRole;
+import com.team13.WaitDoc.hospital.service.HospitalMemberService;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.paper.dto.PaperDto;
@@ -27,6 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final HospitalMemberService hospitalMemberService;
 
 
 
@@ -36,18 +40,27 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String showMyPage(Model model, HttpSession session) {
+    public String showMyPage(Model model, HttpSession session, @AuthenticationPrincipal SecurityUser securityUser) {
         Object memberObj = session.getAttribute("member");
         if (memberObj instanceof SessionMember) {
             SessionMember sessionMember = (SessionMember) memberObj;
             String memberName = sessionMember.getName();
             model.addAttribute("member", memberName);
 
-        } else {
+            Long memberId = securityUser.getMemberId();
+            HospitalMember hospitalMember = hospitalMemberService.findByMemberIdElseNull(memberId);
 
+            //HospitalMemberRole hospitalMemberRole = hospitalMemberService.findRoleByMemberId(memberId);
+
+
+            model.addAttribute("hospitalMember", hospitalMember);
+        } else {
+            throw new RuntimeException("예외 발생");
         }
         return "member/mypage";
     }
+
+
 
     @GetMapping("/profile")
     public String profile(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
