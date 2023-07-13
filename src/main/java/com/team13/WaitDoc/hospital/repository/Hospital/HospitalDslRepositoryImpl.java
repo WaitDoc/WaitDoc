@@ -65,12 +65,13 @@ public class HospitalDslRepositoryImpl implements HospitalDslRepository {
 
         List<Hospital> hospitals = jpaQueryFactory.selectFrom(hospital)
                 .where(builder)
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
                 .fetch();
-        hospitals.sort(Comparator.comparingDouble(
-                h -> LocationDistance.calc(h.getLatitude(), h.getLongitude(), requestDTO.getLatitude(), requestDTO.getLongitude())
-        ));
+        if(requestDTO.getLatitude() != null && requestDTO.getLongitude() != null){
+            hospitals.sort(Comparator.comparingDouble(
+                    h -> LocationDistance.calc(h.getLatitude(), h.getLongitude(), requestDTO.getLatitude(), requestDTO.getLongitude())
+            ));
+        }
+
         int pageSize = pageable.getPageSize();
         int pageNumber = pageable.getPageNumber();
         int start = pageNumber * pageSize;
