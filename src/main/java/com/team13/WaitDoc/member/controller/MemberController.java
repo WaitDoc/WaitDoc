@@ -50,18 +50,26 @@ public class MemberController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        Member member = memberService.findByName(securityUser.getName());
-        model.addAttribute("member", member);
+    public String profile(Model model, HttpSession session) {
+        Object memberObj = session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) memberObj;
+
+        model.addAttribute("member", sessionMember);
+
         return "member/profile";
     }
 
     @GetMapping("/modify")
-    public String modify(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        Member member = memberService.findByName(securityUser.getName());
-        model.addAttribute("member", member);
+    public String modify(Model model, HttpSession session) {
+        Object memberObj = session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) memberObj;
+
+        model.addAttribute("member", sessionMember);
+
         return "member/modify";
     }
+
+
 
 
 
