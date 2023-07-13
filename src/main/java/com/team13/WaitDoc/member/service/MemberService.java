@@ -106,6 +106,10 @@ public class MemberService {
         return memberRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
     }
+
+    public void deleteMemberById(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 }
 
 

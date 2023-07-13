@@ -88,6 +88,17 @@ public class MemberController {
         return "redirect:/member/profile";
     }
 
+    @GetMapping("/delete")
+    public String deleteMember(HttpSession session) {
+        SessionMember sessionMember = (SessionMember) session.getAttribute("member");
+        Long memberId = sessionMember.getMemberId();
+
+        memberService.deleteMemberById(memberId);
+
+        session.invalidate(); // 세션 만료
+        return "redirect:/";
+    }
+
 
 
 
