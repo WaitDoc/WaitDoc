@@ -32,6 +32,8 @@ public class QInquiryMessage extends EntityPathBase<InquiryMessage> {
 
     public final com.team13.WaitDoc.hospital.entity.QHospitalInquiryMember sender;
 
+    public final StringPath senderName = createString("senderName");
+
     public final EnumPath<InquiryMessageType> type = createEnum("type", InquiryMessageType.class);
 
     public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);

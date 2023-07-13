@@ -5,6 +5,7 @@ import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.hospital.entity.HospitalMember;
 import com.team13.WaitDoc.hospital.entity.HospitalMemberRole;
 import com.team13.WaitDoc.hospital.service.HospitalMemberService;
+import com.team13.WaitDoc.member.dto.MemberUpdateDto;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.paper.dto.PaperDto;
@@ -63,18 +64,55 @@ public class MemberController {
 
 
     @GetMapping("/profile")
-    public String profile(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        Member member = memberService.findByName(securityUser.getName());
-        model.addAttribute("member", member);
+    public String profile(Model model, HttpSession session) {
+        Object memberObj = session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) memberObj;
+
+        model.addAttribute("member", sessionMember);
+
         return "member/profile";
     }
 
     @GetMapping("/modify")
-    public String modify(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-        Member member = memberService.findByName(securityUser.getName());
+    public String modify(Model model, HttpSession session) {
+        Object memberObj = session.getAttribute("member");
+        SessionMember sessionMember = (SessionMember) memberObj;
+
+        Member member = memberService.findMemberById(sessionMember.getMemberId());
         model.addAttribute("member", member);
+
         return "member/modify";
     }
+
+    @PostMapping("/update")
+    public String updateMember(@ModelAttribute MemberUpdateDto memberUpdateDto, HttpSession session) {
+        SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+        Long memberId = sessionMember.getMemberId();
+
+        Member member = memberService.findMemberById(memberId);
+        member.setName(memberUpdateDto.getName());
+        member.setEmail(memberUpdateDto.getEmail());
+
+        memberService.updateMember(member);
+
+        SessionMember updatedSessionMember = new SessionMember(member);
+        session.setAttribute("member", updatedSessionMember);
+
+        return "redirect:/member/profile";
+    }
+
+    @GetMapping("/delete")
+    public String deleteMember(HttpSession session) {
+        SessionMember sessionMember = (SessionMember) session.getAttribute("member");
+        Long memberId = sessionMember.getMemberId();
+
+        memberService.deleteMemberById(memberId);
+
+        session.invalidate(); // 세션 만료
+        return "redirect:/";
+    }
+
+
 
 
 

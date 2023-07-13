@@ -31,6 +31,8 @@ public class QHospitalInquiryMember extends EntityPathBase<HospitalInquiryMember
 
     public final QHospitalInquiry hospitalInquiry;
 
+    public final EnumPath<HospitalInquiryMemberRole> hospitalInquiryMemberRole = createEnum("hospitalInquiryMemberRole", HospitalInquiryMemberRole.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final com.team13.WaitDoc.member.entity.QMember member;

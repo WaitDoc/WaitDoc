@@ -44,6 +44,12 @@ public class PaperService {
         return paperRepository.findAll();
     }
 
+    public void delete(Long id) {
+        Paper paper = findById(id);
+
+        paperRepository.delete(paper);
+    }
+
 
 
 }

@@ -83,4 +83,12 @@ public class Member extends BaseEntity {
         this.memberRole = memberRole;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

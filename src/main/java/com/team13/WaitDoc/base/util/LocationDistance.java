@@ -1,9 +1,9 @@
 package com.team13.WaitDoc.base.util;
 
 public class LocationDistance {
-    public static Long calc(double lat1, double lon1, double lat2, double lon2) {
-        if(lat1==0 || lon1 ==0 || lat2==0 || lon2==0){
-            return null;
+    public static Long calc(Double lat1, Double lon1, Double lat2, Double lon2) {
+        if(lat1==null || lon1 ==null || lat2==null || lon2==null){
+            return 0l;
         }
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
