@@ -2,6 +2,7 @@ package com.team13.WaitDoc.member.controller;
 
 
 import com.team13.WaitDoc.base.config.auth.SessionMember;
+import com.team13.WaitDoc.member.dto.MemberUpdateDto;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.service.MemberService;
 import com.team13.WaitDoc.paper.dto.PaperDto;
@@ -64,9 +65,27 @@ public class MemberController {
         Object memberObj = session.getAttribute("member");
         SessionMember sessionMember = (SessionMember) memberObj;
 
-        model.addAttribute("member", sessionMember);
+        Member member = memberService.findMemberById(sessionMember.getMemberId());
+        model.addAttribute("member", member);
 
         return "member/modify";
+    }
+
+    @PostMapping("/update")
+    public String updateMember(@ModelAttribute MemberUpdateDto memberUpdateDto, HttpSession session) {
+        SessionMember sessionMember = (SessionMember)session.getAttribute("member");
+        Long memberId = sessionMember.getMemberId();
+
+        Member member = memberService.findMemberById(memberId);
+        member.setName(memberUpdateDto.getName());
+        member.setEmail(memberUpdateDto.getEmail());
+
+        memberService.updateMember(member);
+
+        SessionMember updatedSessionMember = new SessionMember(member);
+        session.setAttribute("member", updatedSessionMember);
+
+        return "redirect:/member/profile";
     }
 
 

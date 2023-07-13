@@ -1,6 +1,7 @@
 package com.team13.WaitDoc.member.service;
 
 import com.team13.WaitDoc.base.config.auth.OAuthAttributes;
+import com.team13.WaitDoc.base.config.auth.SessionMember;
 import com.team13.WaitDoc.member.entity.Member;
 import com.team13.WaitDoc.member.entity.MemberRole;
 import com.team13.WaitDoc.member.repository.MemberRepository;
@@ -88,6 +89,22 @@ public class MemberService {
         }
 
         memberRepository.save(member);
+    }
+
+    @Transactional
+    public void updateMember(Member member) {
+        Member existingMember = memberRepository.findById(member.getId())
+            .orElseThrow(() -> new IllegalArgumentException("Member does not exist with the id: " + member.getId()));
+
+        existingMember.setName(member.getName());
+        existingMember.setEmail(member.getEmail());
+
+        memberRepository.save(existingMember);
+    }
+
+    public Member findMemberById(Long id) {
+        return memberRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid member Id:" + id));
     }
 }
 
