@@ -7,15 +7,11 @@ import java.util.stream.Collectors;
 import com.team13.WaitDoc.base.entity.BaseEntity;
 import com.team13.WaitDoc.blacklist.entity.Blacklist;
 import com.team13.WaitDoc.hospital.entity.HospitalInquiryMemberRole;
+import com.team13.WaitDoc.hospital.entity.HospitalMember;
 import com.team13.WaitDoc.paper.entity.Paper;
 import com.team13.WaitDoc.waiting.entity.Waiting;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +20,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import lombok.experimental.SuperBuilder;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 
 @Entity
@@ -36,6 +34,7 @@ public class Member extends BaseEntity {
     private String email;
     private String gender;
     private String birthday;
+
 
 
     @Builder.Default
@@ -52,6 +51,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
 
 
     @Builder

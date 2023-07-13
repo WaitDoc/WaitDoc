@@ -2,6 +2,7 @@ package com.team13.WaitDoc.hospital.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import com.team13.WaitDoc.hospital.entity.*;
 import com.team13.WaitDoc.hospital.repository.HospitalInquiryMemberRepository;
@@ -22,6 +23,15 @@ public class HospitalMemberService {
         return hospitalMemberRepository.findByMemberId(memberId)
                 .orElseThrow();
     }
+
+//    public HospitalMemberRole findRoleByMemberId(Long memberId){
+//        Optional<HospitalMember> opHospitalMember=hospitalMemberRepository.findByMemberId(memberId);
+//        if(opHospitalMember.isEmpty()){
+//            return HospitalMemberRole.NONE;
+//        }
+//        HospitalMember hospitalMember= opHospitalMember.get();
+//        return hospitalMember.getRole();
+//    }
 
 
     public void applyForAdmin(Member member, Hospital hospital) {
@@ -47,4 +57,16 @@ public class HospitalMemberService {
     public boolean hasAlreadyApplied(Member member, Hospital hospital) {
         return hospitalMemberRepository.existsByMemberAndHospital(member, hospital);
     }
+
+    public HospitalMember findByMemberId(Long memberId) {
+        return hospitalMemberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new NoSuchElementException("No HospitalMember found with member ID: " + memberId));
+    }
+    public HospitalMember findByMemberIdElseNull(Long memberId) {
+        return hospitalMemberRepository.findByMemberId(memberId)
+                .orElse(null);
+    }
+
+
+
 }
