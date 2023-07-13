@@ -11,15 +11,13 @@
         <div th:text="|${member} 님|" class="pt-4 font-extrabold text-xl"></div>
         <div class="flex flex-col w-6/12">
         <a href="/member/profile" class="btn btn-outline mt-12"><i class="fa-solid fa-user mr-2"></i>회원 정보</a>
-        <a href="/member/chatList" class="btn btn-outline mt-12"><i class="fa-solid fa-file-lines mr-2"></i>1:1 문의 내역</a>
-        <a th:if="${hospitalMember != null and hospitalMember.role == 'DIRECTOR'}" th:href="@{/hospital/{hospitalId}/chatList(hospitalId=${hospitalMember.hospital.id})}" class="btn btn-outline mt-12">
-            <i class="fa-solid fa-list-ul mr-2"></i>병원 문의 관리
+        <a href="/member/chatList" class="btn btn-outline mt-12"><i class="fa-solid fa-message mr-2"></i>1:1 문의 내역</a>
+        <a th:if="${hospitalMember != null and hospitalMember.role.name == 'DIRECTOR'}" th:href="@{/hospital/{hospitalId}/chatList(hospitalId=${hospitalMember.hospital.id})}" class="btn btn-outline mt-12">
+            <i class="fa-solid fa-hospital mr-2"></i>병원 문의 관리
         </a>
         <a href="/waiting/waitinglist" class="btn btn-outline mt-12"><i class="fa-solid fa-list-ul mr-2"></i>줄서기 내역</a>
         <a href="/paper/list" class="btn btn-outline mt-12"><i class="fa-solid fa-folder mr-2"></i>서류 저장 내역</a>
         <a href="/admin/check-key" class="btn btn-outline mt-12"><i class="fa-solid fa-lock mr-2"></i>Admin 권한 신청</a>
-        <p th:if="${hospitalMember != null}">Role: <span th:text="${hospitalMember.role}"></span></p>
-        <p th:if="${hospitalMember != null}">Role: <span th:text="${hospitalMember.role.name}"></span></p>
     </div>
 
     <!--        <div th:if="${hospitalMember != null and hospitalMember.role == 'DIRECTOR'}">-->
