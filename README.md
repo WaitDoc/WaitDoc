@@ -95,3 +95,108 @@
 
 - **Image Processing**: CDN+
 </br>
+</br>
+
+
+## 주요 기능 및 설명
+
+#### 시작 페이지 & 로그인
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/5c46afb5-7dde-43f9-8fb5-2ea4af7840bb)
+
+</br>
+</br>
+
+#### 병원 검색 기능
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/1b830342-f7d8-48ba-877b-3dd45a6f9654)
+
+
+</br>
+
+* 국립 중앙 의료원 - 전국 병.의원 찾기 서비스 오픈 API 사용
+* 25개 진료과목 외 5가지 추가 카테고리를 통해 병원 검색 가능
+* 카테고리 다중 선택 가능
+* 사용자 위치와 가까운 순서대로 검색 결과 제공
+* 사용자 위치가 제공되지 않을 시 이름 순으로 검색 결과 제공
+
+</br>
+</br>
+
+
+#### 인근 병원 조회
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/9b88ccc0-c7e3-42f2-adf2-2c227ade1d9c)
+
+</br>
+
+* 카카오 맵 API 사용
+* 사용자 인근의 가까운 약국과 병원 위치 기본 제공
+* 위치 검색을 통해 약국과 병원 위치 검색 가능
+
+</br>
+</br>
+
+#### 원격 줄서기 & 알림
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/92b51583-f55a-4d6e-8907-1324228ecbb7)
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/bded78fb-4dc4-4105-a54f-cc02631daf65)
+
+</br>
+
+* Apache Kafka를 사용하여 원격 줄서기 기능을 제공
+* 사용자는 이를 통해 실시간으로 원격 줄서기 가능
+* Kafka를 통해 전달된 줄서기 요청은 신속하게 처리되고 대기열에 추가됨
+* 첫번째, 5번째 순서마다 알림을 전송
+
+</br>
+</br>
+
+#### 병원 상세페이지 & 병원 관리자 신청
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/3de13a5a-7d83-4ad0-89ee-0b213a628ea6)
+
+</br>
+
+* 병원 관리자를 신청하여 줄서기 대기를 직접 관리 가능
+
+</br>
+</br>
+
+#### 줄서기 목록 & 블랙리스트 처리
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/0336f374-b47b-4827-ae66-a6f79ae95904)
+
+</br>
+
+* 병원 관리자 권한을 부여 받으면 줄서기 목록 관리 가능
+* 줄서기 후 방문하지 않을 시 Noshow 버튼으로 미방문 횟수 카운트 가능
+* 미방문 횟수 3회가 되면 사용자는 해당 병원에 원격 줄서기 불가능
+
+</br>
+</br>
+
+#### 1:1채팅 - 병원 문의
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/14e44828-fb26-4bbf-8087-5b0244414fb0)
+
+</br>
+
+* 병원 관리자 (상담사) - 사용자 간 1:1 채팅을 통한 문의 기능
+* 병원 관리자 권한을 가지면 병원 문의 관리 기능
+* 멀티 유저간의 상호작용과 실시간 통신가능, 원활한 의사소통과 실시간 업데이트 제공
+
+</br>
+</br>
+
+#### 모바일 서류 등록
+![image](https://github.com/WaitDoc/WaitDoc/assets/103115883/a0957e92-590f-4809-8166-6b6f34db609e)
+
+</br>
+
+* 모바일로 필요한 서류를 저장하고 사용 가능
+* 상세정보를 통해 등록 날짜, 제목, 내용, 등록한 사진 확인 가능
+
+</br>
+</br>
+
+
+---
+
+
+
+
+
